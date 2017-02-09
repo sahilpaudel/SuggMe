@@ -8,26 +8,35 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    tools:context="com.sahilpaudel.app.suggme.LoginActivity">
+    tools:context="com.sahilpaudel.app.suggme.LoginActivity"
+    android:background="@drawable/backsugg"
+    >
 
 
     <ImageView
+        android:layout_marginTop="50dp"
         android:id="@+id/iv_pf_image"
-        android:layout_width="300dp"
-        android:layout_height="175dp"
+        android:layout_width="250dp"
+        android:layout_height="120dp"
         android:layout_centerHorizontal="true"
-        android:background="@drawable/com_facebook_profile_picture_blank_portrait"/>
+        android:background="@drawable/ourlogo"
+        />
 
     <EditText
+        android:layout_marginTop="50dp"
         android:id="@+id/etUserName"
         android:hint="Enter Username"
+        android:layout_below="@+id/iv_pf_image"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="300dp"
+        android:textColor="@color/colorPrimaryDark"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
-        android:layout_marginTop="200dp"/>
+        />
     <EditText
         android:id="@+id/etPassword"
         android:hint="Enter Password"
+        style="@style/TextAppearance.AppCompat.Title"
         android:layout_width="300dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/etUserName"
@@ -35,13 +44,14 @@
     <Button
         android:id="@+id/btLogin"
         android:layout_width="300dp"
-        android:text="sign in"
-        android:textColor="#FFF"
-        android:background="#424242"
+        android:text="Sign In"
+        android:textColor="#ffffff"
+        style="@style/Base.Widget.AppCompat.Button.Colored"
+        android:background="#808080"
         android:layout_marginTop="20dp"
         android:layout_height="wrap_content"
         android:layout_below="@id/etPassword"
-        android:layout_centerHorizontal="true"/>
+        android:layout_centerHorizontal="true" />
     <Button
         android:id="@+id/bt_next"
         android:text="Go to Main"
