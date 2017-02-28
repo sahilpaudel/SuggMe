@@ -3,13 +3,15 @@
     <string name="facebook_app_id">1650093405284832</string>
     <string name="fb_login_protocol_scheme">fb1650093405284832</string>
 
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+
     <!-- TODO: Remove or change this placeholder text -->
     <string name="hello_blank_fragment">Hello blank fragment</string>
-    <string name="demostring">Where is the best restaurant in jalandhar, to go out with family ?</string>
-    <string name="demostring1">The first people known to have inhabited Central
-        Asia were Iranian nomads who came from the northern grasslands of what is now Uzbekistan,
-        sometime in the first millennium BC;
-        when these nomads settled in the region they built an extensive irrigation system along the rivers.
-        At this time, cities such as Bukhoro (Bukhara) and Samarqand (Samarkand) emerged as centres of government and high culture.
-        By the fifth century BC, the Bactrian, Soghdian, and Tokharian states dominated the region.</string>
+    <string name="username">Username</string>
+    <string name="password">Password</string>
 </resources>

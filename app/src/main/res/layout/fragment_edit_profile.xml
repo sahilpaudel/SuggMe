@@ -2,13 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sahilpaudel.app.suggme.BlankFragment2"
-    android:background="@color/cardview_dark_background">
+    tools:context="com.sahilpaudel.app.suggme.profile.EditProfile">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/demostring"/>
+        android:text="@string/hello_blank_fragment" />
 
 </FrameLayout>
