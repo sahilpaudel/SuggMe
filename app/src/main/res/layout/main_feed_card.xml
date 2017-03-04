@@ -1,0 +1,72 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="0.3dp"
+        android:layout_margin="2dp"
+        cardView:cardCornerRadius="2dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="8dp">
+
+            <TextView
+                android:id="@+id/mainQuestion"
+                android:text="Who will win the next Football World Cup,given Messi and Ronaldo not playing it."
+                android:textStyle="bold"
+                android:textSize="16dp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginBottom="5dp"
+                android:layout_marginRight="10dp"/>
+            <ImageView
+                android:id="@+id/responding_user_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:src="@drawable/user"
+                android:scaleType="fitXY"
+                android:layout_below="@id/mainQuestion"
+                android:layout_marginRight="17dp"/>
+
+            <TextView
+                android:text="Sahil Paudel"
+                android:textStyle="bold|italic"
+                android:id="@+id/responding_user_name"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/responding_user_image"
+                android:layout_marginRight="10dp"
+                android:layout_below="@id/mainQuestion"/>
+
+            <TextView
+                android:text="03/02/2017"
+                android:textStyle="bold|italic"
+                android:id="@+id/main_answer_date"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/responding_user_image"
+                android:layout_below="@+id/responding_user_name"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:id="@+id/topAnswer"
+                android:text="@string/demotxt"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/responding_user_image"
+                android:layout_marginTop="5dp"
+                android:textSize="16sp"
+                android:maxLines="5"/>
+
+        </RelativeLayout>
+
+    </android.support.v7.widget.CardView>
+</LinearLayout>

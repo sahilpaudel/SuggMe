@@ -5,150 +5,80 @@
     android:layout_height="match_parent"
     android:orientation="vertical">
 
-    <FrameLayout
+    <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/rect">
+        android:background="@drawable/bg"
+        android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/logo"
-            android:text="S"
-            android:textSize="100sp"
-            android:textColor="#000"
-            android:textStyle="bold"
-            android:gravity="center_horizontal"
-            android:layout_width="110dp"
-            android:layout_height="110dp"
-            android:layout_gravity="center_horizontal"
-            android:layout_margin="50dp"/>
+        <EditText
+            android:hint="Email"
+            android:id="@+id/et_userName"
+            android:inputType="textEmailAddress"
+            android:maxLength="35"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="290dp"
+            android:background="@drawable/roundedfields"
+            android:drawableLeft="@drawable/user"
+            android:padding="16dp"
+            android:maxLines="1"
+            android:drawablePadding="35dp"/>
 
-        <LinearLayout
-            android:orientation="vertical"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent">
+        <EditText
+            android:hint="Password"
+            android:id="@+id/et_password"
+            android:maxLength="35"
+            android:maxLines="1"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="230dp"
+            android:drawableLeft="@drawable/password"
+            android:drawablePadding="35dp"
+            android:padding="16dp"
+            android:layout_marginTop="10dp"
+            android:background="@drawable/roundedfields"/>
 
-            <LinearLayout
-                android:layout_weight="3"
-                android:orientation="horizontal"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent">
+        <Button
+            android:id="@+id/login"
+            android:text="Login in"
+            android:layout_alignParentBottom="true"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="170dp"
+            android:gravity="center"
+            android:layout_marginLeft="60dp"
+            android:background="@drawable/roundedbutton"
+            android:layout_marginRight="60dp" />
 
-            </LinearLayout>
+        <com.facebook.login.widget.LoginButton
+            android:id="@+id/bt_facebook"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginBottom="120dp"
+            android:paddingTop="13dp"
+            android:paddingBottom="13dp"
+            android:paddingRight="13dp"
+            android:paddingLeft="13dp"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="60dp"
+            android:layout_alignParentBottom="true" />
 
-            <LinearLayout
-                android:background="@drawable/signin"
-                android:layout_weight="0.9"
-                android:orientation="vertical"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:paddingTop="70dp">
+        <com.google.android.gms.common.SignInButton
+            android:id="@+id/bt_google"
+            android:layout_width="270dp"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="60dp"
+            android:layout_marginRight="55dp"
+            android:layout_marginBottom="59dp"
+            android:layout_alignParentBottom="true" />
 
-                <EditText
-                    android:textSize="16sp"
-                    android:id="@+id/username"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="@string/username"
-                    android:textColorHint="@color/signintext"
-                    android:textColor="@color/signintext"
-                    android:layout_marginLeft="60dp"
-                    android:inputType="text"
-                    android:background="#0000"
-                    android:padding="16dp"
-                    android:maxLength="50"
-                    android:drawableLeft="@drawable/user"
-                    android:drawablePadding="35dp"
-                    android:layout_marginRight="65dp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginRight="60dp"
-                    android:layout_height="1dp"
-                    android:background="@color/signintext" />
-
-                <EditText
-                    android:textSize="16dp"
-                    android:id="@+id/password"
-                    android:drawablePadding="38dp"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:hint="Password"
-                    android:textColorHint="@color/signintext"
-                    android:textColor="@color/signintext"
-                    android:layout_marginLeft="60dp"
-                    android:inputType="textPassword"
-                    android:background="#0000"
-                    android:maxLength="50"
-                    android:padding="16dp"
-                    android:drawableLeft="@drawable/password"
-                    android:layout_marginRight="60dp"/>
-
-                <View
-                    android:layout_width="match_parent"
-                    android:layout_marginLeft="60dp"
-                    android:layout_marginRight="60dp"
-                    android:layout_height="1dp"
-                    android:background="@color/signintext"
-                    android:layout_marginBottom="63dp" />
-
-            </LinearLayout>
-
-        </LinearLayout>
-        <View
-            android:layout_width="1dp"
-            android:layout_height="120dp"
-            android:background="@color/signintext"
-            android:layout_gravity="bottom"
-            android:layout_marginBottom="220dp"
-            android:layout_marginLeft="110dp" />
-
-    </FrameLayout>
-
-    <Button
-        android:id="@+id/btLogin"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:background="@drawable/rect"
-        android:text="Sign in"
-        android:textSize="20sp"
-        android:textColor="#3b4a45"
-        android:gravity="center"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:padding="13dp"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="145dp"/>
-
-    <com.facebook.login.widget.LoginButton
-        android:id="@+id/bt_facebook"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginBottom="90dp"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:textSize="20sp"
-        android:paddingTop="13dp"
-        android:paddingBottom="13dp"
-        android:paddingRight="13dp"
-        android:paddingLeft="13dp"/>
-
-    <com.google.android.gms.common.SignInButton
-        android:id="@+id/bt_google"
-        android:background="@drawable/rect"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"
-        android:layout_marginBottom="40dp"/>
-    
-    <TextView
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentBottom="true"
-        android:layout_marginLeft="60dp"
-        android:layout_marginRight="60dp"/>
+    </RelativeLayout>
 
 </RelativeLayout>

@@ -5,9 +5,6 @@ import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
-import android.widget.Button;
-import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -45,10 +42,8 @@ import java.util.Map;
 
 public class LoginActivity extends AppCompatActivity implements View.OnClickListener, GoogleApiClient.OnConnectionFailedListener {
 
-    Button bt_signin;
     SignInButton gpButton;
     LoginButton fbButton;
-    EditText etUserName, etPassword;
 
     CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
@@ -63,16 +58,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         FacebookSdk.sdkInitialize(this);
         setContentView(R.layout.activity_login);
 
-        etUserName = (EditText) findViewById(R.id.username);
-        etPassword = (EditText) findViewById(R.id.password);
 
         fbButton = (LoginButton) findViewById(R.id.bt_facebook);
         gpButton = (SignInButton) findViewById(R.id.bt_google);
-        bt_signin = (Button) findViewById(R.id.btLogin);
-        bt_signin.setOnClickListener(this);
         gpButton.setOnClickListener(this);
 
 
+        //check whether user is logged In
         if (SharedPrefSuggMe.getInstance(this).isLoggedIn().equals("1")) {
             startActivity(new Intent(this,MainActivity.class));
             return;
@@ -229,8 +221,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     @Override
     public void onClick(View view) {
         switch (view.getId()) {
-            case R.id.btLogin :
-                break;
             case R.id.bt_google :
                 GoogleSignIn();
                 break;
