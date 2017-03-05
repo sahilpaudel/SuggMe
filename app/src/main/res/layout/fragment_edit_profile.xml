@@ -2,7 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="com.sahilpaudel.app.suggme.profile.EditProfile">
+    tools:context="com.sahilpaudel.app.suggme.profile.EditProfile"
+    android:background="@drawable/background_all_pages">
 
     <!-- TODO: Update blank fragment layout -->
     <TextView
