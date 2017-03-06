@@ -6,10 +6,10 @@ package com.sahilpaudel.app.suggme;
 
 public class Config {
 
-    public static final String URL_CREATE_USER = "http://d0e84fcf.ngrok.io/SuggMe/api/createUser.php";
-    public static final String URL_USER_ISEXIST = "http://d0e84fcf.ngrok.io/SuggMe/api/isExist.php";
-    public static final String URL_GET_QUESTIONS = "http://d0e84fcf.ngrok.io/SuggMe/api/getQuestion.php";
-    public static final String URL_GET_ANSWERS= "http://d0e84fcf.ngrok.io/SuggMe/api/getAnswer.php";
+    public static final String URL_CREATE_USER = "https://37d1d219/SuggMe/api/createUser.php";
+    public static final String URL_USER_ISEXIST = "https://37d1d219/SuggMe/api/isExist.php";
+    public static final String URL_GET_QUESTIONS = "https://37d1d219/SuggMe/api/getQuestion.php";
+    public static final String URL_GET_ANSWERS= "https://37d1d219/SuggMe/api/getAnswer.php";
 
 }
 
