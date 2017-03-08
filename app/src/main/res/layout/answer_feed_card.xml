@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:cardView="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center"
+        android:elevation="0.3dp"
+        android:layout_margin="2dp"
+        cardView:cardCornerRadius="2dp">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <ImageView
+                android:id="@+id/answeredByImage"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_margin="10dp"
+                android:src="@drawable/user"
+                android:scaleType="fitXY"/>
+            <TextView
+                android:id="@+id/answeredByName"
+                android:text="Sahil Paudel"
+                android:textStyle="bold"
+                android:textSize="18sp"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/answeredByImage"
+                android:layout_marginTop="10dp"
+                android:layout_marginRight="10dp"/>
+            <TextView
+                android:id="@+id/answeredOn"
+                android:text="07/03/2017"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_toRightOf="@id/answeredByImage"
+                android:layout_below="@id/answeredByName"
+                android:layout_marginTop="5dp"
+                android:layout_marginRight="10dp"/>
+
+            <TextView
+                android:id="@+id/follow"
+                android:text="0 follow"
+                android:textStyle="bold"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/answeredByName"
+                android:layout_marginTop="5dp"
+                android:layout_alignParentRight="true"
+                android:layout_marginRight="40dp"/>
+
+            <TextView
+                android:id="@+id/answers"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/answeredByImage"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:text="@string/demotxt"
+                android:padding="5dp"/>
+
+            <Button
+                android:id="@+id/like"
+                android:text="0 upvote"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@id/answers"
+                android:layout_marginLeft="10dp"
+                android:background="@color/colorPrimary"
+                android:textColor="#FFF"
+                android:gravity="center_horizontal"
+                android:padding="2dp"
+                android:layout_marginBottom="10dp"/>
+            <Button
+                android:id="@+id/suggest"
+                android:text="0 suggest"
+                android:layout_width="wrap_content"
+                android:layout_height="20dp"
+                android:layout_below="@id/answers"
+                android:layout_toRightOf="@id/like"
+                android:layout_marginLeft="10dp"
+                android:layout_marginBottom="10dp"
+                android:padding="2dp"
+                android:textColor="#FFF"
+                android:background="@color/colorPrimary"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>

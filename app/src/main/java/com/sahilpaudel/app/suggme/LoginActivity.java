@@ -109,7 +109,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                             }
                         }
                 );
-
                 Bundle parameters = new Bundle();
                 parameters.putString("fields", "id, name, email, gender, birthday, first_name, last_name, location, work, education, age_range, timezone, hometown");
                 request.setParameters(parameters);
@@ -243,6 +242,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(String response) {
                 if (response.equals("1")) {
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                }else {
+                    Toast.makeText(LoginActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -279,7 +280,8 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             public void onResponse(String response) {
                 if (response.equals("1")) {
                         Toast.makeText(LoginActivity.this, "Old User", Toast.LENGTH_SHORT).show();
-                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        return;
                 }else{
                     Toast.makeText(LoginActivity.this, "New User", Toast.LENGTH_SHORT).show();
                     //if not exist create new user

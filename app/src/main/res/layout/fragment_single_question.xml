@@ -1,0 +1,74 @@
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sahilpaudel.app.suggme.singlequestionpage.SingleQuestionFragment">
+
+    <android.support.v7.widget.CardView
+        android:id="@+id/cardViewSingleQuestion"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <TextView
+                android:id="@+id/categoryTitle"
+                android:text="Sports(Football)"
+                android:gravity="center_horizontal"
+                android:textStyle="bold|italic"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="5dp"/>
+            <TextView
+                android:id="@+id/questionContent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/categoryTitle"
+                android:text="@string/demotxt2"
+                android:textStyle="bold"
+                android:textSize="16sp"
+                android:layout_margin="5dp"/>
+            <TextView
+                android:id="@+id/askedDate"
+                android:text="2017/03/07"
+                android:textColor="@color/orange"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:layout_below="@id/questionContent"
+                android:layout_marginLeft="6dp"
+                android:textStyle="italic|bold"
+                android:gravity="center"/>
+            <Button
+                android:id="@+id/writeAnswer"
+                android:text="Answer"
+                android:layout_width="wrap_content"
+                android:layout_height="30dp"
+                android:textSize="10sp"
+                android:layout_toRightOf="@id/askedDate"
+                android:layout_below="@id/questionContent"
+                android:layout_marginLeft="10dp"
+                android:gravity="center_horizontal"
+                android:textColor="@color/orange"/>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+    <TextView
+        android:id="@+id/totalAnswerCount"
+        android:text="100+ Answers"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/cardViewSingleQuestion"
+        android:layout_margin="10dp"
+        android:background="#F5F5F5"/>
+
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/answerFeedRecycler"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/totalAnswerCount"
+        android:layout_margin="5dp">
+
+    </android.support.v7.widget.RecyclerView>
+
+
+</RelativeLayout>

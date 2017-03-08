@@ -15,6 +15,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sahilpaudel.app.suggme.mainquestionpage.MainFragment;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
