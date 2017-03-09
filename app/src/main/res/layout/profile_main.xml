@@ -1,0 +1,226 @@
+<?xml version="1.0" encoding="utf-8"?>
+<android.support.design.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:ignore="RtlHardcoded"
+    >
+
+    <android.support.design.widget.AppBarLayout
+        android:id="@+id/main_appbar"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar"
+        >
+
+        <android.support.design.widget.CollapsingToolbarLayout
+            android:id="@+id/main.collapsing"
+            android:layout_width="match_parent"
+            android:layout_height="300dp"
+            app:titleEnabled="false"
+            app:layout_scrollFlags="scroll|exitUntilCollapsed|snap"
+            >
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:background="@drawable/background_all_pages"
+        android:id="@+id/relative_up">
+<Button
+    android:layout_width="40dp"
+    android:layout_margin="15dp"
+    android:layout_height="40dp"
+    android:layout_alignParentEnd="true"
+    android:background="@drawable/editorange"/>
+    <de.hdodenhof.circleimageview.CircleImageView
+    android:id="@+id/profileimage"
+    android:layout_width="150dp"
+    android:layout_height="150dp"
+    android:src="@drawable/myprofile"
+    android:layout_marginTop="50dp"
+    android:layout_centerHorizontal="true"
+        app:border_color="#ffffff"
+        app:border_width="1dp"
+        />
+    <TextView
+        android:textColor="@color/textme"
+        android:id="@+id/name"
+        android:layout_below="@+id/profileimage"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sakshi Verma"
+        android:layout_centerHorizontal="true"
+        android:textSize="25sp"
+        android:layout_marginTop="5dp"/>
+
+    <TextView
+        android:textColor="@color/textme"
+        android:id="@+id/place"
+        android:layout_below="@+id/name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="  Jalandhar"
+        android:drawableLeft="@drawable/loc"
+        android:layout_centerHorizontal="true"
+        android:textSize="18sp"
+        android:layout_marginTop="8dp"/>
+    </RelativeLayout>
+        </android.support.design.widget.CollapsingToolbarLayout>
+    </android.support.design.widget.AppBarLayout>
+
+    <android.support.v4.widget.NestedScrollView
+        android:background="#1A1C1D"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+
+        >
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:id="@+id/relativetab1">
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:text="24"
+                    android:textStyle="bold"
+                    android:textColor="@color/alltext"
+                    android:textSize="40sp"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/no_suggestion"
+                    android:layout_height="wrap_content"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:layout_weight="1"
+                    android:background="#1A1C1D"
+                    android:layout_width="wrap_content" />
+
+                <TextView
+                    android:text="24"
+                    android:textStyle="bold"
+                    android:textColor="@color/alltext"
+                    android:textSize="40sp"
+                    android:gravity="center_horizontal"
+                    android:id="@+id/no_questions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_weight="1"
+                    android:paddingTop="10dp"
+                    android:paddingLeft="10dp"
+                    android:paddingRight="10dp"
+                    android:background="#1A1C1D"/>
+
+
+            </LinearLayout>
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/relativetab2"
+                android:layout_below="@+id/relativetab1">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                  >
+                    <TextView
+                        android:textColor="@color/alltext"
+                        android:text="Suggestions"
+                        android:textSize="17sp"
+                        android:textStyle="bold"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/suggtext"
+                        android:layout_height="match_parent"
+                        android:layout_weight="1"
+                        android:background="#1A1C1D"
+                        android:layout_width="0dp"
+                        android:paddingTop="1dp"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:paddingBottom="2dp"
+                        />
+
+                    <TextView
+                        android:paddingTop="1dp"
+                        android:paddingLeft="1dp"
+                        android:paddingRight="1dp"
+                        android:textStyle="bold"
+                        android:paddingBottom="2dp"
+                        android:textColor="@color/alltext"
+
+                        android:text="Questions"
+                        android:textSize="17sp"
+                        android:gravity="center_horizontal"
+                        android:id="@+id/questext"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:background="#1A1C1D"/>
+                </LinearLayout>
+            </RelativeLayout>
+            <RelativeLayout
+                android:id="@+id/relativeinfo"
+                android:layout_below="@id/relativetab2"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <Button
+
+                    android:textColor="@color/alltext"
+                    android:background="@drawable/roundedbutton2"
+                    android:layout_marginTop="40dp"
+                    android:padding="20dp"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:text="Message"
+                    android:layout_weight="1"
+                    />
+            </RelativeLayout>
+            <RelativeLayout
+                android:layout_marginTop="35dp"
+                android:layout_below="@+id/relativeinfo"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+
+                >
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical"
+             >
+                <android.support.design.widget.TabLayout
+                    android:id="@+id/sliding_tabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    app:tabMode="fixed"
+                    app:tabTextColor="@color/alltext"
+                    app:tabIndicatorColor="@color/alltext"
+                    app:tabSelectedTextColor="@color/alltext"
+                    android:background="@drawable/roundedbutton2"
+                    />
+
+                <android.support.v4.view.ViewPager
+                    android:id="@+id/viewpager"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_weight="1"
+                    android:background="#6A6863"
+                    />
+
+            </LinearLayout>
+        </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v4.widget.NestedScrollView>
+</android.support.design.widget.CoordinatorLayout>
+
+
