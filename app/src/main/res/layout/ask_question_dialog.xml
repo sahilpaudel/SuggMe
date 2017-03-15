@@ -2,7 +2,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:paddingTop="10dp">
+    android:paddingTop="10dp"
+    android:background="@drawable/background_all_pages">
 
     <View
         android:layout_width="match_parent"
@@ -10,14 +11,15 @@
         android:layout_marginTop="6dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@color/orange" />
+        android:background="@color/textme" />
 
     <TextView
         android:id="@+id/label1"
         android:text="ASK SUGGME"
         android:gravity="center_horizontal"
-        android:textStyle="bold|italic"
-        android:textSize="16sp"
+        android:textStyle="bold"
+        android:textColor="@color/alltext"
+        android:textSize="20sp"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="16dp"/>
@@ -27,7 +29,7 @@
         android:layout_height="1dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
-        android:background="@color/orange"
+        android:background="@color/textme"
         android:layout_below="@id/label1"/>
     <LinearLayout
         android:id="@+id/ll"
@@ -41,7 +43,7 @@
             android:id="@+id/ask_question_dialog"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:background="#f5f5f5"
+            android:background="#fcfcfc"
             android:hint="Ask Queries"
             android:padding="10dp"
             android:maxLines="1"
@@ -49,13 +51,16 @@
             android:layout_marginRight="8dp"
             android:layout_marginTop="16dp"/>
         <Button
+
             android:id="@+id/ask_question_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ok"
             android:layout_marginTop="16dp"
             android:padding="10dp"
-            android:background="#F5F5F5"/>
+            android:textStyle="bold"
+            android:textColor="@color/alltext"
+            android:background="@drawable/roundedbutton2"/>
     </LinearLayout>
 
     <ListView
