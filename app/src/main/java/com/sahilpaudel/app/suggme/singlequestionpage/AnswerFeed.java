@@ -13,6 +13,7 @@ public class AnswerFeed {
             public String first_name;
             public String last_name;
             public String entryOn;
+            public String image_url;
             public String isActive;
             public String isUpdated;
             public String isAnonymous;

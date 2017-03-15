@@ -39,8 +39,15 @@ dependencies {
     compile 'com.google.android.gms:play-services-auth:10.0.1'
     compile 'com.google.android.gms:play-services:10.0.1'
     compile 'com.squareup.picasso:picasso:2.5.2'
+<<<<<<< HEAD
     compile 'com.android.support:support-v4:25.1.0'
     compile 'de.hdodenhof:circleimageview:1.2.1'
+=======
+    compile 'com.android.support:support-v4:25.2.0'
+
+    //pretty time
+    compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
+>>>>>>> 6c0a27c774df5c80b442957aa39fc9ea7da1c653
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

@@ -1,0 +1,73 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:paddingTop="10dp">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/orange" />
+
+    <TextView
+        android:id="@+id/label1"
+        android:text="ASK SUGGME"
+        android:gravity="center_horizontal"
+        android:textStyle="bold|italic"
+        android:textSize="16sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="16dp"/>
+    <View
+        android:id="@+id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/orange"
+        android:layout_below="@id/label1"/>
+    <LinearLayout
+        android:id="@+id/ll"
+        android:layout_below="@id/view2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal">
+
+        <EditText
+            android:layout_weight="1"
+            android:id="@+id/ask_question_dialog"
+            android:layout_width="0dp"
+            android:layout_height="wrap_content"
+            android:background="#f5f5f5"
+            android:hint="Ask Queries"
+            android:padding="10dp"
+            android:maxLines="1"
+            android:layout_marginLeft="16dp"
+            android:layout_marginRight="8dp"
+            android:layout_marginTop="16dp"/>
+        <Button
+            android:id="@+id/ask_question_button"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="ok"
+            android:layout_marginTop="16dp"
+            android:padding="10dp"
+            android:background="#F5F5F5"/>
+    </LinearLayout>
+
+    <ListView
+        android:id="@+id/question_hint"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:layout_marginBottom="16dp"
+        android:visibility="gone"
+        android:layout_below="@id/ll">
+    </ListView>
+
+
+</RelativeLayout>

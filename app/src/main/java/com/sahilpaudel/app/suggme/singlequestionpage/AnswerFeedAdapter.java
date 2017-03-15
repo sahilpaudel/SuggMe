@@ -13,7 +13,14 @@ import android.widget.TextView;
 import com.sahilpaudel.app.suggme.R;
 import com.squareup.picasso.Picasso;
 
+import org.ocpsoft.prettytime.PrettyTime;
+
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 /**
  * Created by Sahil Paudel on 3/7/2017.
@@ -42,17 +49,28 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
         String answeredBy = answerFeed.first_name +" "+answerFeed.last_name;
         String answer = answerFeed.answer_content;
         String answeredOn = answerFeed.entryOn;
+        String image_url = answerFeed.image_url;
         String answer_id = answerFeed.answer_id;
         String question_id = answerFeed.question_id;
         String isActive = answerFeed.isActive;
         String isAnonymous = answerFeed.isAnonymous;
         String isUpdated = answerFeed.isUpdated;
 
+        DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+        Date time = null;
+        try {
+            time = df.parse(answeredOn);
+        } catch (ParseException e) {
+            e.printStackTrace();
+        }
+        PrettyTime p = new PrettyTime();
+        answeredOn = "Written "+p.format(time);
+
         holder.tvAnsweredBy.setText(answeredBy);
         holder.tvAnsweredOn.setText(answeredOn);
         holder.tvFollowers.setText("0 follow");
         holder.tvAnswer.setText(answer);
-        //Picasso.with(context).load("").into(holder.imageView);
+        Picasso.with(context).load(image_url).into(holder.imageView);
     }
 
     @Override
