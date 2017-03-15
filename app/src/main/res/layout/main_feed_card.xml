@@ -47,7 +47,7 @@
                 android:layout_below="@id/mainQuestion"
                 android:gravity="center"
                 android:textColor="@color/orange"
-                android:layout_toEndOf="@id/main_question_date"
+                android:layout_alignParentRight="true"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
 

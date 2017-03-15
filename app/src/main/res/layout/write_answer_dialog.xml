@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:layout_marginBottom="36dp">
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/orange" />
+
+    <TextView
+        android:id="@+id/dialog_question_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="16dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:text="@string/demotxt2"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/orange"
+        android:layout_below="@id/dialog_question_tag"/>
+
+    <EditText
+        android:id="@+id/dialog_write_answer"
+        android:gravity="top"
+        android:hint="Write Answers"
+        android:background="#f5f5f5"
+        android:textStyle="italic"
+        android:padding="6dp"
+        android:layout_width="match_parent"
+        android:layout_height="300dp"
+        android:layout_below="@id/dialog_question_tag"
+        android:layout_margin="16dp"/>
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/dialog_write_answer">
+
+        <Button
+            android:id="@+id/dialog_answer_button"
+            android:text="answer"
+            android:layout_weight="1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_below="@id/dialog_write_answer" />
+        <Button
+            android:id="@+id/dialog_cancel_button"
+            android:layout_weight="1"
+            android:text="cancel"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="16dp"
+            android:layout_below="@id/dialog_write_answer" />
+    </LinearLayout>
+</RelativeLayout>

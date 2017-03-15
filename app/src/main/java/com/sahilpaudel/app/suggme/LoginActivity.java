@@ -101,7 +101,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                             id,fname,lname,email,"F",imageUrl
                                     );
                                     //check if user exist
-                                    isExist(fname, lname, email, id,"F","","",gender);
+                                    isExist(fname, lname, email, id,"F","","",gender, imageUrl);
 
                                 }catch (Exception ex){
                                     Toast.makeText(LoginActivity.this, ex.getMessage(), Toast.LENGTH_SHORT).show();
@@ -175,7 +175,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             );
 
             //check if user exist
-            isExist(first_name, last_name, email, gid,"G","","","");
+            isExist(first_name, last_name, email, gid,"G","","","",profileImage);
             //redirect user to nect page
             startActivity(new Intent(getApplicationContext(), MainActivity.class));
 
@@ -234,13 +234,14 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
     //method to send user data to server to complete the registeration process using google or facebook
     private void saveUserInfo(final String first_name, final String last_name,
                               final String email, final String id, final String reg_from,
-                              final String lat, final String lon, final String gender) {
+                              final String lat, final String lon, final String gender,final String image_url) {
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_USER, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("1")) {
+                if (!response.equals("0")) {
+                    SharedPrefSuggMe.getInstance(LoginActivity.this).setUserId(response);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
                 }else {
                     Toast.makeText(LoginActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
@@ -263,6 +264,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 map.put("lon",lon);
                 map.put("reg_from",reg_from);
                 map.put("gender", gender);
+                map.put("image_url", image_url);
                 return map;
             }
         };
@@ -272,20 +274,21 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     private void isExist(final String first_name, final String last_name,
                          final String email, final String id, final String reg_from,
-                         final String lat, final String lon, final String gender) {
+                         final String lat, final String lon, final String gender, final String image_url) {
 
         RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_USER_ISEXIST, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                if (response.equals("1")) {
+                if (!response.equals("0")) {
                         Toast.makeText(LoginActivity.this, "Old User", Toast.LENGTH_SHORT).show();
+                        SharedPrefSuggMe.getInstance(LoginActivity.this).setUserId(response);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
                         return;
                 }else{
                     Toast.makeText(LoginActivity.this, "New User", Toast.LENGTH_SHORT).show();
                     //if not exist create new user
-                    saveUserInfo(first_name, last_name, email, id, reg_from, lat, lon, gender);
+                    saveUserInfo(first_name, last_name, email, id, reg_from, lat, lon, gender, image_url);
                 }
             }
         }, new Response.ErrorListener() {

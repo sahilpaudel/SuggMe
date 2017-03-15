@@ -48,6 +48,21 @@ public class SharedPrefSuggMe {
     public String isLoggedIn() {
         return preferences.getString("ISLOGGEDIN","0");
     }
+    public String getUserId() {
+        return preferences.getString("USER_ID","0");
+    }
+
+    public boolean setUserId(String id) {
+        editor = preferences.edit();
+        editor.putString("USER_ID",id);
+        editor.apply();
+        return true;
+    }
+
+
+    public String getUserName() {
+        return preferences.getString("FIRST_NAME","") +" "+preferences.getString("LAST_NAME","");
+    }
 
     public String getProvider() {
         return preferences.getString("STATUS","A");
