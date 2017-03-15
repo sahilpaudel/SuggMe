@@ -45,14 +45,10 @@
         <activity
             android:name=".MainActivity"
             android:label="@string/title_activity_main"
-<<<<<<< HEAD
+
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar" />
-=======
-            android:theme="@style/AppTheme.NoActionBar"
-            android:windowSoftInputMode="stateHidden"/>
-    </application>
->>>>>>> 6c0a27c774df5c80b442957aa39fc9ea7da1c653
 
     </application>
+    
 </manifest>
