@@ -33,6 +33,7 @@ public class MainActivity extends AppCompatActivity
         setSupportActionBar(toolbar);
 
         Fragment mainFragment = new MainFragment();
+
         if (mainFragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.contentFragment,mainFragment);
@@ -53,8 +54,6 @@ public class MainActivity extends AppCompatActivity
         Picasso.with(this).load(SharedPrefSuggMe.getInstance(this).getImageUrl()).into(userNavigationPic);
 
         navigationView.setNavigationItemSelectedListener(this);
-
-
     }
 
     @Override

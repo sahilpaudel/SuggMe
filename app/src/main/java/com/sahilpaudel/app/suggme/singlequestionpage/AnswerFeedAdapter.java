@@ -11,6 +11,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.sahilpaudel.app.suggme.R;
+import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
 import com.squareup.picasso.Picasso;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -47,6 +48,11 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
            AnswerFeed answerFeed = answerFeeds.get(position);
 
         String answeredBy = answerFeed.first_name +" "+answerFeed.last_name;
+
+        if (SharedPrefSuggMe.getInstance(context).getUserName().equals(answeredBy)) {
+            answeredBy = "By Me";
+        }
+
         String answer = answerFeed.answer_content;
         String answeredOn = answerFeed.entryOn;
         String image_url = answerFeed.image_url;

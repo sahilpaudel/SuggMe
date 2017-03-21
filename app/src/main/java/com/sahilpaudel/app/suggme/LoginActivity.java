@@ -168,7 +168,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             String gid = account.getId();
             String token = account.getIdToken();
 
-
             //creating session
             SharedPrefSuggMe.getInstance(getApplicationContext()).addUserInfo(
                     gid,first_name,last_name,email,"G",profileImage
@@ -188,7 +187,6 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         if(requestCode == RC_SIGN_IN) {
             GoogleSignInResult googleSignInResult = Auth.GoogleSignInApi.getSignInResultFromIntent(data);
             handleSignInResult(googleSignInResult);
-
         }
         else
             callbackManager.onActivityResult(requestCode, resultCode, data);

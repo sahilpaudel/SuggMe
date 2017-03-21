@@ -37,7 +37,7 @@
             android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.DayNight.NoActionBar" />
         <activity
-            android:name=".MainActivity"
+            android:name=".LoginActivity"
             android:label="SuggMe"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -47,7 +47,7 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".RichTextEditor"></activity>
+        <activity android:name=".MainActivity"/>
+        <activity android:name=".RichTextEditor"/>
     </application>
-
 </manifest>

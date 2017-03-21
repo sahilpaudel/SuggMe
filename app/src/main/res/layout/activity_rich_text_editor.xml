@@ -11,7 +11,8 @@
     <HorizontalScrollView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@android:color/black">
+        android:padding="5dp"
+        android:scrollbarFadeDuration="1">
 
         <LinearLayout
             android:orientation="horizontal"
@@ -25,7 +26,8 @@
                 android:background="@null"
                 android:scaleType="fitXY"
                 android:contentDescription="@null"
-                android:src="@drawable/undo"/>
+                android:src="@drawable/undo"
+                android:layout_marginLeft="10dp"/>
 
             <ImageButton
                 android:id="@+id/action_redo"
@@ -34,7 +36,8 @@
                 android:background="@null"
                 android:scaleType="fitXY"
                 android:contentDescription="@null"
-                android:src="@drawable/redo"/>
+                android:src="@drawable/redo"
+                android:layout_marginLeft="10dp"/>
 
             <ImageButton
                 android:id="@+id/action_bold"
@@ -42,6 +45,7 @@
                 android:layout_height="@dimen/rich_height"
                 android:background="@null"
                 android:scaleType="fitXY"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
                 android:src="@drawable/bold"/>
 
@@ -51,35 +55,9 @@
                 android:layout_height="@dimen/rich_height"
                 android:background="@null"
                 android:scaleType="fitXY"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
                 android:src="@drawable/italic"/>
-
-            <ImageButton
-                android:id="@+id/action_subscript"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:contentDescription="@null"
-                android:src="@drawable/subscript"/>
-
-            <ImageButton
-                android:id="@+id/action_superscript"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:contentDescription="@null"
-                android:src="@drawable/superscript"/>
-
-            <ImageButton
-                android:id="@+id/action_strikethrough"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:contentDescription="@null"
-                android:src="@drawable/strikethrough"/>
 
             <ImageButton
                 android:id="@+id/action_underline"
@@ -87,114 +65,16 @@
                 android:layout_height="@dimen/rich_height"
                 android:background="@null"
                 android:scaleType="fitXY"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
                 android:src="@drawable/underline"/>
-
-            <ImageButton
-                android:id="@+id/action_heading1"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/h1"/>
-
-            <ImageButton
-                android:id="@+id/action_heading2"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:contentDescription="@null"
-                android:src="@drawable/h2"
-                />
-
-            <ImageButton
-                android:id="@+id/action_heading3"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:contentDescription="@null"
-                android:src="@drawable/h3"
-                />
-
-            <ImageButton
-                android:id="@+id/action_heading4"
-                android:layout_width="20dp"
-                android:layout_height="20dp"
-                android:background="@null"
-                android:scaleType="fitXY"
-                android:contentDescription="@null"
-                android:src="@drawable/h4"
-                />
-
-            <ImageButton
-                android:id="@+id/action_heading5"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/h5"
-                />
-
-            <ImageButton
-                android:id="@+id/action_heading6"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/h6"
-                />
-
-            <ImageButton
-                android:id="@+id/action_txt_color"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/txt_color"
-                />
-
-            <ImageButton
-                android:id="@+id/action_bg_color"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/bg_color"
-                />
-
-
-            <ImageButton
-                android:id="@+id/action_indent"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/indent"
-                />
-
-            <ImageButton
-                android:id="@+id/action_outdent"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@drawable/outdent"
-                />
 
             <ImageButton
                 android:id="@+id/action_align_left"
                 android:layout_width="@dimen/rich_width"
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
+                android:layout_marginLeft="10dp"
                 android:background="@null"
                 android:contentDescription="@null"
                 android:src="@drawable/justify_left"
@@ -206,9 +86,9 @@
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
-                android:src="@drawable/justify_center"
-                />
+                android:src="@drawable/justify_center"/>
 
             <ImageButton
                 android:id="@+id/action_align_right"
@@ -216,9 +96,9 @@
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
-                android:src="@drawable/justify_right"
-                />
+                android:src="@drawable/justify_right"/>
 
             <ImageButton
                 android:id="@+id/action_insert_bullets"
@@ -226,6 +106,7 @@
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
                 android:src="@drawable/bullets"
                 />
@@ -236,6 +117,7 @@
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
                 android:src="@drawable/numbers"
                 />
@@ -246,9 +128,9 @@
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
-                android:src="@drawable/blockquote"
-                />
+                android:src="@drawable/blackquote"/>
 
             <ImageButton
                 android:id="@+id/action_insert_image"
@@ -256,9 +138,9 @@
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
-                android:src="@drawable/insert_image"
-                />
+                android:src="@drawable/insert_image"/>
 
             <ImageButton
                 android:id="@+id/action_insert_link"
@@ -266,43 +148,15 @@
                 android:layout_height="@dimen/rich_height"
                 android:scaleType="fitXY"
                 android:background="@null"
+                android:layout_marginLeft="10dp"
                 android:contentDescription="@null"
-                android:src="@drawable/insert_link"
-                />
-
-            <ImageButton
-                android:id="@+id/action_insert_checkbox"
-                android:layout_width="@dimen/rich_width"
-                android:layout_height="@dimen/rich_height"
-                android:scaleType="fitXY"
-                android:background="@null"
-                android:contentDescription="@null"
-                android:src="@android:drawable/checkbox_on_background"
-                />
-
+                android:src="@drawable/insert_link"/>
         </LinearLayout>
     </HorizontalScrollView>
 
     <jp.wasabeef.richeditor.RichEditor
         android:id="@+id/editor"
         android:layout_width="match_parent"
-        android:layout_height="400dp"
-        />
-
-    <TextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:text="HTML Preview"
-        android:textSize="12sp"
-        />
-
-    <TextView
-        android:id="@+id/preview"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="15dp"
-        />
-
+        android:layout_height="400dp"/>
 
 </LinearLayout>
