@@ -118,7 +118,6 @@ public class MainFragment extends Fragment {
                         feed.askedOn = object.getString("entryOn");
                         feed.askedBy = object.getString("user_id");
                         feed.answerCount = object.getString("ansc");
-                        //Toast.makeText(getActivity(),object.getString("question_id"), Toast.LENGTH_SHORT).show();
                         question_feed.add(feed);
 
                     }

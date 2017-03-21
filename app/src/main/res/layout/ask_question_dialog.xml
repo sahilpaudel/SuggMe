@@ -7,7 +7,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1.5dp"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -26,7 +26,7 @@
     <View
         android:id="@+id/view2"
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1.5dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
         android:background="@color/textme"
@@ -60,7 +60,7 @@
             android:padding="10dp"
             android:textStyle="bold"
             android:textColor="@color/alltext"
-            android:background="@drawable/roundedbutton2"/>
+            android:background="@drawable/roundedbutton"/>
     </LinearLayout>
 
     <ListView

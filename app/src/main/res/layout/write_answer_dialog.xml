@@ -9,7 +9,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1.5dp"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -29,7 +29,7 @@
 
     <View
         android:layout_width="match_parent"
-        android:layout_height="1dp"
+        android:layout_height="1.5dp"
         android:layout_marginTop="6dp"
         android:layout_marginLeft="16dp"
         android:layout_marginRight="16dp"
@@ -61,7 +61,7 @@
             android:text="answer"
             android:textStyle="bold"
             android:textColor="@color/alltext"
-            android:background="@drawable/roundedbutton2"
+            android:background="@drawable/roundedbutton"
             android:layout_weight="1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -69,7 +69,7 @@
             android:layout_below="@id/dialog_write_answer" />
         <Button
             android:id="@+id/dialog_cancel_button"
-            android:background="@drawable/roundedbutton2"
+            android:background="@drawable/roundedbutton"
             android:layout_weight="1"
             android:text="cancel"
             android:textStyle="bold"

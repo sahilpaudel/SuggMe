@@ -22,7 +22,7 @@
                 android:id="@+id/mainQuestion"
                 android:text="Who will win the next Football World Cup,given Messi and Ronaldo not playing it."
                 android:textStyle="bold"
-                android:textSize="16dp"
+                android:textSize="17.5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="5dp"
