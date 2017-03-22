@@ -5,22 +5,30 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.sahilpaudel.app.suggme.singlequestionpage.SingleQuestionFragment">
 
-    <android.support.v7.widget.CardView
-        android:id="@+id/cardViewSingleQuestion"
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/swipeToRefreshAnswer"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
+
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-
-            <TextView
-                android:id="@+id/categoryTitle"
-                android:text="Sports(Football)"
-                android:gravity="center_horizontal"
-                android:textStyle="bold|italic"
+            android:layout_height="wrap_content">
+            <android.support.v7.widget.CardView
+                android:id="@+id/cardViewSingleQuestion"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="5dp"/>
+                android:layout_height="wrap_content">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+
+                    <TextView
+                        android:id="@+id/categoryTitle"
+                        android:text="Question"
+                        android:gravity="center_horizontal"
+                        android:textStyle="bold|italic"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="5dp"/>
             <TextView
                 android:id="@+id/questionContent"
                 android:layout_width="match_parent"
@@ -90,6 +98,7 @@
         android:layout_margin="5dp">
 
     </android.support.v7.widget.RecyclerView>
+    </RelativeLayout>
 
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 </RelativeLayout>

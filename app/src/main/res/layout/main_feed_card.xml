@@ -20,7 +20,6 @@
 
             <TextView
                 android:id="@+id/mainQuestion"
-                android:text="Who will win the next Football World Cup,given Messi and Ronaldo not playing it."
                 android:textStyle="bold"
                 android:textSize="17.5dp"
                 android:layout_width="match_parent"
@@ -29,7 +28,6 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-                android:text="03/02/2017"
                 android:textStyle="bold|italic"
                 android:id="@+id/main_question_date"
                 android:textColor="@color/orange"
@@ -37,8 +35,8 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mainQuestion"
                 android:layout_marginRight="10dp"/>
+
             <TextView
-                android:text="0 Responses"
                 android:layout_marginLeft="20dp"
                 android:textStyle="bold|italic"
                 android:id="@+id/total_answer"

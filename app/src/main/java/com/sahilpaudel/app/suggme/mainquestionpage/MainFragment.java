@@ -3,14 +3,18 @@ package com.sahilpaudel.app.suggme.mainquestionpage;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -34,6 +38,7 @@ import com.sahilpaudel.app.suggme.Config;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.RecyclerTouchListener;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
+import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.singlequestionpage.SingleQuestionFragment;
 
 import org.json.JSONArray;
@@ -70,15 +75,35 @@ public class MainFragment extends Fragment {
     RequestQueue getQuestionQueue;
     StringRequest getQuestionRequest;
 
+    SwipeRefreshLayout swipeToRefreshQuestion;
+
+    GetUserAddress getUserAddress;
+
+    String city;
+    String state;
+    String country;
+
     public MainFragment() {
         // Required empty public constructor
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        getUserAddress = new GetUserAddress(getActivity());
+        getUserAddress.executeGPS();
+//        Toast.makeText(getActivity(), getUserAddress.getCity(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), getUserAddress.getState(), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(getActivity(), getUserAddress.getCountry(), Toast.LENGTH_SHORT).show();
+        city = getUserAddress.getCity();
+        state = getUserAddress.getState();
+        country = getUserAddress.getCountry();
+
+        swipeToRefreshQuestion = (SwipeRefreshLayout)view.findViewById(R.id.swipeToRefreshQuestion);
 
         recyclerViewFeed = (RecyclerView)view.findViewById(R.id.mainFeedRecycler);
         tvUserName = (TextView)view.findViewById(R.id.userName);
@@ -105,7 +130,10 @@ public class MainFragment extends Fragment {
         getQuestionRequest = new StringRequest(Request.Method.POST, Config.URL_GET_QUESTIONS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //set refresh stop when we get the data
+                swipeToRefreshQuestion.setRefreshing(false);
                 progress.dismiss();
+                Log.d("RESPONSE",response);
                 try {
                     JSONArray array = new JSONArray(response);
 
@@ -119,7 +147,6 @@ public class MainFragment extends Fragment {
                         feed.askedBy = object.getString("user_id");
                         feed.answerCount = object.getString("ansc");
                         question_feed.add(feed);
-
                     }
                     questionFeedAdapter = new QuestionFeedAdapter(getActivity(),question_feed);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
@@ -127,6 +154,31 @@ public class MainFragment extends Fragment {
                     recyclerViewFeed.setItemAnimator(new DefaultItemAnimator());
                     recyclerViewFeed.setAdapter(questionFeedAdapter);
                     questionFeedAdapter.notifyDataSetChanged();
+                    swipeToRefreshQuestion.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            //clear the list
+                            question_feed.clear();
+                            //clear adapter
+                            questionFeedAdapter.notifyDataSetChanged();
+                            //make new request
+                            getQuestionQueue.add(getQuestionRequest);
+
+                            //call adapter
+                            questionFeedAdapter = new QuestionFeedAdapter(getActivity(),question_feed);
+                            //set adapter
+                            recyclerViewFeed.setAdapter(questionFeedAdapter);
+                            //notify adapter
+                            questionFeedAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+                    // Configure the refreshing colors
+                    swipeToRefreshQuestion.setColorSchemeResources(
+                            android.R.color.holo_blue_bright,
+                            android.R.color.holo_green_light,
+                            android.R.color.holo_orange_light,
+                            android.R.color.holo_red_light);
 
                     recyclerViewFeed.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerViewFeed, new ClickListener() {
                         @Override
@@ -143,7 +195,6 @@ public class MainFragment extends Fragment {
                             args.putString("CONTENT",question);
                             args.putString("DATE",askedOn);
                             args.putString("ANSC",answercount);
-
                             fragment.setArguments(args);
 
                             if(fragment != null) {
@@ -153,7 +204,6 @@ public class MainFragment extends Fragment {
                                 transaction.commit();
                             }
                         }
-
                         @Override
                         public void onLongClick(View view, int position) {
 
@@ -171,7 +221,14 @@ public class MainFragment extends Fragment {
             public void onErrorResponse(VolleyError error) {
                 progress.dismiss();
             }
-        }){};
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("STATE",state);
+                return params;
+            }
+        };
         getQuestionQueue.add(getQuestionRequest);
         return view;
     }
@@ -238,8 +295,12 @@ public class MainFragment extends Fragment {
         btAskQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createQuestion(askQuestion.getText().toString(),"0");
-                b.dismiss();
+                if (askQuestion.getText().toString().isEmpty()) {
+                    askQuestion.setError("It cannot be empty");
+                }else {
+                    createQuestion(askQuestion.getText().toString(), "0");
+                    b.dismiss();
+                }
             }
         });
 

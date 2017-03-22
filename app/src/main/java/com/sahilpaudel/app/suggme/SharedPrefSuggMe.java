@@ -58,7 +58,16 @@ public class SharedPrefSuggMe {
         editor.apply();
         return true;
     }
+    public boolean setState(String state) {
+        editor = preferences.edit();
+        editor.putString("STATE",state);
+        editor.apply();
+        return true;
+    }
 
+    public String getState() {
+        return preferences.getString("STATE","");
+    }
 
     public String getUserName() {
         return preferences.getString("FIRST_NAME","") +" "+preferences.getString("LAST_NAME","");

@@ -7,6 +7,7 @@ import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -86,6 +87,9 @@ public class SingleQuestionFragment extends Fragment {
     //application user_id
     String currentUserId;
 
+    //refresher
+    SwipeRefreshLayout swipeRefreshLayoutAnswer;
+
     public SingleQuestionFragment() {
         // Required empty public constructor
     }
@@ -96,6 +100,9 @@ public class SingleQuestionFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_single_question, container, false);
+
+        swipeRefreshLayoutAnswer = (SwipeRefreshLayout)view.findViewById(R.id.swipeToRefreshAnswer);
+
         recyclerViewAnswer = (RecyclerView)view.findViewById(R.id.answerFeedRecycler);
         tvQuestion = (TextView)view.findViewById(R.id.questionContent);
         tvAskedOn = (TextView)view.findViewById(R.id.askedDate);
@@ -165,6 +172,8 @@ public class SingleQuestionFragment extends Fragment {
         getAnswerRequest = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
+                //stop refreshing when we get the data
+                swipeRefreshLayoutAnswer.setRefreshing(false);
                 progress.dismiss();
                 try {
                     JSONArray array = new JSONArray(response);
@@ -201,6 +210,27 @@ public class SingleQuestionFragment extends Fragment {
                     recyclerViewAnswer.setItemAnimator(new DefaultItemAnimator());
                     recyclerViewAnswer.setAdapter(answerFeedAdapter);
                     answerFeedAdapter.notifyDataSetChanged();
+
+                    swipeRefreshLayoutAnswer.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+                        @Override
+                        public void onRefresh() {
+                            //clear old data
+                            answerFeeds.clear();
+                            answerFeedAdapter.notifyDataSetChanged();
+                            //make new request
+                            getAnswerQueue.add(getAnswerRequest);
+                            //fil with new data
+                            answerFeedAdapter = new AnswerFeedAdapter(getActivity(),answerFeeds);
+                            recyclerViewAnswer.setAdapter(answerFeedAdapter);
+                            answerFeedAdapter.notifyDataSetChanged();
+                        }
+                    });
+
+                    // Configure the refreshing colors
+                    swipeRefreshLayoutAnswer.setColorSchemeResources(android.R.color.holo_blue_bright,
+                            android.R.color.holo_green_light,
+                            android.R.color.holo_orange_light,
+                            android.R.color.holo_red_light);
 
                     recyclerViewAnswer.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerViewAnswer, new ClickListener() {
                         @Override

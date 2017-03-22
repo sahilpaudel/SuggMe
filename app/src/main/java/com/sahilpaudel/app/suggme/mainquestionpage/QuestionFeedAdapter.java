@@ -69,6 +69,7 @@ public class QuestionFeedAdapter extends RecyclerView.Adapter<QuestionFeedAdapte
         String category_id = questionFeed.category_id;
         String answerCount = questionFeed.answerCount;
 
+
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
             Date time =  df.parse(askedOn);
