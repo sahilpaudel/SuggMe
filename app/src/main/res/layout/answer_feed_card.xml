@@ -11,8 +11,8 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:elevation="0.3dp"
-        android:layout_margin="2dp"
-        cardView:cardCornerRadius="2dp">
+        android:layout_margin="5dp"
+        cardView:cardCornerRadius="5dp">
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -72,8 +72,8 @@
                 android:layout_height="20dp"
                 android:layout_below="@id/answers"
                 android:layout_marginLeft="10dp"
-                android:background="@color/colorPrimary"
-                android:textColor="#FFF"
+                android:background="@drawable/roundedbutton2"
+                android:textColor="@color/alltext"
                 android:gravity="center_horizontal"
                 android:padding="2dp"
                 android:layout_marginBottom="10dp"/>
@@ -87,8 +87,8 @@
                 android:layout_marginLeft="10dp"
                 android:layout_marginBottom="10dp"
                 android:padding="2dp"
-                android:textColor="#FFF"
-                android:background="@color/colorPrimary"/>
+                android:textColor="@color/alltext"
+                android:background="@drawable/roundedbutton2"/>
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </RelativeLayout>
