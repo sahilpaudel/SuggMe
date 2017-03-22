@@ -5,7 +5,6 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context="com.sahilpaudel.app.suggme.mainquestionpage.MainFragment">
 
-<<<<<<< HEAD
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefreshQuestion"
         xmlns:android="http://schemas.android.com/apk/res/android"
@@ -46,48 +45,5 @@
         </android.support.v7.widget.RecyclerView>
         </RelativeLayout>
     </android.support.v4.widget.SwipeRefreshLayout>
-=======
-    <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/imageViewMainFrag"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:src="@mipmap/ic_launcher"
-        android:layout_marginTop="15dp"
-        android:layout_marginLeft="8dp"
-        app:border_color="#f5f5f5"
-        app:border_width="1dp"/>
-
-    <TextView
-        android:id="@+id/userName"
-        android:layout_toRightOf="@+id/imageViewMainFrag"
-        android:text="Sahil Paudel"
-        android:textStyle="bold"
-        android:textSize="17sp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_marginBottom="5dp"
-        android:layout_marginTop="20dp"
-        android:layout_marginLeft="5dp"
-        android:layout_marginRight="5dp"/>
-    <EditText
-        android:id="@+id/askQuestion"
-        android:hint="Ask SuggMe"
-        android:padding="6dp"
-        android:focusable="false"
-        android:layout_width="match_parent"
-        android:layout_height="45dp"
-        android:layout_below="@id/imageViewMainFrag"
-        android:layout_margin="10dp"
-        android:background="@drawable/roundedbutton"
-        style="@style/EditTextStyle"/>
-
-    <android.support.v7.widget.RecyclerView
-        android:layout_margin="8dp"
-        android:id="@+id/mainFeedRecycler"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@id/askQuestion">
-    </android.support.v7.widget.RecyclerView>
->>>>>>> fd032523eabe90915cefa637241290c6d36a7747
 
 </RelativeLayout>

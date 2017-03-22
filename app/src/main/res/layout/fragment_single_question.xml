@@ -8,36 +8,23 @@
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefreshAnswer"
         android:layout_width="match_parent"
-<<<<<<< HEAD
         android:layout_height="match_parent">
 
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
+
             <android.support.v7.widget.CardView
                 android:id="@+id/cardViewSingleQuestion"
-=======
-        android:layout_height="wrap_content"
-        app:cardCornerRadius="10dp"
-        app:cardBackgroundColor="#f5f5f5"
-        android:layout_margin="5dp">
-        <RelativeLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:padding="10dp">
-
-            <TextView
-                android:id="@+id/categoryTitle"
-                android:text="Sports(Football)"
-                android:gravity="center_horizontal"
-                android:textStyle="bold"
->>>>>>> fd032523eabe90915cefa637241290c6d36a7747
+                android:layout_height="wrap_content"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content">
+                app:cardCornerRadius="10dp"
+                app:cardBackgroundColor="#f5f5f5"
+                android:layout_margin="5dp">
+
                 <RelativeLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent">
-
                     <TextView
                         android:id="@+id/categoryTitle"
                         android:text="Question"
@@ -46,15 +33,15 @@
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"/>
-            <TextView
-                android:id="@+id/questionContent"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/categoryTitle"
-                android:text="@string/demotxt2"
-                android:textStyle="bold"
-                android:textSize="16sp"
-                android:layout_margin="5dp"/>
+                    <TextView
+                    android:id="@+id/questionContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/categoryTitle"
+                    android:text="@string/demotxt2"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_margin="5dp"/>
             <TextView
                 android:id="@+id/askedDate"
                 android:text="2017/03/07"
@@ -72,7 +59,7 @@
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:textSize="10sp"
-                android:layout_marginLeft="180dp"
+                android:layout_marginLeft="110dp"
                 android:layout_toRightOf="@id/askedDate"
                 android:layout_below="@id/questionContent"
                 android:textColor="@color/alltext"/>
@@ -98,11 +85,12 @@
                     android:layout_height="wrap_content" />
             </android.support.v7.widget.CardView>
         </RelativeLayout>
+
     </android.support.v7.widget.CardView>
-    <TextView
-        android:id="@+id/totalAnswerCount"
-        android:text="100+ Answers"
-        android:layout_width="match_parent"
+            <TextView
+            android:id="@+id/totalAnswerCount"
+            android:text="0 Answers"
+            android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cardViewSingleQuestion"
         android:layout_margin="5dp"
@@ -114,9 +102,10 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/totalAnswerCount"
         android:layout_margin="10dp">
-
     </android.support.v7.widget.RecyclerView>
+
     </RelativeLayout>
 
     </android.support.v4.widget.SwipeRefreshLayout>
+
 </RelativeLayout>

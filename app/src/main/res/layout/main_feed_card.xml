@@ -23,6 +23,7 @@
             <TextView
                 android:id="@+id/mainQuestion"
                 android:textStyle="bold"
+                android:text="Demo question"
                 android:textSize="17.5dp"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -30,12 +31,8 @@
                 android:layout_marginRight="10dp"/>
 
             <TextView
-<<<<<<< HEAD
                 android:textStyle="bold|italic"
-=======
                 android:text="03/02/2017"
-                android:textStyle="bold"
->>>>>>> fd032523eabe90915cefa637241290c6d36a7747
                 android:id="@+id/main_question_date"
                 android:textColor="@color/textme"
                 android:layout_width="wrap_content"
@@ -48,6 +45,7 @@
                 android:layout_marginLeft="20dp"
                 android:textStyle="bold"
                 android:id="@+id/total_answer"
+                android:text="0"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mainQuestion"
@@ -57,6 +55,5 @@
                 android:layout_marginTop="6dp"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
-
     </android.support.v7.widget.CardView>
 </LinearLayout>
