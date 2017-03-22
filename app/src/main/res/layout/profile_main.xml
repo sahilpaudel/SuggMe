@@ -40,7 +40,7 @@
         app:border_color="#ffffff"
         app:border_width="1dp"/>
     <TextView
-        android:textColor="@color/textme"
+        android:textColor="@color/alltext"
         android:id="@+id/name"
         android:layout_below="@+id/profileimage"
         android:layout_width="wrap_content"
@@ -52,7 +52,7 @@
         android:layout_marginTop="5dp"/>
 
     <TextView
-        android:textColor="@color/textme"
+        android:textColor="@color/alltext"
         android:id="@+id/place"
         android:layout_below="@+id/name"
         android:layout_width="wrap_content"

@@ -33,16 +33,16 @@
     <item android:state_pressed="false" android:state_focused="false">
         <shape>
             <gradient
-                android:startColor="#252A30"
-                android:centerColor="#252A30"
-                android:endColor="#252A30"
+                android:startColor="#138d75"
+                android:centerColor="#138d75"
+                android:endColor="#138d75"
                 android:angle="270"
                 />
             <stroke
                 android:width="0.7dp"
-                android:color="#252A30"/>
+                android:color="#3E4649"/>
             <corners
-                android:radius="7dp" />
+                android:radius="8dp" />
         </shape>
     </item>
 

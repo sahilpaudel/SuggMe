@@ -4,10 +4,9 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-    <!-- Single ListItem -->
-
-    <!-- Product Name -->
-    <TextView android:id="@+id/question_title"
+    <TextView
+        android:layout_margin="8dp"
+        android:id="@+id/question_title"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:padding="10dip"

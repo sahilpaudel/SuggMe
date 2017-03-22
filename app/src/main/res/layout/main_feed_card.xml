@@ -3,15 +3,17 @@
     xmlns:cardView="http://schemas.android.com/apk/res-auto"
     android:orientation="vertical"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content">
+    android:layout_height="wrap_content"
+    android:background="#f5f5f5">
 
     <android.support.v7.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:elevation="0.3dp"
-        android:layout_margin="2dp"
-        cardView:cardCornerRadius="2dp">
+        cardView:cardBackgroundColor="#f5f5f5"
+        android:layout_margin="5dp"
+        cardView:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -30,24 +32,26 @@
 
             <TextView
                 android:text="03/02/2017"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 android:id="@+id/main_question_date"
-                android:textColor="@color/orange"
+                android:textColor="@color/textme"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mainQuestion"
+                android:layout_marginTop="6dp"
                 android:layout_marginRight="10dp"/>
             <TextView
                 android:text="0 Responses"
                 android:layout_marginLeft="20dp"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 android:id="@+id/total_answer"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/mainQuestion"
                 android:gravity="center"
-                android:textColor="@color/orange"
+                android:textColor="@color/textme"
                 android:layout_alignParentRight="true"
+                android:layout_marginTop="6dp"
                 android:layout_marginRight="10dp"/>
         </RelativeLayout>
 

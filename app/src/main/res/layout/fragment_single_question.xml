@@ -8,16 +8,20 @@
     <android.support.v7.widget.CardView
         android:id="@+id/cardViewSingleQuestion"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        app:cardCornerRadius="10dp"
+        app:cardBackgroundColor="#f5f5f5"
+        android:layout_margin="5dp">
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
+            android:layout_height="match_parent"
+            android:padding="10dp">
 
             <TextView
                 android:id="@+id/categoryTitle"
                 android:text="Sports(Football)"
                 android:gravity="center_horizontal"
-                android:textStyle="bold|italic"
+                android:textStyle="bold"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="5dp"/>
@@ -38,19 +42,19 @@
                 android:layout_height="30dp"
                 android:layout_below="@id/questionContent"
                 android:layout_marginLeft="6dp"
-                android:textStyle="italic|bold"
+                android:textStyle="bold"
                 android:gravity="center"/>
             <Button
                 android:id="@+id/writeAnswer"
                 android:text="Answer"
+                android:background="@drawable/roundedfields"
                 android:layout_width="wrap_content"
                 android:layout_height="30dp"
                 android:textSize="10sp"
+                android:layout_marginLeft="180dp"
                 android:layout_toRightOf="@id/askedDate"
                 android:layout_below="@id/questionContent"
-                android:layout_marginLeft="10dp"
-                android:gravity="center_horizontal"
-                android:textColor="@color/orange"/>
+                android:textColor="@color/alltext"/>
 
             <android.support.v7.widget.CardView
                 android:id="@+id/ifAlreadyWrittenCard"
@@ -60,6 +64,7 @@
                 android:layout_below="@id/askedDate"
                 app:cardElevation="12dp"
                 android:layout_marginTop="5dp"
+                android:layout_margin="5dp"
                 android:visibility="gone">
 
                 <TextView
@@ -79,7 +84,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/cardViewSingleQuestion"
-        android:layout_margin="10dp"
+        android:layout_margin="5dp"
         android:background="#F5F5F5"/>
 
     <android.support.v7.widget.RecyclerView
@@ -87,7 +92,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@id/totalAnswerCount"
-        android:layout_margin="5dp">
+        android:layout_margin="10dp">
 
     </android.support.v7.widget.RecyclerView>
 
