@@ -34,7 +34,7 @@
         android:id="@+id/ll"
         android:layout_below="@id/view2"
         android:layout_width="match_parent"
-        android:layout_height="170dp"
+        android:layout_height="80dp"
         android:orientation="horizontal">
 
         <EditText
@@ -72,6 +72,5 @@
         android:visibility="gone"
         android:layout_below="@id/ll">
     </ListView>
-
 
 </RelativeLayout>

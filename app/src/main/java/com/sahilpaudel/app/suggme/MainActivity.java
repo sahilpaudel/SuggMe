@@ -1,7 +1,9 @@
 package com.sahilpaudel.app.suggme;
 
 import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.design.widget.NavigationView;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
@@ -16,6 +18,7 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.mainquestionpage.MainFragment;
 import com.squareup.picasso.Picasso;
 
@@ -23,17 +26,23 @@ public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
 
     ImageView userNavigationPic;
-    TextView tv_address;
+    TextView userName,showAddress;
 
+    GetUserAddress getUserAddress;
+
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+
+        getUserAddress = new GetUserAddress(this);
+        getUserAddress.executeGPS();
+
         Toolbar toolbar = (Toolbar) findViewById(R.id.toolbar);
         setSupportActionBar(toolbar);
 
         Fragment mainFragment = new MainFragment();
-
         if (mainFragment != null) {
             FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.contentFragment,mainFragment);
@@ -51,6 +60,11 @@ public class MainActivity extends AppCompatActivity
         navHeader = navigationView.getHeaderView(0);
 
         userNavigationPic = (ImageView)navHeader.findViewById(R.id.imageView);
+        userName = (TextView)navHeader.findViewById(R.id.userName);
+        showAddress = (TextView)navHeader.findViewById(R.id.showAddress);
+
+        userName.setText(SharedPrefSuggMe.getInstance(MainActivity.this).getUserName());
+        showAddress.setText(getUserAddress.getCity()+", "+getUserAddress.getState()+", "+getUserAddress.getCountry());
         Picasso.with(this).load(SharedPrefSuggMe.getInstance(this).getImageUrl()).into(userNavigationPic);
 
         navigationView.setNavigationItemSelectedListener(this);

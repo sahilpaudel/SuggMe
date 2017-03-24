@@ -3,6 +3,7 @@ package com.sahilpaudel.app.suggme.mainquestionpage;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
@@ -33,6 +34,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.sahilpaudel.app.suggme.ClickListener;
 import com.sahilpaudel.app.suggme.Config;
 import com.sahilpaudel.app.suggme.R;
@@ -51,6 +57,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import static android.app.Activity.RESULT_CANCELED;
+import static android.app.Activity.RESULT_OK;
+
 
 /**
  * A simple {@link Fragment} subclass.
@@ -65,6 +74,8 @@ public class MainFragment extends Fragment {
 
     TextView tvUserName;
     EditText etWriteQuestion;
+
+    Intent intent;
 
     ArrayAdapter hintAdapter;
 
@@ -82,6 +93,10 @@ public class MainFragment extends Fragment {
     String city;
     String state;
     String country;
+
+    String questionAddress;
+
+    private final static int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
     public MainFragment() {
         // Required empty public constructor
@@ -241,8 +256,17 @@ public class MainFragment extends Fragment {
         writeQuestionDialog.setView(dialogView);
         final AlertDialog b = writeQuestionDialog.create();
 
-        final EditText askQuestion = (EditText)dialogView.findViewById(R.id.ask_question_dialog);
+        //place autocomplete
+        try {
+            intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                    .build(getActivity());
+            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 
+        }catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e){
+            Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+        //fetching old questions
+        final EditText askQuestion = (EditText)dialogView.findViewById(R.id.ask_question_dialog);
         int n = question_feed.size();
         final String quest[] = new String[n];
         final String quest_id[] = new String[n];
@@ -297,6 +321,9 @@ public class MainFragment extends Fragment {
             public void onClick(View view) {
                 if (askQuestion.getText().toString().isEmpty()) {
                     askQuestion.setError("It cannot be empty");
+                }else if(questionAddress == null){
+                    askQuestion.setError("Select location");
+                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
                 }else {
                     createQuestion(askQuestion.getText().toString(), "0");
                     b.dismiss();
@@ -306,7 +333,6 @@ public class MainFragment extends Fragment {
 
         b.show();
     }
-
 
     private void getQuestionById(final String question_id, final AlertDialog b) {
 
@@ -407,10 +433,29 @@ public class MainFragment extends Fragment {
                 params.put("user_id",SharedPrefSuggMe.getInstance(getActivity()).getUserId());
                 params.put("entryOn",currentTime);
                 params.put("is_anonymous",isAnonymous);
+                params.put("question_address",questionAddress);
                 return params;
             }
         };
+
         queue.add(request);
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(getActivity(), data);
+               questionAddress = place.getAddress().toString();
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(getActivity(), data);
+                // TODO: Handle the error.
+                Log.i("PLACE", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
 }
