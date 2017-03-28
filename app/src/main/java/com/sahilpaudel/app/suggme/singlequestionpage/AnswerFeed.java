@@ -8,6 +8,7 @@ public class AnswerFeed {
 
             public String answer_id;
             public String question_id;
+            public String question_title;
             public String answer_content;
             public String user_id;
             public String first_name;

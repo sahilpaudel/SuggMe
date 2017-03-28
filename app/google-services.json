@@ -1,7 +1,9 @@
 {
   "project_info": {
     "project_number": "326874559147",
-    "project_id": "project--6876990081232588564"
+    "firebase_url": "https://project-6876990081232588564.firebaseio.com",
+    "project_id": "project--6876990081232588564",
+    "storage_bucket": "project--6876990081232588564.appspot.com"
   },
   "client": [
     {
@@ -13,16 +15,20 @@
       },
       "oauth_client": [
         {
+          "client_id": "326874559147-npf13aa98ud96uostajcahqmlchrrg91.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
+          "client_id": "326874559147-c8ni1kqdbtofokuftccnkfrno0t5vgac.apps.googleusercontent.com",
+          "client_type": 3
+        },
+        {
           "client_id": "326874559147-aaucoaul57skq0u04bj1r5rq89hjh5ev.apps.googleusercontent.com",
           "client_type": 1,
           "android_info": {
             "package_name": "com.sahilpaudel.apps.facebooklogin",
             "certificate_hash": "54ed510a9b3fc509c9a3634b7e3ac28137dfef2f"
           }
-        },
-        {
-          "client_id": "326874559147-c8ni1kqdbtofokuftccnkfrno0t5vgac.apps.googleusercontent.com",
-          "client_type": 3
         }
       ],
       "api_key": [
@@ -35,11 +41,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "326874559147-npf13aa98ud96uostajcahqmlchrrg91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     },
@@ -51,6 +62,10 @@
         }
       },
       "oauth_client": [
+        {
+          "client_id": "326874559147-npf13aa98ud96uostajcahqmlchrrg91.apps.googleusercontent.com",
+          "client_type": 3
+        },
         {
           "client_id": "326874559147-9f6ig61aets11cvekfvvu2gfp8urusvs.apps.googleusercontent.com",
           "client_type": 1,
@@ -74,11 +89,16 @@
           "status": 1
         },
         "appinvite_service": {
-          "status": 1,
-          "other_platform_oauth_client": []
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "326874559147-npf13aa98ud96uostajcahqmlchrrg91.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
         },
         "ads_service": {
-          "status": 1
+          "status": 2
         }
       }
     }

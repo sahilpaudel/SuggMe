@@ -1,6 +1,7 @@
 package com.sahilpaudel.app.suggme.singlequestionpage;
 
 import android.content.Context;
+import android.content.Intent;
 import android.media.Image;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
@@ -12,6 +13,7 @@ import android.widget.TextView;
 
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
+import com.sahilpaudel.app.suggme.comments.CommentActivity;
 import com.squareup.picasso.Picasso;
 
 import org.ocpsoft.prettytime.PrettyTime;
@@ -32,6 +34,8 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
     List<AnswerFeed> answerFeeds;
     Context context;
 
+    String answeredBy;
+
     public AnswerFeedAdapter(Context context, List<AnswerFeed> answerFeeds) {
         this.answerFeeds = answerFeeds;
         this.context = context;
@@ -47,10 +51,10 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
     public void onBindViewHolder(MyViewHolder holder, int position) {
            AnswerFeed answerFeed = answerFeeds.get(position);
 
-        String answeredBy = answerFeed.first_name +" "+answerFeed.last_name;
+        answeredBy = answerFeed.first_name +" "+answerFeed.last_name;
 
         if (SharedPrefSuggMe.getInstance(context).getUserName().equals(answeredBy)) {
-            answeredBy = "By Me";
+            answeredBy = "Me";
         }
 
         String answer = answerFeed.answer_content;
@@ -61,6 +65,7 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
         String isActive = answerFeed.isActive;
         String isAnonymous = answerFeed.isAnonymous;
         String isUpdated = answerFeed.isUpdated;
+        final String question_title = answerFeed.question_title;
 
         DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
         Date time = null;
@@ -77,6 +82,19 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
         holder.tvFollowers.setText("0 follow");
         holder.tvAnswer.setText(answer);
         Picasso.with(context).load(image_url).into(holder.imageView);
+
+        //to access in anonymous class of listener
+        final String finalAnsweredOn = answeredOn;
+        holder.bt_comment.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, CommentActivity.class);
+                intent.putExtra("QUESTION_TITLE",question_title);
+                intent.putExtra("ANSWERED_BY", answeredBy);
+                intent.putExtra("ANSWERED_ON", finalAnsweredOn);
+                context.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -89,9 +107,9 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
         TextView tvAnsweredBy, tvAnsweredOn, tvFollowers, tvAnswer;
         Button bt_upvote, bt_comment;
         ImageView imageView;
+
         public MyViewHolder(View itemView) {
             super(itemView);
-
             tvAnsweredBy = (TextView)itemView.findViewById(R.id.answeredByName);
             tvAnsweredOn = (TextView)itemView.findViewById(R.id.answeredOn);
             tvFollowers = (TextView)itemView.findViewById(R.id.follow);

@@ -18,8 +18,12 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.facebook.AccessTokenTracker;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.mainquestionpage.MainFragment;
+import com.sahilpaudel.app.suggme.notifications.NotificationFragment;
+import com.sahilpaudel.app.suggme.profile.FragmentProfile;
+import com.sahilpaudel.app.suggme.profile.ProfilePage;
 import com.squareup.picasso.Picasso;
 
 public class MainActivity extends AppCompatActivity
@@ -29,6 +33,7 @@ public class MainActivity extends AppCompatActivity
     TextView userName,showAddress;
 
     GetUserAddress getUserAddress;
+    AccessTokenTracker accessTokenTracker;
 
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -107,21 +112,35 @@ public class MainActivity extends AppCompatActivity
     public boolean onNavigationItemSelected(MenuItem item) {
         // Handle navigation view item clicks here.
         int id = item.getItemId();
+        Fragment fragment;
+        FragmentTransaction transaction;
 
-        if (id == R.id.nav_camera) {
-            startActivity(new Intent(this, RichTextEditor.class));
-        } else if (id == R.id.nav_gallery) {
-
-        } else if (id == R.id.nav_slideshow) {
-
+        if (id == R.id.nav_home) {
+            fragment = new MainFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack("main_fragment");
+            transaction.commit();
+        } else if (id == R.id.nav_profile) {
+//            fragment = new FragmentProfile();
+//            transaction = getSupportFragmentManager().beginTransaction();
+//            transaction.replace(R.id.contentFragment, fragment);
+//            transaction.addToBackStack("user_profile");
+//            transaction.commit();
+            startActivity(new Intent(this, ProfilePage.class));
+        } else if (id == R.id.nav_notifications) {
+            fragment = new NotificationFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack("notification");
+            transaction.commit();
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
 
-        } else if (id == R.id.nav_send) {
+        } else if (id == R.id.nav_logout) {
 
         }
-
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);
         return true;

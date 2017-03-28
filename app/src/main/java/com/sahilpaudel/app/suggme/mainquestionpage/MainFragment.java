@@ -23,6 +23,7 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -45,11 +46,13 @@ import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.RecyclerTouchListener;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
+import com.sahilpaudel.app.suggme.singlequestionpage.AnswerActivity;
 import com.sahilpaudel.app.suggme.singlequestionpage.SingleQuestionFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
+import org.w3c.dom.Text;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -95,6 +98,7 @@ public class MainFragment extends Fragment {
     String country;
 
     String questionAddress;
+    TextView currentLocation;
 
     private final static int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
 
@@ -111,12 +115,11 @@ public class MainFragment extends Fragment {
 
         getUserAddress = new GetUserAddress(getActivity());
         getUserAddress.executeGPS();
-//        Toast.makeText(getActivity(), getUserAddress.getCity(), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(), getUserAddress.getState(), Toast.LENGTH_SHORT).show();
-//        Toast.makeText(getActivity(), getUserAddress.getCountry(), Toast.LENGTH_SHORT).show();
+
         city = getUserAddress.getCity();
         state = getUserAddress.getState();
         country = getUserAddress.getCountry();
+        questionAddress = city+", "+state+", "+country;
 
         swipeToRefreshQuestion = (SwipeRefreshLayout)view.findViewById(R.id.swipeToRefreshQuestion);
 
@@ -199,25 +202,33 @@ public class MainFragment extends Fragment {
                         @Override
                         public void onClick(View view, int position) {
                             //fragment to display single feed in one page
-                            Fragment fragment = new SingleQuestionFragment();
+                            //Fragment fragment = new SingleQuestionFragment();
                             QuestionFeed feeds = question_feed.get(position);
                             String question = feeds.quest_title;
                             String question_id = feeds.question_id;
                             String askedOn = feeds.askedOn;
                             String answercount = feeds.answerCount;
-                            Bundle args = new Bundle();
-                            args.putString("QID",question_id);
-                            args.putString("CONTENT",question);
-                            args.putString("DATE",askedOn);
-                            args.putString("ANSC",answercount);
-                            fragment.setArguments(args);
 
-                            if(fragment != null) {
-                                FragmentTransaction transaction = getFragmentManager().beginTransaction();
-                                transaction.replace(R.id.contentFragment, fragment);
-                                transaction.addToBackStack(null);
-                                transaction.commit();
-                            }
+                            Intent intent = new Intent(getActivity(), AnswerActivity.class);
+                            intent.putExtra("QID",question_id);
+                            intent.putExtra("CONTENT",question);
+                            intent.putExtra("DATE",askedOn);
+                            intent.putExtra("ANSC",answercount);
+                            startActivity(intent);
+
+//                            Bundle args = new Bundle();
+//                            args.putString("QID",question_id);
+//                            args.putString("CONTENT",question);
+//                            args.putString("DATE",askedOn);
+//                            args.putString("ANSC",answercount);
+//                            fragment.setArguments(args);
+
+//                            if(fragment != null) {
+//                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
+//                                transaction.replace(R.id.contentFragment, fragment);
+//                                transaction.addToBackStack("answerpage");
+//                                transaction.commit();
+//                            }
                         }
                         @Override
                         public void onLongClick(View view, int position) {
@@ -260,7 +271,7 @@ public class MainFragment extends Fragment {
         try {
             intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
                     .build(getActivity());
-            startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            //startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
 
         }catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e){
             Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
@@ -315,6 +326,16 @@ public class MainFragment extends Fragment {
             }
         });
 
+        //select location
+        currentLocation = (TextView)dialogView.findViewById(R.id.currentLocation);
+                 currentLocation.setText(questionAddress);
+        Button changeLocation = (Button)dialogView.findViewById(R.id.changeLocation);
+        changeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            }
+        });
         Button btAskQuestion = (Button)dialogView.findViewById(R.id.ask_question_button);
         btAskQuestion.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -364,9 +385,9 @@ public class MainFragment extends Fragment {
                     args.putString("ANSC",answerCount);
                     fragment.setArguments(args);
                     if(fragment != null) {
-                        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
                         transaction.replace(R.id.contentFragment, fragment);
-                        transaction.addToBackStack(null);
+                        transaction.addToBackStack("answerpage");
                         transaction.commit();
                     }
                     b.dismiss();
@@ -446,7 +467,9 @@ public class MainFragment extends Fragment {
         if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
             if (resultCode == RESULT_OK) {
                 Place place = PlaceAutocomplete.getPlace(getActivity(), data);
-               questionAddress = place.getAddress().toString();
+                questionAddress = place.getAddress().toString();
+                currentLocation.setText(questionAddress);
+                Log.i("PLACE", questionAddress);
             } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
                 Status status = PlaceAutocomplete.getStatus(getActivity(), data);
                 // TODO: Handle the error.
@@ -457,5 +480,7 @@ public class MainFragment extends Fragment {
             }
         }
     }
+
+
 
 }

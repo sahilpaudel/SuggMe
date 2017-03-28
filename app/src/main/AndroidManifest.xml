@@ -20,7 +20,7 @@
             android:value="@integer/google_play_services_version" />
         <meta-data
             android:name="com.google.android.geo.API_KEY"
-            android:value="AIzaSyD0eSWla2Qfp6PS37T_BtA_JFBRYNgihAA"/>
+            android:value="AIzaSyD0eSWla2Qfp6PS37T_BtA_JFBRYNgihAA" />
 
         <activity
             android:name="com.facebook.CustomTabActivity"
@@ -50,7 +50,10 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".MainActivity"/>
-        <activity android:name=".RichTextEditor"/>
+        <activity android:name=".MainActivity" />
+        <activity android:name=".RichTextEditor" />
+        <activity android:name=".singlequestionpage.AnswerActivity" />
+        <activity android:name=".comments.CommentActivity"></activity>
     </application>
+
 </manifest>

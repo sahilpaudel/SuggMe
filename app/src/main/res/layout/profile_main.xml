@@ -30,11 +30,12 @@
         android:layout_height="40dp"
         android:layout_alignParentEnd="true"
         android:background="@drawable/editorange"/>
+
     <de.hdodenhof.circleimageview.CircleImageView
         android:id="@+id/profileimage"
         android:layout_width="150dp"
         android:layout_height="150dp"
-        android:src="@drawable/myprofile"
+        android:src="@drawable/com_facebook_profile_picture_blank_square"
         android:layout_marginTop="50dp"
         android:layout_centerHorizontal="true"
         app:border_color="#ffffff"
@@ -45,7 +46,7 @@
         android:layout_below="@+id/profileimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Sakshi Verma"
+        android:text="FirstName LastName"
         android:textStyle="bold"
         android:layout_centerHorizontal="true"
         android:textSize="25sp"
@@ -57,7 +58,7 @@
         android:layout_below="@+id/name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="  Jalandhar"
+        android:text=" Jalandhar"
         android:textStyle="bold"
         android:drawableLeft="@drawable/loc"
         android:layout_centerHorizontal="true"

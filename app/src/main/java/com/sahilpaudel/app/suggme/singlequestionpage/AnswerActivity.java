@@ -1,27 +1,20 @@
 package com.sahilpaudel.app.suggme.singlequestionpage;
 
-
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
-import android.content.DialogInterface;
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.text.Editable;
-import android.text.TextWatcher;
 import android.util.Log;
-import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -37,13 +30,11 @@ import com.sahilpaudel.app.suggme.Config;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.RecyclerTouchListener;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
-import com.sahilpaudel.app.suggme.mainquestionpage.QuestionFeedAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 import org.ocpsoft.prettytime.PrettyTime;
-import org.w3c.dom.Text;
 
 import java.sql.Timestamp;
 import java.text.DateFormat;
@@ -52,16 +43,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Locale;
 import java.util.Map;
 
-/**
- * A simple {@link Fragment} subclass.
- */
-public class SingleQuestionFragment extends Fragment {
+public class AnswerActivity extends AppCompatActivity {
 
-    View view;
     ProgressDialog progress;
     ArrayList<AnswerFeed> answerFeeds;
     AnswerFeedAdapter answerFeedAdapter;
@@ -91,27 +77,31 @@ public class SingleQuestionFragment extends Fragment {
     //refresher
     SwipeRefreshLayout swipeRefreshLayoutAnswer;
 
-    public SingleQuestionFragment() {
-        // Required empty public constructor
-    }
-
+    ImageView imageViewClose;
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container,
-                             Bundle savedInstanceState) {
-        // Inflate the layout for this fragment
-        view = inflater.inflate(R.layout.fragment_single_question, container, false);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_answer);
 
-        swipeRefreshLayoutAnswer = (SwipeRefreshLayout)view.findViewById(R.id.swipeToRefreshAnswer);
+        //implement close activity on click
+        imageViewClose = (ImageView)findViewById(R.id.closeActivity);
+        imageViewClose.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
 
-
-        recyclerViewAnswer = (RecyclerView)view.findViewById(R.id.answerFeedRecycler);
-        tvQuestion = (TextView)view.findViewById(R.id.questionContent);
-        tvAskedOn = (TextView)view.findViewById(R.id.askedDate);
-        tvAnswerCount = (TextView)view.findViewById(R.id.totalAnswerCount);
-        btWriteAnswer = (Button)view.findViewById(R.id.writeAnswer);
-        alreadyAnsweredCard = (CardView)view.findViewById(R.id.ifAlreadyWrittenCard);
-        tvalreadyAnswered = (TextView)view.findViewById(R.id.ifAlreadyWritten);
+        //to refresh
+        swipeRefreshLayoutAnswer = (SwipeRefreshLayout)findViewById(R.id.swipeToRefreshAnswer);
+        recyclerViewAnswer = (RecyclerView)findViewById(R.id.answerFeedRecycler);
+        tvQuestion = (TextView)findViewById(R.id.questionContent);
+        tvAskedOn = (TextView)findViewById(R.id.askedDate);
+        tvAnswerCount = (TextView)findViewById(R.id.totalAnswerCount);
+        btWriteAnswer = (Button)findViewById(R.id.writeAnswer);
+        alreadyAnsweredCard = (CardView)findViewById(R.id.ifAlreadyWrittenCard);
+        tvalreadyAnswered = (TextView)findViewById(R.id.ifAlreadyWritten);
 
         //edit  answer
         tvalreadyAnswered.setOnClickListener(new View.OnClickListener() {
@@ -122,7 +112,7 @@ public class SingleQuestionFragment extends Fragment {
         });
 
         //get current userId
-        currentUserId = SharedPrefSuggMe.getInstance(getActivity()).getUserId();
+        currentUserId = SharedPrefSuggMe.getInstance(AnswerActivity.this).getUserId();
         //get current system time
         currentTime = timestamp.toString();
 
@@ -133,10 +123,10 @@ public class SingleQuestionFragment extends Fragment {
             }
         });
 
-        final String question_id = getArguments().getString("QID");
-        String question_content = getArguments().getString("CONTENT");
-        String question_date = getArguments().getString("DATE");
-        String answer_count = getArguments().getString("ANSC");
+        final String question_id = getIntent().getStringExtra("QID");
+        String question_content = getIntent().getStringExtra("CONTENT");
+        String question_date = getIntent().getStringExtra("DATE");
+        String answer_count = getIntent().getStringExtra("ANSC");
 
         //assign question id to temp variable to write answer for this
         //question id
@@ -153,22 +143,22 @@ public class SingleQuestionFragment extends Fragment {
         });
 
         //beautifying the time display
-                try {
-                    DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
-                    Date time =  df.parse(question_date);
-                    PrettyTime p = new PrettyTime();
-                    question_date = "Asked "+p.format(time);
-                } catch (ParseException e) {
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                }
+        try {
+            DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
+            Date time =  df.parse(question_date);
+            PrettyTime p = new PrettyTime();
+            question_date = "Asked "+p.format(time);
+        } catch (ParseException e) {
+            Toast.makeText(AnswerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
         //end of beautifying the time display
 
-                tvQuestion.setText(question_content);
-                tvAskedOn.setText(question_date);
-                tvAnswerCount.setText(answer_count+" Answers");
+        tvQuestion.setText(question_content);
+        tvAskedOn.setText(question_date);
+        tvAnswerCount.setText(answer_count+" Answers");
 
-        getAnswerQueue = Volley.newRequestQueue(getActivity());
-        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the feeds", false, false);
+        getAnswerQueue = Volley.newRequestQueue(AnswerActivity.this);
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
         answerFeeds = new ArrayList<>();
         //Answers
         getAnswerRequest = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERS, new Response.Listener<String>() {
@@ -189,6 +179,7 @@ public class SingleQuestionFragment extends Fragment {
                         feed.answer_content = object.getString("answer_content");
                         feed.entryOn = object.getString("entryOn");
                         feed.user_id = object.getString("user_id");
+                        feed.question_title = tempQuestionContent;
 
                         //check if user has already answered the query
                         if (feed.user_id.equals(currentUserId)) {
@@ -206,8 +197,8 @@ public class SingleQuestionFragment extends Fragment {
                         feed.isUpdated = object.getString("isUpdated");
                         answerFeeds.add(feed);
                     }
-                    answerFeedAdapter = new AnswerFeedAdapter(getActivity(),answerFeeds);
-                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
+                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
+                    RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(AnswerActivity.this);
                     recyclerViewAnswer.setLayoutManager(layoutManager);
                     recyclerViewAnswer.setItemAnimator(new DefaultItemAnimator());
                     recyclerViewAnswer.setAdapter(answerFeedAdapter);
@@ -222,7 +213,7 @@ public class SingleQuestionFragment extends Fragment {
                             //make new request
                             getAnswerQueue.add(getAnswerRequest);
                             //fil with new data
-                            answerFeedAdapter = new AnswerFeedAdapter(getActivity(),answerFeeds);
+                            answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
                             recyclerViewAnswer.setAdapter(answerFeedAdapter);
                             answerFeedAdapter.notifyDataSetChanged();
                         }
@@ -234,7 +225,7 @@ public class SingleQuestionFragment extends Fragment {
                             android.R.color.holo_orange_light,
                             android.R.color.holo_red_light);
 
-                    recyclerViewAnswer.addOnItemTouchListener(new RecyclerTouchListener(getActivity(), recyclerViewAnswer, new ClickListener() {
+                    recyclerViewAnswer.addOnItemTouchListener(new RecyclerTouchListener(AnswerActivity.this, recyclerViewAnswer, new ClickListener() {
                         @Override
                         public void onClick(View view, int position) {
 
@@ -247,7 +238,7 @@ public class SingleQuestionFragment extends Fragment {
                     }));
 
                 } catch (JSONException e) {
-                    Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnswerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
                     progress.dismiss();
                 }
 
@@ -266,18 +257,19 @@ public class SingleQuestionFragment extends Fragment {
             }
         };
         getAnswerQueue.add(getAnswerRequest);
-        return view;
+        
     }
+
 
     //alert dialog to write answer
     private void showAnswerDialog() {
 
-        final AlertDialog.Builder writeAnswerDialog = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        final AlertDialog.Builder writeAnswerDialog = new AlertDialog.Builder(AnswerActivity.this);
+        LayoutInflater inflater = AnswerActivity.this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.write_answer_dialog,null);
         writeAnswerDialog.setView(dialogView);
         final TextView showQuestion = (TextView)dialogView.findViewById(R.id.dialog_question_tag);
-                       showQuestion.setText(tempQuestionContent);
+        showQuestion.setText(tempQuestionContent);
         final EditText writeAnswer = (EditText)dialogView.findViewById(R.id.dialog_write_answer);
         final Button askButton = (Button)dialogView.findViewById(R.id.dialog_answer_button);
         final Button cancelButton = (Button)dialogView.findViewById(R.id.dialog_cancel_button);
@@ -287,7 +279,7 @@ public class SingleQuestionFragment extends Fragment {
             @Override
             public void onClick(View view) {
                 String content = writeAnswer.getText().toString();
-                String userid = SharedPrefSuggMe.getInstance(getActivity()).getUserId();
+                String userid = SharedPrefSuggMe.getInstance(AnswerActivity.this).getUserId();
                 //check if content is blank.
                 if (content.isEmpty()) {
                     writeAnswer.setError("It cannot be empty");
@@ -300,7 +292,7 @@ public class SingleQuestionFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
                 b.dismiss();
             }
         });
@@ -310,8 +302,8 @@ public class SingleQuestionFragment extends Fragment {
     //to create answers
     private void createAnswer (final String content, final String user_id) {
 
-        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the feeds", false, false);
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_ANSWERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -324,13 +316,13 @@ public class SingleQuestionFragment extends Fragment {
                     //make new volley request
                     getAnswerQueue.add(getAnswerRequest);
                     //call adapter class
-                    answerFeedAdapter = new AnswerFeedAdapter(getActivity(),answerFeeds);
+                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
                     //set adapter
                     recyclerViewAnswer.setAdapter(answerFeedAdapter);
                     //populate the adapter;
                     answerFeedAdapter.notifyDataSetChanged();
                 }else{
-                    Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
+                    Toast.makeText(AnswerActivity.this, response, Toast.LENGTH_LONG).show();
                     progress.dismiss();
                 }
             }
@@ -338,7 +330,7 @@ public class SingleQuestionFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progress.dismiss();
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -361,9 +353,9 @@ public class SingleQuestionFragment extends Fragment {
     //to edit answers
     private void showUpdateDialog() {
 
-        Toast.makeText(getActivity(), "Update Dialog", Toast.LENGTH_SHORT).show();
-        final AlertDialog.Builder writeAnswerDialog = new AlertDialog.Builder(getActivity());
-        LayoutInflater inflater = getActivity().getLayoutInflater();
+        Toast.makeText(AnswerActivity.this, "Update Dialog", Toast.LENGTH_SHORT).show();
+        final AlertDialog.Builder writeAnswerDialog = new AlertDialog.Builder(AnswerActivity.this);
+        LayoutInflater inflater = AnswerActivity.this.getLayoutInflater();
         final View dialogView = inflater.inflate(R.layout.write_answer_dialog,null);
         writeAnswerDialog.setView(dialogView);
         final TextView showQuestion = (TextView)dialogView.findViewById(R.id.dialog_question_tag);
@@ -380,7 +372,7 @@ public class SingleQuestionFragment extends Fragment {
             public void onClick(View view) {
                 //update the string
                 String updatedAnswer = writeAnswer.getText().toString();
-                Toast.makeText(getActivity(), updatedAnswer, Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, updatedAnswer, Toast.LENGTH_SHORT).show();
                 updateAnswer(tempAnswerID, updatedAnswer, "0","1");
                 b.dismiss();
             }
@@ -388,7 +380,7 @@ public class SingleQuestionFragment extends Fragment {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(getActivity(), "Cancel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
                 b.dismiss();
             }
         });
@@ -398,8 +390,8 @@ public class SingleQuestionFragment extends Fragment {
 
     private void updateAnswer (final String ans_id, final String content,final String isAnonymous, final String isActive) {
 
-        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the feeds", false, false);
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_UPDATE_ANSWERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -411,14 +403,14 @@ public class SingleQuestionFragment extends Fragment {
                     //make new volley request
                     getAnswerQueue.add(getAnswerRequest);
                     //call adapter class
-                    answerFeedAdapter = new AnswerFeedAdapter(getActivity(),answerFeeds);
+                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
                     //set adapter
                     recyclerViewAnswer.setAdapter(answerFeedAdapter);
                     //populate the adapter;
                     answerFeedAdapter.notifyDataSetChanged();
                     //progress.dismiss();
                 }else{
-                    Toast.makeText(getActivity(), response, Toast.LENGTH_LONG).show();
+                    Toast.makeText(AnswerActivity.this, response, Toast.LENGTH_LONG).show();
                     progress.dismiss();
                 }
             }
@@ -426,7 +418,7 @@ public class SingleQuestionFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progress.dismiss();
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -446,8 +438,8 @@ public class SingleQuestionFragment extends Fragment {
 
     private void GetAnswerByUserId() {
 
-        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the updater", false, false);
-        RequestQueue queue = Volley.newRequestQueue(getActivity());
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the updater", false, false);
+        RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERBY_USERID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -461,15 +453,15 @@ public class SingleQuestionFragment extends Fragment {
                     showUpdateDialog();
                 }catch (Exception e){
                     progress.dismiss();
-                    Toast.makeText(getActivity(), "At GETANSWERBYID : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(AnswerActivity.this, "At GETANSWERBYID : "+e.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("GETBYID",e.getMessage());
-            }
+                }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 progress.dismiss();
-                Toast.makeText(getContext(), error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

@@ -42,10 +42,9 @@ dependencies {
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.android.support:support-v4:25.2.0'
     compile 'de.hdodenhof:circleimageview:1.2.1'
-    //pretty time
     compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
-    //rich text editor
     compile 'jp.wasabeef:richeditor-android:1.2.1'
+    compile 'com.google.firebase:firebase-messaging:10.2.0'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
