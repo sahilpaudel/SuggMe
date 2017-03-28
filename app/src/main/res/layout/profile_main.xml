@@ -10,7 +10,7 @@
     <android.support.design.widget.AppBarLayout
         android:id="@+id/main_appbar"
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="280dp"
         android:theme="@style/ThemeOverlay.AppCompat.Dark.ActionBar">
 
         <android.support.design.widget.CollapsingToolbarLayout
@@ -84,108 +84,147 @@
             android:layout_height="wrap_content"
             android:id="@+id/relativetab1">
 
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
                 <TextView
+                    android:layout_marginTop="15dp"
                     android:text="24"
                     android:textStyle="bold"
                     android:textColor="@color/textme"
-                    android:textSize="40sp"
+                    android:textSize="24sp"
                     android:gravity="center_horizontal"
                     android:id="@+id/no_suggestion"
                     android:layout_height="wrap_content"
                     android:paddingTop="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
-                    android:layout_weight="1"
+                    android:layout_marginLeft="35dp"
                     android:background="#f5f5f5"
                     android:layout_width="wrap_content" />
 
                 <TextView
+
+                    android:layout_toRightOf="@+id/no_suggestion"
                     android:text="24"
                     android:textStyle="bold"
                     android:textColor="@color/textme"
-                    android:textSize="40sp"
+                    android:textSize="24sp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginLeft="54.6dp"
                     android:gravity="center_horizontal"
                     android:id="@+id/no_questions"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_weight="1"
                     android:paddingTop="10dp"
                     android:paddingLeft="10dp"
                     android:paddingRight="10dp"
                     android:background="#F5F5F5"/>
 
-
-            </LinearLayout>
-        </RelativeLayout>
-
-            <RelativeLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:id="@+id/relativetab2"
-                android:layout_below="@+id/relativetab1">
-
-                <LinearLayout
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/nosugg"
+                    android:layout_marginLeft="17dp"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                  >
-                    <TextView
-                        android:textColor="@color/textme"
-                        android:text="Suggestions"
-                        android:textSize="17sp"
-                        android:textStyle="bold"
-                        android:gravity="center_horizontal"
-                        android:id="@+id/suggtext"
-                        android:layout_height="match_parent"
-                        android:layout_weight="1"
-                        android:background="#f5f5f5"
-                        android:layout_width="0dp"
-                        android:paddingTop="1dp"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:paddingBottom="2dp"
-                        />
-
-                    <TextView
-                        android:paddingTop="1dp"
-                        android:paddingLeft="1dp"
-                        android:paddingRight="1dp"
-                        android:textStyle="bold"
-                        android:paddingBottom="2dp"
-                        android:textColor="@color/textme"
-                        android:text="Questions"
-                        android:textSize="17sp"
-                        android:gravity="center_horizontal"
-                        android:id="@+id/questext"
-                        android:layout_width="0dp"
-                        android:layout_height="wrap_content"
-                        android:layout_weight="1"
-                        android:background="#f5f5f5"/>
-                </LinearLayout>
-            </RelativeLayout>
-            <RelativeLayout
-                android:id="@+id/relativeinfo"
-                android:layout_below="@id/relativetab2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
+                    android:text="Suggestions"
+                    android:layout_below="@+id/no_suggestion"
+                    />
+                <TextView
+                    android:layout_below="@+id/no_questions"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Questions"
+                    android:layout_toRightOf="@+id/nosugg"
+                    android:layout_marginLeft="37dp"/>
                 <Button
-
+                    android:id="@+id/chatme"
                     android:textColor="@color/alltext"
                     android:background="@drawable/roundedbutton2"
-                    android:layout_marginTop="40dp"
-                    android:padding="20dp"
+                    android:layout_marginTop="24dp"
+                    android:padding="6dp"
+                    android:layout_marginLeft="80dp"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_centerHorizontal="true"
                     android:text="Message"
-                    android:layout_weight="1"
+                    android:layout_toRightOf="@+id/no_questions"
+                    />
+
+        </RelativeLayout>
+
+            <RelativeLayout
+                android:id="@+id/relativeinfo"
+                android:layout_below="@id/relativetab1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <View
+                    android:id="@+id/viewab"
+                    android:layout_width="match_parent"
+                    android:layout_height="1dp"
+                    android:layout_marginTop="18dp"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginRight="20dp"
+                    android:background="@color/textme"
+                    />
+                <EditText
+                    android:id="@+id/ageabout"
+                    android:textSize="16sp"
+                    android:layout_marginTop="10dp"
+                    android:textColor="@color/textme"
+                    android:layout_below="@+id/viewab"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Age :"
+                    />
+                <TextView
+                    android:text="24"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="22dp"
+                    android:layout_toRightOf="@+id/ageabout"
+                    android:layout_below="@+id/viewab"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+
+                <EditText
+                    android:id="@+id/studiesat"
+                    android:textSize="16sp"
+                    android:layout_marginTop="-10dp"
+                    android:textColor="@color/textme"
+                    android:layout_below="@+id/ageabout"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Studies at :"
+                    />
+                <TextView
+                    android:text="lovely"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@+id/studiesat"
+                    android:layout_below="@+id/ageabout"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    />
+                <EditText
+                    android:id="@+id/knowsbest"
+                    android:textSize="16sp"
+                    android:layout_marginTop="-9dp"
+                    android:textColor="@color/textme"
+                    android:layout_below="@+id/studiesat"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Knows Best About :"
+                    />
+                <TextView
+                    android:text="Karnataka"
+                    android:layout_marginLeft="20dp"
+                    android:layout_marginTop="3dp"
+                    android:layout_toRightOf="@+id/knowsbest"
+                    android:layout_below="@+id/studiesat"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
                     />
             </RelativeLayout>
             <RelativeLayout
-                android:layout_marginTop="35dp"
+                android:layout_marginTop="18dp"
                 android:layout_below="@+id/relativeinfo"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"

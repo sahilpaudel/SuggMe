@@ -11,7 +11,7 @@ import android.support.v4.app.FragmentPagerAdapter;
 
 public class FragmentProfileAdapter  extends FragmentPagerAdapter {
     final int PAGE_COUNT = 2;
-    private String tabTitles[] = new String[] { "About Me", "Question"};
+    private String tabTitles[] = new String[] {"Answers", "Questions"};
     private Context context;
 
     public FragmentProfileAdapter(FragmentManager fm, Context context) {
