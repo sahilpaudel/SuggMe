@@ -3,14 +3,17 @@ package com.sahilpaudel.app.suggme.singlequestionpage;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.util.Log;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,6 +30,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sahilpaudel.app.suggme.ClickListener;
 import com.sahilpaudel.app.suggme.Config;
+import com.sahilpaudel.app.suggme.LoginActivity;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.RecyclerTouchListener;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
@@ -74,11 +78,15 @@ public class AnswerActivity extends AppCompatActivity {
     //application user_id
     String currentUserId;
 
+    String question_id;
+    String question_content;
+    String question_date;
+
     //refresher
     SwipeRefreshLayout swipeRefreshLayoutAnswer;
 
     ImageView imageViewClose;
-
+    FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -89,6 +97,7 @@ public class AnswerActivity extends AppCompatActivity {
         imageViewClose.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
+                finish();
                 finish();
             }
         });
@@ -123,10 +132,9 @@ public class AnswerActivity extends AppCompatActivity {
             }
         });
 
-        final String question_id = getIntent().getStringExtra("QID");
-        String question_content = getIntent().getStringExtra("CONTENT");
-        String question_date = getIntent().getStringExtra("DATE");
-        String answer_count = getIntent().getStringExtra("ANSC");
+        question_id = getIntent().getStringExtra("QID");
+        question_content = getIntent().getStringExtra("CONTENT");
+        question_date = getIntent().getStringExtra("DATE");
 
         //assign question id to temp variable to write answer for this
         //question id
@@ -149,18 +157,14 @@ public class AnswerActivity extends AppCompatActivity {
             PrettyTime p = new PrettyTime();
             question_date = "Asked "+p.format(time);
         } catch (ParseException e) {
-            Toast.makeText(AnswerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
+            //Toast.makeText(AnswerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
         //end of beautifying the time display
-
-        tvQuestion.setText(question_content);
-        tvAskedOn.setText(question_date);
-        tvAnswerCount.setText(answer_count+" Answers");
 
         getAnswerQueue = Volley.newRequestQueue(AnswerActivity.this);
         progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
         answerFeeds = new ArrayList<>();
-        //Answers
+        //to get Answers which are active
         getAnswerRequest = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
@@ -169,7 +173,6 @@ public class AnswerActivity extends AppCompatActivity {
                 progress.dismiss();
                 try {
                     JSONArray array = new JSONArray(response);
-
                     for (int i = 0; i < array.length(); i++) {
 
                         JSONObject object = array.getJSONObject(i);
@@ -188,7 +191,6 @@ public class AnswerActivity extends AppCompatActivity {
                             btWriteAnswer.setVisibility(View.INVISIBLE);
                             alreadyAnsweredCard.setVisibility(View.VISIBLE);
                         }
-
                         feed.first_name = object.getString("first_name");
                         feed.last_name = object.getString("last_name");
                         feed.image_url = object.getString("image_url");
@@ -197,7 +199,8 @@ public class AnswerActivity extends AppCompatActivity {
                         feed.isUpdated = object.getString("isUpdated");
                         answerFeeds.add(feed);
                     }
-                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
+
+                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds,transaction, question_id, question_content, question_date);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(AnswerActivity.this);
                     recyclerViewAnswer.setLayoutManager(layoutManager);
                     recyclerViewAnswer.setItemAnimator(new DefaultItemAnimator());
@@ -213,7 +216,7 @@ public class AnswerActivity extends AppCompatActivity {
                             //make new request
                             getAnswerQueue.add(getAnswerRequest);
                             //fil with new data
-                            answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
+                            answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds,transaction, question_id, question_content, question_date);
                             recyclerViewAnswer.setAdapter(answerFeedAdapter);
                             answerFeedAdapter.notifyDataSetChanged();
                         }
@@ -257,6 +260,10 @@ public class AnswerActivity extends AppCompatActivity {
             }
         };
         getAnswerQueue.add(getAnswerRequest);
+
+        tvQuestion.setText(question_content);
+        tvAskedOn.setText(question_date);
+        tvAnswerCount.setText("Answers");
         
     }
 
@@ -275,6 +282,7 @@ public class AnswerActivity extends AppCompatActivity {
         final Button cancelButton = (Button)dialogView.findViewById(R.id.dialog_cancel_button);
         final AlertDialog b = writeAnswerDialog.create();
         b.setCanceledOnTouchOutside(false);
+
         askButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
@@ -316,7 +324,7 @@ public class AnswerActivity extends AppCompatActivity {
                     //make new volley request
                     getAnswerQueue.add(getAnswerRequest);
                     //call adapter class
-                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
+                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds,transaction, question_id, question_content, question_date);
                     //set adapter
                     recyclerViewAnswer.setAdapter(answerFeedAdapter);
                     //populate the adapter;
@@ -387,7 +395,7 @@ public class AnswerActivity extends AppCompatActivity {
         b.show();
     }
 
-
+    //updating the answer
     private void updateAnswer (final String ans_id, final String content,final String isAnonymous, final String isActive) {
 
         progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
@@ -403,7 +411,7 @@ public class AnswerActivity extends AppCompatActivity {
                     //make new volley request
                     getAnswerQueue.add(getAnswerRequest);
                     //call adapter class
-                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds);
+                    answerFeedAdapter = new AnswerFeedAdapter(AnswerActivity.this,answerFeeds,transaction, question_id, question_content, question_date);
                     //set adapter
                     recyclerViewAnswer.setAdapter(answerFeedAdapter);
                     //populate the adapter;
@@ -472,6 +480,33 @@ public class AnswerActivity extends AppCompatActivity {
                 return params;
             }
         };
+        queue.add(request);
+    }
+
+    //method to check if user has already written an answer of given question id
+    private void isAnswerWritten(final String question_id) {
+
+        final ProgressDialog progress = ProgressDialog.show(AnswerActivity.this, "Please wait.", "Checking if already written..", false, false);
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_ALREADY_WRITTEN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                progress.dismiss();
+
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String,String> params = new HashMap<>();
+                params.put("question_id",question_id);
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }
 

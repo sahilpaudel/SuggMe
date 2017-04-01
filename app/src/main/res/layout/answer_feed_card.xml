@@ -44,16 +44,14 @@
                 android:layout_marginTop="5dp"
                 android:layout_marginRight="10dp"/>
 
-            <TextView
-                android:id="@+id/follow"
-                android:text="0 follow"
-                android:textStyle="bold"
+            <ImageView
+                android:id="@+id/ivShowMore"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/answeredByName"
-                android:layout_marginTop="5dp"
                 android:layout_alignParentRight="true"
-                android:layout_marginRight="40dp"/>
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="10dp"
+                android:src="@drawable/dots_vertical"/>
 
             <TextView
                 android:id="@+id/answers"
@@ -61,6 +59,7 @@
                 android:layout_height="wrap_content"
                 android:layout_below="@id/answeredByImage"
                 android:layout_marginLeft="5dp"
+                android:maxLength="5000"
                 android:layout_marginRight="5dp"
                 android:text="@string/demotxt"
                 android:padding="5dp"/>

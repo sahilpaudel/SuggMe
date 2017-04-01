@@ -51,9 +51,10 @@
                 android:layout_below="@id/mainQuestion"
                 android:gravity="center"
                 android:textColor="@color/textme"
-                android:layout_alignParentRight="true"
                 android:layout_marginTop="6dp"
+                android:layout_toRightOf="@id/main_question_date"
                 android:layout_marginRight="10dp"/>
+
         </RelativeLayout>
     </android.support.v7.widget.CardView>
 </LinearLayout>

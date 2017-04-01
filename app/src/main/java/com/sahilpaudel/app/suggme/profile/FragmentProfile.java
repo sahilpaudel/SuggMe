@@ -39,7 +39,6 @@ public class FragmentProfile extends Fragment {
         View view = inflater.inflate(R.layout.fragment_profile, container, false);
         view.setBackgroundResource(R.drawable.roundedbutton2);
 
-
         return view;
     }
 }

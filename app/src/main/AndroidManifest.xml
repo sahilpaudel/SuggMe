@@ -53,7 +53,8 @@
         <activity android:name=".MainActivity" />
         <activity android:name=".RichTextEditor" />
         <activity android:name=".singlequestionpage.AnswerActivity" />
-        <activity android:name=".comments.CommentActivity"></activity>
+        <activity android:name=".comments.CommentActivity" />
+        <activity android:name=".RegisterActivity"></activity>
     </application>
 
 </manifest>

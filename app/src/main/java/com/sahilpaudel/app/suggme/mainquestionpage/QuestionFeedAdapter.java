@@ -1,11 +1,14 @@
 package com.sahilpaudel.app.suggme.mainquestionpage;
 
 import android.content.Context;
+import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
 import android.view.LayoutInflater;
+import android.view.MenuInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -43,11 +46,13 @@ public class QuestionFeedAdapter extends RecyclerView.Adapter<QuestionFeedAdapte
         TextView totalResponse;
         TextView askedOn;
 
+
         public MyViewHolder(View itemView) {
             super(itemView);
             topQuestions = (TextView)itemView.findViewById(R.id.mainQuestion);
             totalResponse = (TextView)itemView.findViewById(R.id.total_answer);
             askedOn = (TextView)itemView.findViewById(R.id.main_question_date);
+
         }
     }
 
@@ -81,6 +86,7 @@ public class QuestionFeedAdapter extends RecyclerView.Adapter<QuestionFeedAdapte
         holder.topQuestions.setText(topQuestion);
         holder.askedOn.setText(askedOn);
         holder.totalResponse.setText(answerCount + " Response");
+
     }
         @Override
     public int getItemCount() {

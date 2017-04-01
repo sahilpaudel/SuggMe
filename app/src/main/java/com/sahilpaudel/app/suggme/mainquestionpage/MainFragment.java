@@ -8,7 +8,6 @@ import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.RequiresApi;
 import android.support.v4.app.Fragment;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
@@ -23,7 +22,6 @@ import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
-import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
@@ -47,12 +45,10 @@ import com.sahilpaudel.app.suggme.RecyclerTouchListener;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.singlequestionpage.AnswerActivity;
-import com.sahilpaudel.app.suggme.singlequestionpage.SingleQuestionFragment;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
-import org.w3c.dom.Text;
 
 import java.sql.Timestamp;
 import java.util.ArrayList;
@@ -207,13 +203,11 @@ public class MainFragment extends Fragment {
                             String question = feeds.quest_title;
                             String question_id = feeds.question_id;
                             String askedOn = feeds.askedOn;
-                            String answercount = feeds.answerCount;
 
                             Intent intent = new Intent(getActivity(), AnswerActivity.class);
                             intent.putExtra("QID",question_id);
                             intent.putExtra("CONTENT",question);
                             intent.putExtra("DATE",askedOn);
-                            intent.putExtra("ANSC",answercount);
                             startActivity(intent);
 
 //                            Bundle args = new Bundle();
@@ -222,7 +216,7 @@ public class MainFragment extends Fragment {
 //                            args.putString("DATE",askedOn);
 //                            args.putString("ANSC",answercount);
 //                            fragment.setArguments(args);
-
+//
 //                            if(fragment != null) {
 //                                FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
 //                                transaction.replace(R.id.contentFragment, fragment);
@@ -258,6 +252,7 @@ public class MainFragment extends Fragment {
         getQuestionQueue.add(getQuestionRequest);
         return view;
     }
+
 
     private void showQuestionDialog() {
 
@@ -376,20 +371,11 @@ public class MainFragment extends Fragment {
                         String askedBy = object.getString("user_id");
                         String answerCount = object.getString("ansc");
 
-                    //fragment to display single feed in one page
-                    Fragment fragment = new SingleQuestionFragment();
-                    Bundle args = new Bundle();
-                    args.putString("QID",question_id);
-                    args.putString("CONTENT",quest_title);
-                    args.putString("DATE",askedOn);
-                    args.putString("ANSC",answerCount);
-                    fragment.setArguments(args);
-                    if(fragment != null) {
-                        FragmentTransaction transaction = getActivity().getSupportFragmentManager().beginTransaction();
-                        transaction.replace(R.id.contentFragment, fragment);
-                        transaction.addToBackStack("answerpage");
-                        transaction.commit();
-                    }
+                    Intent intent = new Intent(getActivity(), AnswerActivity.class);
+                    intent.putExtra("QID",question_id);
+                    intent.putExtra("CONTENT",quest_title);
+                    intent.putExtra("DATE",askedOn);
+                    startActivity(intent);
                     b.dismiss();
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();

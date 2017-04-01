@@ -7,5 +7,5 @@ package com.sahilpaudel.app.suggme.comments;
 public class Comments {
     public String userName;
     public String entryOn;
-    public String Answer;
+    public String commentContent;
 }

@@ -17,7 +17,7 @@
         android:id="@+id/imageView"
     android:layout_width="80dp"
     android:layout_height="80dp"
-    android:src="@mipmap/ic_launcher"
+    android:src="@drawable/com_facebook_profile_picture_blank_square"
     android:layout_marginTop="10dp"
     app:border_color="#f5f5f5"
     app:border_width="0.5dp" />

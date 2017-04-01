@@ -11,12 +11,14 @@
     android:paddingTop="@dimen/activity_vertical_margin"
     tools:context="com.sahilpaudel.app.suggme.singlequestionpage.AnswerActivity">
 
+
     <android.support.v4.widget.SwipeRefreshLayout
         android:id="@+id/swipeToRefreshAnswer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="wrap_content">
 
         <RelativeLayout
+            android:id="@+id/rl1"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
 
@@ -62,6 +64,7 @@
                     <Button
                         android:id="@+id/writeAnswer"
                         android:text="Answer"
+                        android:layout_centerHorizontal="true"
                         android:background="@drawable/roundedfields"
                         android:layout_width="wrap_content"
                         android:layout_height="30dp"
@@ -96,7 +99,7 @@
             </android.support.v7.widget.CardView>
             <TextView
                 android:id="@+id/totalAnswerCount"
-                android:text="0 Answers"
+                android:text="Answers"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/cardViewSingleQuestion"
@@ -112,14 +115,14 @@
             </android.support.v7.widget.RecyclerView>
 
         </RelativeLayout>
-
     </android.support.v4.widget.SwipeRefreshLayout>
 
     <ImageView
         android:id="@+id/closeActivity"
-        android:layout_width="match_parent"
-        android:layout_height="40dp"
-        android:background="#e0e0e0"
-        android:layout_alignParentBottom="true"
-        android:src="@drawable/close"/>
+        android:layout_width="20dp"
+        android:layout_height="20dp"
+        android:layout_margin="6dp"
+        android:src="@drawable/cross"
+        android:layout_alignParentRight="true"/>
+
 </RelativeLayout>

@@ -7,6 +7,9 @@ import android.support.annotation.NonNull;
 import android.support.annotation.RequiresApi;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
+import android.widget.Button;
+import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
@@ -24,6 +27,7 @@ import com.facebook.FacebookException;
 import com.facebook.FacebookSdk;
 import com.facebook.GraphRequest;
 import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
 import com.facebook.login.LoginResult;
 import com.facebook.login.widget.LoginButton;
 import com.google.android.gms.auth.api.Auth;
@@ -37,6 +41,8 @@ import com.google.android.gms.common.api.OptionalPendingResult;
 import com.google.android.gms.common.api.ResultCallback;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 
+import org.json.JSONArray;
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.util.Arrays;
@@ -47,6 +53,11 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
     SignInButton gpButton;
     LoginButton fbButton;
+    Button btLogin;
+
+    EditText etUserName;
+    EditText etUserPassword;
+    TextView tvNotRegistered;
 
     CallbackManager callbackManager;
     AccessTokenTracker accessTokenTracker;
@@ -67,20 +78,28 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
         getUserAddress = new GetUserAddress(this);
         getUserAddress.executeGPS();
 
+        btLogin = (Button) findViewById(R.id.login);
+        etUserName = (EditText)findViewById(R.id.et_userName);
+        etUserPassword = (EditText)findViewById(R.id.et_password);
+        tvNotRegistered = (TextView)findViewById(R.id.textNotRegister);
+
         fbButton = (LoginButton) findViewById(R.id.bt_facebook);
         gpButton = (SignInButton) findViewById(R.id.bt_google);
         gpButton.setOnClickListener(this);
+        btLogin.setOnClickListener(this);
+        tvNotRegistered.setOnClickListener(this);
 
 
         //check whether user is logged In
         if (SharedPrefSuggMe.getInstance(this).isLoggedIn().equals("1")) {
             startActivity(new Intent(this,MainActivity.class));
+            finish();
             return;
         }else {
             Toast.makeText(this, "NOT LOGGED IN", Toast.LENGTH_SHORT).show();
         }
 
-        //start of facebook Integraion
+        //start of facebook Integration
         fbButton.setReadPermissions(Arrays.asList("public_profile, email, user_friends," +
                 "user_location,user_hometown"));
         callbackManager = CallbackManager.Factory.create();
@@ -94,9 +113,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         new GraphRequest.GraphJSONObjectCallback() {
                             @Override
                             public void onCompleted(JSONObject object, GraphResponse response) {
-
                                 try{
-
                                     String email = object.getString("email");
                                     String id = object.getString("id");
                                     String name = object.getString("name");
@@ -106,7 +123,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                                     String imageUrl = "https://graph.facebook.com/" + id + "/picture?type=large";
 
                                     SharedPrefSuggMe.getInstance(getApplicationContext()).addUserInfo(
-                                            id,fname,lname,email,"F",imageUrl
+                                            id,fname,lname,email,"F",imageUrl, gender
                                     );
                                     //check if user exist
                                     isExist(fname, lname, email, id,"F","","",gender, imageUrl);
@@ -131,13 +148,13 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         }
                     }
                 };
+
             }
 
             @Override
             public void onCancel() {
 
             }
-
             @Override
             public void onError(FacebookException error) {
                 Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
@@ -178,7 +195,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
 
             //creating session
             SharedPrefSuggMe.getInstance(getApplicationContext()).addUserInfo(
-                    gid,first_name,last_name,email,"G",profileImage
+                    gid,first_name,last_name,email,"G",profileImage,""
             );
 
             //check if user exist
@@ -229,6 +246,12 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             case R.id.bt_google :
                 GoogleSignIn();
                 break;
+            case R.id.login :
+                userLogin(etUserName.getText().toString(), etUserPassword.getText().toString());
+                break;
+            case R.id.textNotRegister :
+                startActivity(new Intent(LoginActivity.this, RegisterActivity.class));
+                break;
         }
     }
 
@@ -249,6 +272,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                 if (!response.equals("0")) {
                     SharedPrefSuggMe.getInstance(LoginActivity.this).setUserId(response);
                     startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
                 }else {
                     Toast.makeText(LoginActivity.this, "Error Occurred", Toast.LENGTH_SHORT).show();
                 }
@@ -290,6 +314,7 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
                         Toast.makeText(LoginActivity.this, "Old User", Toast.LENGTH_SHORT).show();
                         SharedPrefSuggMe.getInstance(LoginActivity.this).setUserId(response);
                         startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                        finish();
                         return;
                 }else{
                     Toast.makeText(LoginActivity.this, "New User", Toast.LENGTH_SHORT).show();
@@ -312,6 +337,61 @@ public class LoginActivity extends AppCompatActivity implements View.OnClickList
             }
         };
         queue.add(request);
+    }
+
+    //user normal login
+    private void userLogin(final String email, final String password) {
+
+        RequestQueue queue = Volley.newRequestQueue(getApplicationContext());
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_USER_LOGIN, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (!response.equals("0")) {
+                    Toast.makeText(LoginActivity.this, "Success", Toast.LENGTH_SHORT).show();
+                    try {
+                        JSONArray array = new JSONArray(response);
+                        JSONObject object = array.getJSONObject(0);
+                        String user_id = object.getString("user_id");
+                        String uniqueid = object.getString("uniqueid");
+                        String first_name = object.getString("first_name");
+                        String last_name = object.getString("last_name");
+                        String gender = object.getString("gender");
+                        String profileImage = object.getString("image_url");
+                        String email = object.getString("email");
+                        String reg_from = object.getString("reg_from");
+
+                        //creating session
+                        SharedPrefSuggMe.getInstance(getApplicationContext()).addUserInfo(
+                                uniqueid,first_name,last_name,email,reg_from,profileImage,gender
+                        );
+                        SharedPrefSuggMe.getInstance(getApplicationContext()).setUserId(user_id);
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                    startActivity(new Intent(getApplicationContext(), MainActivity.class));
+                    finish();
+
+                }else{
+                    Toast.makeText(LoginActivity.this, "User Don't Exist", Toast.LENGTH_SHORT).show();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(LoginActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> map = new HashMap<>();
+                map.put("email",email);
+                map.put("password",password);
+                return map;
+            }
+        };
+        queue.add(request);
+
     }
 
 }

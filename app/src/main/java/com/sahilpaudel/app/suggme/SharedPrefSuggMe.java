@@ -28,7 +28,7 @@ public class SharedPrefSuggMe {
         return mInstance;
     }
 
-    public boolean addUserInfo(String id, String firstName, String lastName, String email, String status, String imageUrl) {
+    public boolean addUserInfo(String id, String firstName, String lastName, String email, String status, String imageUrl, String gender) {
 
         editor = preferences.edit();
         editor.putString("ID",id);
@@ -36,6 +36,7 @@ public class SharedPrefSuggMe {
         editor.putString("LAST_NAME",lastName);
         editor.putString("EMAIL",email);
         editor.putString("STATUS",status);
+        editor.putString("GENDER",gender);
         editor.putString("IMAGE_URL",imageUrl);
         editor.putString("ISLOGGEDIN","1");
         editor.apply();
@@ -43,7 +44,7 @@ public class SharedPrefSuggMe {
     }
 
     public String getImageUrl() {
-        return preferences.getString("IMAGE_URL","");
+        return preferences.getString("IMAGE_URL","null.jpg");
     }
     public String isLoggedIn() {
         return preferences.getString("ISLOGGEDIN","0");
@@ -74,10 +75,11 @@ public class SharedPrefSuggMe {
     }
 
     public String getProvider() {
-        return preferences.getString("STATUS","A");
+        return preferences.getString("STATUS","D");
     }
 
+
     public void deleteSession() {
-        preferences.edit().clear();
+        preferences.edit().clear().apply();
     }
 }
