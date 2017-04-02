@@ -4,13 +4,10 @@ import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
-import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
-import android.view.Menu;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
@@ -31,8 +28,6 @@ import com.sahilpaudel.app.suggme.Config;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
 import com.sahilpaudel.app.suggme.comments.CommentActivity;
-import com.sahilpaudel.app.suggme.comments.CommentViewFragment;
-import com.sahilpaudel.app.suggme.upvotemanager.Upvote;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -176,6 +171,7 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
             bt_comment = (Button)itemView.findViewById(R.id.suggest);
             imageView = (ImageView)itemView.findViewById(R.id.answeredByImage);
             ivShowMore = (ImageView)itemView.findViewById(R.id.ivShowMore);
+            bt_upvote.setClickable(false);
         }
     }
 
@@ -283,11 +279,11 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
 
 
     private void getLike(final String answer_id, final MyViewHolder holder) {
-        progress = ProgressDialog.show(context,"Please wait.", "Loading upvotes....", false, false);
+
+        //progress = ProgressDialog.show(context,"Please wait.", "Loading upvotes....", false, true);
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GETLIKE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                progress.dismiss();
                 try {
                     JSONArray array = new JSONArray(response);
                     total_like = array.length();
@@ -295,21 +291,25 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
                         JSONObject object = array.getJSONObject(i);
 
                         if (object.getString("user_id").equals(SharedPrefSuggMe.getInstance(context).getUserId())) {
-                            Toast.makeText(context, "Already liked", Toast.LENGTH_SHORT).show();
                             holder.bt_upvote.setText(total_like+" UPVOTES");
                             holder.bt_upvote.setClickable(false);
+
+                        } else {
+                            holder.bt_upvote.setClickable(true);
                         }
+                        //progress.dismiss();
                     }
+
                 } catch (JSONException e) {
                     Toast.makeText(context, "LIKE : "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    progress.dismiss();
+                    //progress.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "Error : "+error, Toast.LENGTH_SHORT).show();
-                progress.dismiss();
+                //progress.dismiss();
             }
         }){
             @Override

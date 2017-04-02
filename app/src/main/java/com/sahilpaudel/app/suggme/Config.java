@@ -12,6 +12,7 @@ public class Config {
     public static final String URL_USER_ISEXIST = "https://e386dafb.ngrok.io/SuggMe/api/isExist.php";
     public static final String URL_GET_QUESTIONS = "https://e386dafb.ngrok.io/SuggMe/api/getQuestion.php";
     public static final String URL_GET_QUESTIONBYID = "https://e386dafb.ngrok.io/SuggMe/api/getQuestionById.php";
+    public static final String URL_GET_QUESTION_BY_USER_ID = "https://e386dafb.ngrok.io/SuggMe/api/getQuestionByUserId.php";
     public static final String URL_CREATE_QUESTION = "https://e386dafb.ngrok.io/SuggMe/api/createQuestion.php";
     public static final String URL_GET_ANSWERS = "https://e386dafb.ngrok.io/SuggMe/api/getAnswers.php";
     public static final String URL_DELETE_ANSWER = "https://e386dafb.ngrok.io/SuggMe/api/deleteAnswer.php";
@@ -23,6 +24,7 @@ public class Config {
     public static final String URL_ALREADY_WRITTEN = "https://e386dafb.ngrok.io/SuggMe/api/isAlreadyWritten.php";
     public static final String URL_CREATE_LIKE = "https://e386dafb.ngrok.io/SuggMe/api/createRating.php";
     public static final String URL_GETLIKE = "https://e386dafb.ngrok.io/SuggMe/api/getRating.php";
+    public static final String URL_DEMO = "https://e386dafb.ngrok.io/SuggMe/api/demo.php";
 
 }
 

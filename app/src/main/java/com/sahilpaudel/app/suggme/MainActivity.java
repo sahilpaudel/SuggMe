@@ -18,13 +18,10 @@ import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
 
-import com.facebook.AccessTokenTracker;
 import com.facebook.login.LoginManager;
-import com.google.android.gms.auth.api.Auth;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.mainquestionpage.MainFragment;
 import com.sahilpaudel.app.suggme.notifications.NotificationFragment;
-import com.sahilpaudel.app.suggme.profile.FragmentProfile;
 import com.sahilpaudel.app.suggme.profile.ProfilePage;
 import com.squareup.picasso.Picasso;
 
@@ -139,6 +136,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_manage) {
 
         } else if (id == R.id.nav_share) {
+            fragment = new LoadingFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack("loading");
+            transaction.commit();
 
         } else if (id == R.id.nav_logout) {
             logout();

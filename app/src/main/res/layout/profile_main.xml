@@ -16,12 +16,12 @@
         <android.support.design.widget.CollapsingToolbarLayout
             android:id="@+id/main.collapsing"
             android:layout_width="match_parent"
-            android:layout_height="300dp"
+            android:layout_height="280dp"
             app:titleEnabled="false"
             app:layout_scrollFlags="scroll|exitUntilCollapsed|snap">
     <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="300dp"
+        android:layout_height="280dp"
         android:background="@drawable/background_all_pages"
         android:id="@+id/relative_up">
     <Button
@@ -42,7 +42,7 @@
         app:border_width="1dp"/>
     <TextView
         android:textColor="@color/alltext"
-        android:id="@+id/name"
+        android:id="@+id/userName"
         android:layout_below="@+id/profileimage"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -55,7 +55,7 @@
     <TextView
         android:textColor="@color/alltext"
         android:id="@+id/place"
-        android:layout_below="@+id/name"
+        android:layout_below="@+id/userName"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text=" Jalandhar"
@@ -73,190 +73,137 @@
         android:layout_width="match_parent"
         android:layout_height="match_parent"
         android:scrollbars="none"
-        app:layout_behavior="@string/appbar_scrolling_view_behavior"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-        >
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="match_parent">
-        <RelativeLayout
+            android:layout_height="wrap_content">
+        <LinearLayout
+            android:id="@+id/userprofile"
+            android:orientation="vertical"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:id="@+id/relativetab1">
+            android:background="#F5FFFF">
 
-                <TextView
-                    android:layout_marginTop="15dp"
-                    android:text="24"
-                    android:textStyle="bold"
-                    android:textColor="@color/textme"
-                    android:textSize="24sp"
-                    android:gravity="center_horizontal"
-                    android:id="@+id/no_suggestion"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:layout_marginLeft="35dp"
-                    android:background="#f5f5f5"
-                    android:layout_width="wrap_content" />
-
-                <TextView
-
-                    android:layout_toRightOf="@+id/no_suggestion"
-                    android:text="24"
-                    android:textStyle="bold"
-                    android:textColor="@color/textme"
-                    android:textSize="24sp"
-                    android:layout_marginTop="15dp"
-                    android:layout_marginLeft="54.6dp"
-                    android:gravity="center_horizontal"
-                    android:id="@+id/no_questions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:paddingTop="10dp"
-                    android:paddingLeft="10dp"
-                    android:paddingRight="10dp"
-                    android:background="#F5F5F5"/>
-
-                <TextView
-                    android:id="@+id/nosugg"
-                    android:layout_marginLeft="17dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Suggestions"
-                    android:layout_below="@+id/no_suggestion"
-                    />
-                <TextView
-                    android:layout_below="@+id/no_questions"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Questions"
-                    android:layout_toRightOf="@+id/nosugg"
-                    android:layout_marginLeft="37dp"/>
-                <Button
-                    android:id="@+id/chatme"
-                    android:textColor="@color/alltext"
-                    android:background="@drawable/roundedbutton2"
-                    android:layout_marginTop="24dp"
-                    android:padding="6dp"
-                    android:layout_marginLeft="80dp"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_centerHorizontal="true"
-                    android:text="Message"
-                    android:layout_toRightOf="@+id/no_questions"
-                    />
-
-        </RelativeLayout>
-
-            <RelativeLayout
-                android:id="@+id/relativeinfo"
-                android:layout_below="@id/relativetab1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content">
-
-                <View
-                    android:id="@+id/viewab"
-                    android:layout_width="match_parent"
-                    android:layout_height="1dp"
-                    android:layout_marginTop="18dp"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginRight="20dp"
-                    android:background="@color/textme"
-                    />
-                <EditText
-                    android:id="@+id/ageabout"
-                    android:textSize="16sp"
-                    android:layout_marginTop="10dp"
-                    android:textColor="@color/textme"
-                    android:layout_below="@+id/viewab"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Age :"
-                    />
-                <TextView
-                    android:text="24"
-                    android:layout_marginLeft="10dp"
-                    android:layout_marginTop="22dp"
-                    android:layout_toRightOf="@+id/ageabout"
-                    android:layout_below="@+id/viewab"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-
-                <EditText
-                    android:id="@+id/studiesat"
-                    android:textSize="16sp"
-                    android:layout_marginTop="-10dp"
-                    android:textColor="@color/textme"
-                    android:layout_below="@+id/ageabout"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Studies at :"
-                    />
-                <TextView
-                    android:text="lovely"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toRightOf="@+id/studiesat"
-                    android:layout_below="@+id/ageabout"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-                <EditText
-                    android:id="@+id/knowsbest"
-                    android:textSize="16sp"
-                    android:layout_marginTop="-9dp"
-                    android:textColor="@color/textme"
-                    android:layout_below="@+id/studiesat"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Knows Best About :"
-                    />
-                <TextView
-                    android:text="Karnataka"
-                    android:layout_marginLeft="20dp"
-                    android:layout_marginTop="3dp"
-                    android:layout_toRightOf="@+id/knowsbest"
-                    android:layout_below="@+id/studiesat"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    />
-            </RelativeLayout>
-            <RelativeLayout
-                android:layout_marginTop="18dp"
-                android:layout_below="@+id/relativeinfo"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-
-                >
             <LinearLayout
                 android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:orientation="vertical"
-             >
-                <android.support.design.widget.TabLayout
-                    android:id="@+id/sliding_tabs"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/school"/>
+                <TextView
+                    android:id="@+id/userSchool"
+                    android:text="Lovely Professional University, Jalandhar, Punjab"
+                    android:maxLength="100"
+                    android:textSize="12dp"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    app:tabMode="fixed"
-                    app:tabTextColor="@color/alltext"
-                    app:tabIndicatorColor="@color/alltext"
-                    app:tabSelectedTextColor="@color/alltext"
-                    android:background="@drawable/roundedbutton2"
-                    />
-
-                <android.support.v4.view.ViewPager
-                    android:id="@+id/viewpager"
-                    android:layout_width="match_parent"
-                    android:layout_height="match_parent"
-                    android:layout_weight="1"
-                    android:background="#6A6863"
-                    />
-
+                    android:padding="5dp"/>
             </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/textme"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/job"/>
+                <TextView
+                    android:id="@+id/userJob"
+                    android:text="Associate Software Developer, Envestnet Yodlee, Bangalore"
+                    android:maxLength="100"
+                    android:textSize="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"/>
+            </LinearLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:layout_marginLeft="20dp"
+                android:layout_marginRight="20dp"
+                android:background="@color/textme"/>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="5dp">
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:src="@drawable/place"/>
+                <TextView
+                    android:id="@+id/userLivingSince"
+                    android:text="Living Since 1996"
+                    android:maxLength="100"
+                    android:textSize="12dp"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="5dp"/>
+            </LinearLayout>
+        </LinearLayout>
+
+                <LinearLayout
+                    android:id="@+id/selectTabs"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/userprofile">
+                    <TextView
+                        android:id="@+id/userQuestions"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 Questions"
+                        android:textStyle="bold"
+                        android:layout_weight="1"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"/>
+                    <TextView
+                        android:id="@+id/userAnswers"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="0 Responses"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"/>
+                    <TextView
+                        android:id="@+id/userVisited"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Place Visited"
+                        android:textStyle="bold"
+                        android:layout_marginLeft="20dp"
+                        android:layout_marginRight="20dp"
+                        android:layout_weight="1"/>
+                </LinearLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/selectTabs"
+                android:padding="6dp"
+                android:background="#F0FFFF">
+
+                <FrameLayout
+                    android:id="@+id/contentFragment"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent">
+                </FrameLayout>
+            </RelativeLayout>
         </RelativeLayout>
-        </RelativeLayout>
+
+
     </android.support.v4.widget.NestedScrollView>
 </android.support.design.widget.CoordinatorLayout>
 

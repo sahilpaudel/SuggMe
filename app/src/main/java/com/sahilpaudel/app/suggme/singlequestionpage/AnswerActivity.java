@@ -3,6 +3,7 @@ package com.sahilpaudel.app.suggme.singlequestionpage;
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.app.AppCompatActivity;
@@ -30,6 +31,7 @@ import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
 import com.sahilpaudel.app.suggme.ClickListener;
 import com.sahilpaudel.app.suggme.Config;
+import com.sahilpaudel.app.suggme.CustomProgressDialog;
 import com.sahilpaudel.app.suggme.LoginActivity;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.RecyclerTouchListener;
@@ -87,6 +89,8 @@ public class AnswerActivity extends AppCompatActivity {
 
     ImageView imageViewClose;
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
+    FragmentManager manager;
+    CustomProgressDialog p;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -162,7 +166,10 @@ public class AnswerActivity extends AppCompatActivity {
         //end of beautifying the time display
 
         getAnswerQueue = Volley.newRequestQueue(AnswerActivity.this);
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        manager = getSupportFragmentManager();
+        p = new CustomProgressDialog(this, manager);
+        p.show();
         answerFeeds = new ArrayList<>();
         //to get Answers which are active
         getAnswerRequest = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERS, new Response.Listener<String>() {
@@ -170,7 +177,8 @@ public class AnswerActivity extends AppCompatActivity {
             public void onResponse(String response) {
                 //stop refreshing when we get the data
                 swipeRefreshLayoutAnswer.setRefreshing(false);
-                progress.dismiss();
+                //progress.dismiss();
+                p.dismiss();
                 try {
                     JSONArray array = new JSONArray(response);
                     for (int i = 0; i < array.length(); i++) {
@@ -242,14 +250,15 @@ public class AnswerActivity extends AppCompatActivity {
 
                 } catch (JSONException e) {
                     Toast.makeText(AnswerActivity.this, e.getMessage(), Toast.LENGTH_SHORT).show();
-                    progress.dismiss();
+                    //progress.dismiss();
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progress.dismiss();
+                //progress.dismiss();
+                Log.e("ERROR : ",error.getMessage());
             }
         }){
             @Override
@@ -310,12 +319,15 @@ public class AnswerActivity extends AppCompatActivity {
     //to create answers
     private void createAnswer (final String content, final String user_id) {
 
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        p = new CustomProgressDialog(this, manager);
+        p.show();
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_ANSWERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                progress.dismiss();
+                //progress.dismiss();
+                p.dismiss();
                 if(response.equals("1")) {
                     //clear all the data in the list
                     answerFeeds.clear();
@@ -331,13 +343,15 @@ public class AnswerActivity extends AppCompatActivity {
                     answerFeedAdapter.notifyDataSetChanged();
                 }else{
                     Toast.makeText(AnswerActivity.this, response, Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    //progress.dismiss();
+                    p.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progress.dismiss();
+                //progress.dismiss();
+                p.dismiss();
                 Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
@@ -398,7 +412,9 @@ public class AnswerActivity extends AppCompatActivity {
     //updating the answer
     private void updateAnswer (final String ans_id, final String content,final String isAnonymous, final String isActive) {
 
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        p = new CustomProgressDialog(this, manager);
+        p.show();
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_UPDATE_ANSWERS, new Response.Listener<String>() {
             @Override
@@ -417,15 +433,16 @@ public class AnswerActivity extends AppCompatActivity {
                     //populate the adapter;
                     answerFeedAdapter.notifyDataSetChanged();
                     //progress.dismiss();
+                    p.dismiss();
                 }else{
                     Toast.makeText(AnswerActivity.this, response, Toast.LENGTH_LONG).show();
-                    progress.dismiss();
+                    //progress.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progress.dismiss();
+                //progress.dismiss();
                 Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
@@ -446,7 +463,9 @@ public class AnswerActivity extends AppCompatActivity {
 
     private void GetAnswerByUserId() {
 
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the updater", false, false);
+        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the updater", false, false);
+        p = new CustomProgressDialog(this, manager);
+        p.show();
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERBY_USERID, new Response.Listener<String>() {
             @Override
@@ -457,10 +476,11 @@ public class AnswerActivity extends AppCompatActivity {
                     JSONObject object = array.getJSONObject(0);
                     tempAnswerContent = object.getString("answer_content");
                     tempAnswerID = object.getString("answer_id");
-                    progress.dismiss();
+                    //progress.dismiss();
+                    p.dismiss();
                     showUpdateDialog();
                 }catch (Exception e){
-                    progress.dismiss();
+                    //progress.dismiss();
                     Toast.makeText(AnswerActivity.this, "At GETANSWERBYID : "+e.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("GETBYID",e.getMessage());
                 }
@@ -468,7 +488,7 @@ public class AnswerActivity extends AppCompatActivity {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                progress.dismiss();
+                //progress.dismiss();
                 Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
