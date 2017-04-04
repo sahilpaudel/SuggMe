@@ -31,60 +31,60 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.profile_main);
-        tvQuestions = (TextView)findViewById(R.id.userQuestions);
-        tvAnswers = (TextView)findViewById(R.id.userAnswers);
-        tvVisited = (TextView)findViewById(R.id.userVisited);
-
-        tvUserName = (TextView)findViewById(R.id.userName);
-        tvUserName.setText(
-                SharedPrefSuggMe.getInstance(this).getUserName()
-        );
-        tvQuestions.setOnClickListener(this);
-        tvAnswers.setOnClickListener(this);
-        tvVisited.setOnClickListener(this);
-
-        fragment = new UserQuestionsFragment();
-        transaction = getSupportFragmentManager().beginTransaction();
-        transaction.add(R.id.contentFragment, fragment);
-        transaction.commit();
+//        tvQuestions = (TextView)findViewById(R.id.userQuestions);
+//        tvAnswers = (TextView)findViewById(R.id.userAnswers);
+//        tvVisited = (TextView)findViewById(R.id.userVisited);
+//
+//        tvUserName = (TextView)findViewById(R.id.userName);
+//        tvUserName.setText(
+//                SharedPrefSuggMe.getInstance(this).getUserName()
+//        );
+//        tvQuestions.setOnClickListener(this);
+//        tvAnswers.setOnClickListener(this);
+//        tvVisited.setOnClickListener(this);
+//
+//        fragment = new UserQuestionsFragment();
+//        transaction = getSupportFragmentManager().beginTransaction();
+//        transaction.add(R.id.contentFragment, fragment);
+//        transaction.commit();
     }
 
     @Override
     public void onClick(View view) {
-        switch (view.getId()) {
-            case R.id.userQuestions : {
-                    fragment = new UserQuestionsFragment();
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.contentFragment, fragment);
-                    transaction.commit();
-
-                findViewById(R.id.userQuestions).setBackgroundColor(Color.parseColor("#04AA9C"));
-                findViewById(R.id.userAnswers).setBackgroundColor(Color.TRANSPARENT);
-                findViewById(R.id.userVisited).setBackgroundColor(Color.TRANSPARENT);
-                }
-                break;
-            case R.id.userAnswers : {
-                    fragment = new UserAnswersFragment();
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.contentFragment, fragment);
-                    transaction.commit();
-
-                findViewById(R.id.userQuestions).setBackgroundColor(Color.TRANSPARENT);
-                findViewById(R.id.userAnswers).setBackgroundColor(Color.parseColor("#04AA9C"));
-                findViewById(R.id.userVisited).setBackgroundColor(Color.TRANSPARENT);
-                }
-                break;
-            case R.id.userVisited : {
-                    fragment = new UserVisitedPlaces();
-                    transaction = getSupportFragmentManager().beginTransaction();
-                    transaction.replace(R.id.contentFragment, fragment);
-                    transaction.commit();
-
-                findViewById(R.id.userQuestions).setBackgroundColor(Color.TRANSPARENT);
-                findViewById(R.id.userAnswers).setBackgroundColor(Color.TRANSPARENT);
-                findViewById(R.id.userVisited).setBackgroundColor(Color.parseColor("#04AA9C"));
-                }
-                break;
-        }
+//        switch (view.getId()) {
+//            case R.id.userQuestions : {
+//                    fragment = new UserQuestionsFragment();
+//                    transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.contentFragment, fragment);
+//                    transaction.commit();
+//
+//                findViewById(R.id.userQuestions).setBackgroundColor(Color.parseColor("#04AA9C"));
+//                findViewById(R.id.userAnswers).setBackgroundColor(Color.TRANSPARENT);
+//                findViewById(R.id.userVisited).setBackgroundColor(Color.TRANSPARENT);
+//                }
+//                break;
+//            case R.id.userAnswers : {
+//                    fragment = new UserAnswersFragment();
+//                    transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.contentFragment, fragment);
+//                    transaction.commit();
+//
+//                findViewById(R.id.userQuestions).setBackgroundColor(Color.TRANSPARENT);
+//                findViewById(R.id.userAnswers).setBackgroundColor(Color.parseColor("#04AA9C"));
+//                findViewById(R.id.userVisited).setBackgroundColor(Color.TRANSPARENT);
+//                }
+//                break;
+//            case R.id.userVisited : {
+//                    fragment = new UserVisitedPlaces();
+//                    transaction = getSupportFragmentManager().beginTransaction();
+//                    transaction.replace(R.id.contentFragment, fragment);
+//                    transaction.commit();
+//
+//                findViewById(R.id.userQuestions).setBackgroundColor(Color.TRANSPARENT);
+//                findViewById(R.id.userAnswers).setBackgroundColor(Color.TRANSPARENT);
+//                findViewById(R.id.userVisited).setBackgroundColor(Color.parseColor("#04AA9C"));
+//                }
+//                break;
+//        }
     }
 }
