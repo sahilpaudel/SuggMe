@@ -1,17 +1,15 @@
 package com.sahilpaudel.app.suggme.profile;
+import android.graphics.Color;
 import android.os.Bundle;
-import android.support.design.widget.TabLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
-import android.support.v4.view.ViewPager;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.TextView;
-import android.widget.Toast;
 
-import com.sahilpaudel.app.suggme.MainActivity;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
+import com.sahilpaudel.app.suggme.profile.useranswers.UserAnswersFragment;
 
 
 /**
@@ -59,6 +57,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
                     transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.contentFragment, fragment);
                     transaction.commit();
+
+                findViewById(R.id.userQuestions).setBackgroundColor(Color.parseColor("#04AA9C"));
+                findViewById(R.id.userAnswers).setBackgroundColor(Color.TRANSPARENT);
+                findViewById(R.id.userVisited).setBackgroundColor(Color.TRANSPARENT);
                 }
                 break;
             case R.id.userAnswers : {
@@ -66,6 +68,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
                     transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.contentFragment, fragment);
                     transaction.commit();
+
+                findViewById(R.id.userQuestions).setBackgroundColor(Color.TRANSPARENT);
+                findViewById(R.id.userAnswers).setBackgroundColor(Color.parseColor("#04AA9C"));
+                findViewById(R.id.userVisited).setBackgroundColor(Color.TRANSPARENT);
                 }
                 break;
             case R.id.userVisited : {
@@ -73,6 +79,10 @@ public class ProfilePage extends AppCompatActivity implements View.OnClickListen
                     transaction = getSupportFragmentManager().beginTransaction();
                     transaction.replace(R.id.contentFragment, fragment);
                     transaction.commit();
+
+                findViewById(R.id.userQuestions).setBackgroundColor(Color.TRANSPARENT);
+                findViewById(R.id.userAnswers).setBackgroundColor(Color.TRANSPARENT);
+                findViewById(R.id.userVisited).setBackgroundColor(Color.parseColor("#04AA9C"));
                 }
                 break;
         }

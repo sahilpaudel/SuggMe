@@ -11,12 +11,4 @@ public class QuestionFeed {
             public String askedOn;
             public String askedBy;
             public String answerCount;
-
-    public String getQuestion_id() {
-        return question_id;
-    }
-
-    public String getQuest_title() {
-        return quest_title;
-    }
 }

@@ -55,29 +55,39 @@
                         android:text="@string/demotxt2"
                         android:textStyle="bold"
                         android:textSize="16sp"
-                        android:layout_margin="5dp"/>
+                        android:layout_margin="5dp" />
                     <TextView
                         android:id="@+id/askedDate"
                         android:text="2017/03/07"
                         android:textColor="@color/orange"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
+                        android:layout_height="20dp"
                         android:layout_below="@id/questionContent"
-                        android:layout_marginLeft="6dp"
+                        android:layout_marginStart="6dp"
                         android:textStyle="bold"
                         android:gravity="center"/>
                     <Button
                         android:id="@+id/writeAnswer"
                         android:text="Answer"
-                        android:layout_centerHorizontal="true"
                         android:background="@drawable/roundedfields"
                         android:layout_width="wrap_content"
-                        android:layout_height="30dp"
-                        android:textSize="10sp"
-                        android:layout_marginLeft="110dp"
-                        android:layout_toRightOf="@id/askedDate"
+                        android:layout_height="20dp"
+                        android:textSize="12sp"
+                        android:gravity="center"
+                        android:layout_toEndOf="@id/askedDate"
+                        android:layout_marginLeft="20dp"
                         android:layout_below="@id/questionContent"
                         android:textColor="@color/alltext"/>
+
+                    <ImageView
+                        android:id="@+id/ivEditQuestion"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentEnd="true"
+                        android:src="@drawable/pencil"
+                        android:layout_marginEnd="20dp"
+                        android:layout_marginStart="20dp"
+                        android:layout_below="@id/questionContent" />
 
                     <android.support.v7.widget.CardView
                         android:id="@+id/ifAlreadyWrittenCard"
@@ -124,10 +134,10 @@
 
     <ImageView
         android:id="@+id/closeActivity"
-        android:layout_width="20dp"
-        android:layout_height="20dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:layout_margin="6dp"
         android:src="@drawable/cross"
-        android:layout_alignParentRight="true"/>
+        android:layout_alignParentEnd="true"/>
 
 </RelativeLayout>

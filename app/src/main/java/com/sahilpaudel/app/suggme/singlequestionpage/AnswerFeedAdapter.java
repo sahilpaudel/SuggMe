@@ -322,6 +322,5 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
         };
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(request);
-
     }
 }

@@ -30,7 +30,6 @@
             android:hint="Password"
             android:id="@+id/et_password"
             android:inputType="textPassword"
-            android:textColor="#F2FFFA"
             android:layout_below="@+id/et_userName"
             android:maxLength="35"
             android:layout_width="match_parent"

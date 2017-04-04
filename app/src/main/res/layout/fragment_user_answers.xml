@@ -1,13 +1,13 @@
 <FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    tools:context="com.sahilpaudel.app.suggme.profile.UserAnswersFragment">
+    android:layout_height="wrap_content"
+    tools:context="com.sahilpaudel.app.suggme.profile.useranswers.UserAnswersFragment">
 
-    <!-- TODO: Update blank fragment layout -->
-    <TextView
+    <android.support.v7.widget.RecyclerView
+        android:id="@+id/recyclerViewAnswer"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:text="USER FRAGMENT" />
+        android:layout_height="wrap_content"
+        android:padding="6dp"/>
 
 </FrameLayout>

@@ -49,6 +49,7 @@ import com.sahilpaudel.app.suggme.RecyclerTouchListener;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.singlequestionpage.AnswerActivity;
+import com.sahilpaudel.app.suggme.singlequestionpage.AnswerFeed;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -81,6 +82,7 @@ public class MainFragment extends Fragment {
     Intent intent;
 
     ArrayAdapter hintAdapter;
+
 
     //current timestamp
     Timestamp timestamp = new Timestamp(System.currentTimeMillis());
@@ -146,17 +148,15 @@ public class MainFragment extends Fragment {
 
         getQuestionQueue = Volley.newRequestQueue(getActivity());
 
-        //progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the feeds", false, false);
-        manager = getActivity().getSupportFragmentManager();
-        p = new CustomProgressDialog(getActivity(), manager);
-        p.show();
+        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the feeds", false, false);
+
         //get question
         getQuestionRequest = new StringRequest(Request.Method.POST, Config.URL_GET_QUESTIONS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //set refresh stop when we get the data
                 swipeToRefreshQuestion.setRefreshing(false);
-                p.dismiss();
+                progress.dismiss();
                 Log.d("RESPONSE",response);
                 try {
                     JSONArray array = new JSONArray(response);
@@ -172,6 +172,8 @@ public class MainFragment extends Fragment {
                         feed.answerCount = object.getString("ansc");
                         question_feed.add(feed);
                     }
+
+
                     questionFeedAdapter = new QuestionFeedAdapter(getActivity(),question_feed);
                     RecyclerView.LayoutManager layoutManager = new LinearLayoutManager(getActivity());
                     recyclerViewFeed.setLayoutManager(layoutManager);
@@ -352,15 +354,12 @@ public class MainFragment extends Fragment {
     private void getQuestionById(final String question_id, final AlertDialog b) {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        //progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the question", false, false);
-        manager = getActivity().getSupportFragmentManager();
-        p = new CustomProgressDialog(getActivity(), manager);
-        p.show();
+        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the question", false, false);
         //get question
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_QUESTIONBYID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                p.dismiss();
+                progress.dismiss();
                 try {
                     JSONArray array = new JSONArray(response);
                         JSONObject object = array.getJSONObject(0);
@@ -380,14 +379,14 @@ public class MainFragment extends Fragment {
                     b.dismiss();
                 } catch (JSONException e) {
                     //Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    Log.e("EXCEPTION : ",e.getMessage());
+                    Log.e("EXCEPTION : ",""+e.getMessage());
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Log.e("EXCEPTION : ",error.getMessage());
+                Log.e("EXCEPTION : ",""+error.getMessage());
             }
         }){
             @Override
@@ -403,15 +402,11 @@ public class MainFragment extends Fragment {
     private void createQuestion(final String content, final String isAnonymous) {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        //progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the question", false, false);
+        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the question", false, false);
         //get question
-        manager = getActivity().getSupportFragmentManager();
-        p = new CustomProgressDialog(getActivity(), manager);
-        p.show();
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_QUESTION, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                p.dismiss();
                 if (!response.isEmpty()) {
                     //clear all the data in the list
                     question_feed.clear();
@@ -428,11 +423,12 @@ public class MainFragment extends Fragment {
                 }else {
                     Toast.makeText(getActivity(), "No data", Toast.LENGTH_SHORT).show();
                 }
+                progress.dismiss();
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Toast.makeText(getActivity(), "Volley Error : "+error, Toast.LENGTH_SHORT).show();
             }
         }){
             @Override

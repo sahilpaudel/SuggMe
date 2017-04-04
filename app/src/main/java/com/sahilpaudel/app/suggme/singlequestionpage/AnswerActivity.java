@@ -2,7 +2,10 @@ package com.sahilpaudel.app.suggme.singlequestionpage;
 
 import android.app.AlertDialog;
 import android.app.ProgressDialog;
+import android.content.Intent;
+import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
@@ -12,13 +15,18 @@ import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.View;
+import android.widget.AdapterView;
+import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -29,6 +37,11 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
+import com.google.android.gms.common.GooglePlayServicesNotAvailableException;
+import com.google.android.gms.common.GooglePlayServicesRepairableException;
+import com.google.android.gms.common.api.Status;
+import com.google.android.gms.location.places.Place;
+import com.google.android.gms.location.places.ui.PlaceAutocomplete;
 import com.sahilpaudel.app.suggme.ClickListener;
 import com.sahilpaudel.app.suggme.Config;
 import com.sahilpaudel.app.suggme.CustomProgressDialog;
@@ -36,6 +49,8 @@ import com.sahilpaudel.app.suggme.LoginActivity;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.RecyclerTouchListener;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
+import com.sahilpaudel.app.suggme.location.GetUserAddress;
+import com.sahilpaudel.app.suggme.mainquestionpage.QuestionFeed;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -49,8 +64,11 @@ import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Locale;
 import java.util.Map;
+
+import static android.R.attr.country;
 
 public class AnswerActivity extends AppCompatActivity {
 
@@ -87,14 +105,30 @@ public class AnswerActivity extends AppCompatActivity {
     //refresher
     SwipeRefreshLayout swipeRefreshLayoutAnswer;
 
+    private final static int PLACE_AUTOCOMPLETE_REQUEST_CODE = 1;
+    String questionAddress;
+    TextView currentLocation;
+    GetUserAddress getUserAddress;
+
     ImageView imageViewClose;
+    ImageView imageViewEditQuestion;
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
     FragmentManager manager;
-    CustomProgressDialog p;
+    //CustomProgressDialog p;
+    @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_answer);
+
+
+        getUserAddress = new GetUserAddress(this);
+        getUserAddress.executeGPS();
+
+        String city = getUserAddress.getCity();
+        String state = getUserAddress.getState();
+        String country = getUserAddress.getCountry();
+        questionAddress = city+", "+state+", "+country;
 
         //implement close activity on click
         imageViewClose = (ImageView)findViewById(R.id.closeActivity);
@@ -105,6 +139,8 @@ public class AnswerActivity extends AppCompatActivity {
                 finish();
             }
         });
+
+        imageViewEditQuestion = (ImageView)findViewById(R.id.ivEditQuestion);
 
         //to refresh
         swipeRefreshLayoutAnswer = (SwipeRefreshLayout)findViewById(R.id.swipeToRefreshAnswer);
@@ -120,7 +156,7 @@ public class AnswerActivity extends AppCompatActivity {
         tvalreadyAnswered.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                GetAnswerByUserId();
+                GetAnswerByQuestionUserId();
             }
         });
 
@@ -154,6 +190,14 @@ public class AnswerActivity extends AppCompatActivity {
             }
         });
 
+        //update questions
+        imageViewEditQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                showUpdateQuestionDialog();
+            }
+        });
+
         //beautifying the time display
         try {
             DateFormat df = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.ENGLISH);
@@ -166,10 +210,8 @@ public class AnswerActivity extends AppCompatActivity {
         //end of beautifying the time display
 
         getAnswerQueue = Volley.newRequestQueue(AnswerActivity.this);
-        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
-        manager = getSupportFragmentManager();
-        p = new CustomProgressDialog(this, manager);
-        p.show();
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+
         answerFeeds = new ArrayList<>();
         //to get Answers which are active
         getAnswerRequest = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERS, new Response.Listener<String>() {
@@ -178,7 +220,7 @@ public class AnswerActivity extends AppCompatActivity {
                 //stop refreshing when we get the data
                 swipeRefreshLayoutAnswer.setRefreshing(false);
                 //progress.dismiss();
-                p.dismiss();
+                progress.dismiss();
                 try {
                     JSONArray array = new JSONArray(response);
                     for (int i = 0; i < array.length(); i++) {
@@ -258,7 +300,7 @@ public class AnswerActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //progress.dismiss();
-                Log.e("ERROR : ",error.getMessage());
+                Log.e("ERROR : ",""+error.getMessage());
             }
         }){
             @Override
@@ -319,15 +361,14 @@ public class AnswerActivity extends AppCompatActivity {
     //to create answers
     private void createAnswer (final String content, final String user_id) {
 
-        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
-        p = new CustomProgressDialog(this, manager);
-        p.show();
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_ANSWERS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 //progress.dismiss();
-                p.dismiss();
+                progress.dismiss();
                 if(response.equals("1")) {
                     //clear all the data in the list
                     answerFeeds.clear();
@@ -344,14 +385,14 @@ public class AnswerActivity extends AppCompatActivity {
                 }else{
                     Toast.makeText(AnswerActivity.this, response, Toast.LENGTH_LONG).show();
                     //progress.dismiss();
-                    p.dismiss();
+                    progress.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //progress.dismiss();
-                p.dismiss();
+                progress.dismiss();
+
                 Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
@@ -394,7 +435,7 @@ public class AnswerActivity extends AppCompatActivity {
             public void onClick(View view) {
                 //update the string
                 String updatedAnswer = writeAnswer.getText().toString();
-                Toast.makeText(AnswerActivity.this, updatedAnswer, Toast.LENGTH_SHORT).show();
+                //Toast.makeText(AnswerActivity.this, updatedAnswer, Toast.LENGTH_SHORT).show();
                 updateAnswer(tempAnswerID, updatedAnswer, "0","1");
                 b.dismiss();
             }
@@ -402,7 +443,7 @@ public class AnswerActivity extends AppCompatActivity {
         cancelButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                Toast.makeText(AnswerActivity.this, "Cancel", Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, "Cancelled", Toast.LENGTH_SHORT).show();
                 b.dismiss();
             }
         });
@@ -412,9 +453,8 @@ public class AnswerActivity extends AppCompatActivity {
     //updating the answer
     private void updateAnswer (final String ans_id, final String content,final String isAnonymous, final String isActive) {
 
-        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
-        p = new CustomProgressDialog(this, manager);
-        p.show();
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_UPDATE_ANSWERS, new Response.Listener<String>() {
             @Override
@@ -432,18 +472,17 @@ public class AnswerActivity extends AppCompatActivity {
                     recyclerViewAnswer.setAdapter(answerFeedAdapter);
                     //populate the adapter;
                     answerFeedAdapter.notifyDataSetChanged();
-                    //progress.dismiss();
-                    p.dismiss();
+                    progress.dismiss();
                 }else{
                     Toast.makeText(AnswerActivity.this, response, Toast.LENGTH_LONG).show();
-                    //progress.dismiss();
+                    progress.dismiss();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //progress.dismiss();
-                Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -460,14 +499,12 @@ public class AnswerActivity extends AppCompatActivity {
         queue.add(request);
     }
 
+    // // TODO: 4/3/2017 to show the hints
+    private void GetAnswerByQuestionUserId() {
 
-    private void GetAnswerByUserId() {
-
-        //progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the updater", false, false);
-        p = new CustomProgressDialog(this, manager);
-        p.show();
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the updater", false, false);
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
-        final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWERBY_USERID, new Response.Listener<String>() {
+        final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWER_BY_QUESTION_USER_ID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 try{
@@ -476,11 +513,10 @@ public class AnswerActivity extends AppCompatActivity {
                     JSONObject object = array.getJSONObject(0);
                     tempAnswerContent = object.getString("answer_content");
                     tempAnswerID = object.getString("answer_id");
-                    //progress.dismiss();
-                    p.dismiss();
+                    progress.dismiss();
                     showUpdateDialog();
                 }catch (Exception e){
-                    //progress.dismiss();
+                    progress.dismiss();
                     Toast.makeText(AnswerActivity.this, "At GETANSWERBYID : "+e.getMessage(), Toast.LENGTH_SHORT).show();
                     Log.d("GETBYID",e.getMessage());
                 }
@@ -489,7 +525,7 @@ public class AnswerActivity extends AppCompatActivity {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //progress.dismiss();
-                Toast.makeText(AnswerActivity.this, error.getMessage(), Toast.LENGTH_SHORT).show();
+                Toast.makeText(AnswerActivity.this, ""+error.getMessage(), Toast.LENGTH_SHORT).show();
             }
         }){
             @Override
@@ -503,31 +539,109 @@ public class AnswerActivity extends AppCompatActivity {
         queue.add(request);
     }
 
-    //method to check if user has already written an answer of given question id
-    private void isAnswerWritten(final String question_id) {
+    private void updateQuestion(final String question_id, final String question_data) {
 
-        final ProgressDialog progress = ProgressDialog.show(AnswerActivity.this, "Please wait.", "Checking if already written..", false, false);
-        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_ALREADY_WRITTEN, new Response.Listener<String>() {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_UPDATE_QUESTIONS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 progress.dismiss();
-
+                Intent intent = new Intent(getApplicationContext(), AnswerActivity.class);
+                intent.putExtra("QID",question_id);
+                intent.putExtra("CONTENT",response);
+                intent.putExtra("DATE",question_date);
+                startActivity(intent);
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-
+                Log.d("ERROR : ", error+"");
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
-                Map<String,String> params = new HashMap<>();
-                params.put("question_id",question_id);
+                Map<String, String> params = new HashMap<>();
+                params.put("quest_id",question_id);
+                params.put("content",question_data);
+                params.put("question_address", questionAddress);
                 return params;
             }
         };
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
+    }
+
+    Intent intent;
+    //update Question Dialog
+    private void showUpdateQuestionDialog() {
+
+        Toast.makeText(AnswerActivity.this, "Update Dialog", Toast.LENGTH_SHORT).show();
+        final AlertDialog.Builder writeQuestionDialog = new AlertDialog.Builder(AnswerActivity.this);
+        LayoutInflater inflater = AnswerActivity.this.getLayoutInflater();
+        final View dialogView = inflater.inflate(R.layout.ask_question_dialog, null);
+        writeQuestionDialog.setView(dialogView);
+        final AlertDialog b = writeQuestionDialog.create();
+
+        //place autocomplete
+        try {
+            intent = new PlaceAutocomplete.IntentBuilder(PlaceAutocomplete.MODE_OVERLAY)
+                    .build(this);
+            //startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+
+        }catch (GooglePlayServicesRepairableException | GooglePlayServicesNotAvailableException e){
+            Toast.makeText(this, e.getMessage(), Toast.LENGTH_SHORT).show();
+        }
+
+        final EditText askQuestion = (EditText)dialogView.findViewById(R.id.ask_question_dialog);
+        askQuestion.setText(question_content);
+        //select location
+        currentLocation = (TextView)dialogView.findViewById(R.id.currentLocation);
+        currentLocation.setText(questionAddress);
+        Button changeLocation = (Button)dialogView.findViewById(R.id.changeLocation);
+
+        //to show location option
+        changeLocation.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+            }
+        });
+        Button btAskQuestion = (Button)dialogView.findViewById(R.id.ask_question_button);
+        btAskQuestion.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                if (askQuestion.getText().toString().isEmpty()) {
+                    askQuestion.setError("It cannot be empty");
+                }else if(questionAddress == null){
+                    askQuestion.setError("Select location");
+                    startActivityForResult(intent, PLACE_AUTOCOMPLETE_REQUEST_CODE);
+                }else {
+                    updateQuestion(question_id,askQuestion.getText().toString());
+                    b.dismiss();
+                }
+            }
+        });
+
+        b.setCanceledOnTouchOutside(false);
+        b.show();
+    }
+
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == PLACE_AUTOCOMPLETE_REQUEST_CODE) {
+            if (resultCode == RESULT_OK) {
+                Place place = PlaceAutocomplete.getPlace(this, data);
+                questionAddress = place.getAddress().toString();
+                currentLocation.setText(questionAddress);
+                Log.i("PLACE", questionAddress);
+            } else if (resultCode == PlaceAutocomplete.RESULT_ERROR) {
+                Status status = PlaceAutocomplete.getStatus(this, data);
+                // TODO: Handle the error.
+                Log.i("PLACE", status.getStatusMessage());
+
+            } else if (resultCode == RESULT_CANCELED) {
+                // The user canceled the operation.
+            }
+        }
     }
 
 }

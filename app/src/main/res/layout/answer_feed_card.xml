@@ -26,6 +26,7 @@
             <TextView
                 android:id="@+id/answeredByName"
                 android:text="Sahil Paudel"
+                android:textColor="#000"
                 android:textStyle="bold"
                 android:textSize="18sp"
                 android:layout_width="match_parent"
@@ -60,6 +61,7 @@
                 android:layout_below="@id/answeredByImage"
                 android:layout_marginLeft="5dp"
                 android:maxLength="5000"
+                android:textColor="#000"
                 android:layout_marginRight="5dp"
                 android:text="@string/demotxt"
                 android:padding="5dp"/>

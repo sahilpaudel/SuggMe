@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <android.support.v7.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="6dp">
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="#F0F0F0">
+
+            <RelativeLayout
+                android:id="@+id/relative_up"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content">
+
+                <TextView
+                    android:id="@+id/tvQuestionTitle"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:text="@string/demotxt2"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:textColor="#000"
+                    android:paddingLeft="16dp"
+                    android:paddingRight="16dp"
+                    android:paddingTop="16dp"/>
+                <TextView
+                    android:id="@+id/tvQuestionDate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About 2 hours ago"
+                    android:layout_marginLeft="16dp"
+                    android:textStyle="italic"
+                    android:layout_marginTop="2dp"
+                    android:layout_below="@id/tvQuestionTitle"/>
+            </RelativeLayout>
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:layout_marginLeft="5dp"
+                android:layout_marginRight="5dp"
+                android:background="#E0E0E0"
+                android:layout_marginTop="3dp"
+                android:layout_below="@id/relative_up"/>
+            <RelativeLayout
+                android:id="@+id/relative_down"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/relative_up">
+
+                <ImageView
+                    android:id="@+id/ivShowMore"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginRight="5dp"
+                    android:layout_marginTop="10dp"
+                    android:src="@drawable/dots_vertical"/>
+
+                <ImageView
+                    android:id="@+id/ivAnsweredByImage"
+                    android:layout_width="70dp"
+                    android:layout_height="70dp"
+                    android:layout_margin="16dp"
+                    android:scaleType="fitXY"
+                    android:src="@drawable/com_facebook_profile_picture_blank_square"/>
+                <TextView
+                    android:id="@+id/tvAnsweredByName"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="John Doe"
+                    android:textColor="#000"
+                    android:textStyle="bold"
+                    android:textSize="16sp"
+                    android:layout_marginTop="26dp"
+                    android:layout_toRightOf="@id/ivAnsweredByImage"/>
+                <TextView
+                    android:id="@+id/tvAnsweredOn"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="About 5 minutes ago"
+                    android:textStyle="italic"
+                    android:layout_marginTop="8dp"
+                    android:layout_below="@id/tvAnsweredByName"
+                    android:layout_toRightOf="@id/ivAnsweredByImage"/>
+                <TextView
+                    android:id="@+id/tvAnswerContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="16dp"
+                    android:layout_marginRight="16dp"
+                    android:layout_marginBottom="16dp"
+                    android:text="@string/demotxt"
+                    android:textSize="16sp"
+                    android:gravity="start"
+                    android:textColor="#000"
+                    android:layout_below="@id/ivAnsweredByImage"/>
+                <Button
+                    android:id="@+id/bt_upvote"
+                    android:text="0 upvote"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_below="@id/tvAnswerContent"
+                    android:layout_marginLeft="10dp"
+                    android:background="@drawable/roundedbutton2"
+                    android:textColor="@color/alltext"
+                    android:gravity="center_horizontal"
+                    android:padding="2dp"
+                    android:layout_marginBottom="10dp"/>
+                <Button
+                    android:id="@+id/bt_comment"
+                    android:text="0 suggest"
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_toRightOf="@id/bt_upvote"
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginBottom="10dp"
+                    android:padding="2dp"
+                    android:layout_below="@id/tvAnswerContent"
+                    android:textColor="@color/alltext"
+                    android:background="@drawable/roundedbutton2"/>
+            </RelativeLayout>
+        </RelativeLayout>
+    </android.support.v7.widget.CardView>
+</RelativeLayout>
