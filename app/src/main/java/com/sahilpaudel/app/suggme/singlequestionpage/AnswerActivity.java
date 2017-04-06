@@ -210,7 +210,7 @@ public class AnswerActivity extends AppCompatActivity {
         //end of beautifying the time display
 
         getAnswerQueue = Volley.newRequestQueue(AnswerActivity.this);
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the answers...", false, false);
 
         answerFeeds = new ArrayList<>();
         //to get Answers which are active
@@ -361,7 +361,7 @@ public class AnswerActivity extends AppCompatActivity {
     //to create answers
     private void createAnswer (final String content, final String user_id) {
 
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Responding to need ones...", false, false);
 
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_ANSWERS, new Response.Listener<String>() {
@@ -453,7 +453,7 @@ public class AnswerActivity extends AppCompatActivity {
     //updating the answer
     private void updateAnswer (final String ans_id, final String content,final String isAnonymous, final String isActive) {
 
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the feeds", false, false);
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Updating the answer...", false, false);
 
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_UPDATE_ANSWERS, new Response.Listener<String>() {
@@ -502,7 +502,7 @@ public class AnswerActivity extends AppCompatActivity {
     // // TODO: 4/3/2017 to show the hints
     private void GetAnswerByQuestionUserId() {
 
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the updater", false, false);
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Loading the updater", false, false);
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWER_BY_QUESTION_USER_ID, new Response.Listener<String>() {
             @Override
@@ -540,11 +540,11 @@ public class AnswerActivity extends AppCompatActivity {
     }
 
     private void updateQuestion(final String question_id, final String question_data) {
-
+        final ProgressDialog progressQuestionUpdate = ProgressDialog.show(this, "Please wait...", "Updating Question..", false, false);
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_UPDATE_QUESTIONS, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                progress.dismiss();
+                progressQuestionUpdate.dismiss();
                 Intent intent = new Intent(getApplicationContext(), AnswerActivity.class);
                 intent.putExtra("QID",question_id);
                 intent.putExtra("CONTENT",response);

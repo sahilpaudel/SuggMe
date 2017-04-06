@@ -54,6 +54,7 @@ public class UserQuestionsFragment extends Fragment {
 
     FragmentManager manager;
     CustomProgressDialog customProgress;
+    String user_id;
 
     public UserQuestionsFragment() {
         // Required empty public constructor
@@ -65,6 +66,23 @@ public class UserQuestionsFragment extends Fragment {
                              Bundle savedInstanceState) {
          // Inflate the layout for this fragment
          view = inflater.inflate(R.layout.fragment_user_questions, container, false);
+
+         // store current user id, to fetch records for current user
+         user_id = SharedPrefSuggMe.getInstance(getActivity()).getUserId();
+
+        try{
+            //to fetch records for user profile, when the profile activity
+            //is called for other users, by clicking names.
+            String temp_user_id = getArguments().getString("USER_ID");
+            Toast.makeText(getActivity(), temp_user_id, Toast.LENGTH_SHORT).show();
+
+            if (temp_user_id != null)
+                 user_id = temp_user_id;
+
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
          recyclerViewQuestions = (RecyclerView)view.findViewById(R.id.recyclerViewQuestion);
          //getting questions that are asked by the current user
          question_feed = new ArrayList<>();
@@ -128,13 +146,13 @@ public class UserQuestionsFragment extends Fragment {
          }, new Response.ErrorListener() {
              @Override
              public void onErrorResponse(VolleyError error) {
-                 Toast.makeText(getActivity(), "Error UQ : "+error, Toast.LENGTH_SHORT).show();
+                 Toast.makeText(getActivity(), "Error UQ : ", Toast.LENGTH_SHORT).show();
              }
          }){
              @Override
              protected Map<String, String> getParams() throws AuthFailureError {
                  Map<String, String> params = new HashMap<>();
-                 params.put("user_id", SharedPrefSuggMe.getInstance(getActivity()).getUserId());
+                 params.put("user_id", user_id);
                  return params;
              }
          };

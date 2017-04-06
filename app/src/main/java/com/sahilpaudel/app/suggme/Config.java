@@ -6,6 +6,7 @@ package com.sahilpaudel.app.suggme;
 
 public class Config {
 
+    public static final String URL_GET_USER_INFO = "https://e386dafb.ngrok.io/SuggMe/api/getUserInfo.php";
     public static final String URL_CREATE_USER = "https://e386dafb.ngrok.io/SuggMe/api/createUser.php";
     public static final String URL_CREATE_USER_NORMAL = "https://e386dafb.ngrok.io/SuggMe/api/createUserNormal.php";
     public static final String URL_USER_LOGIN = "https://e386dafb.ngrok.io/SuggMe/api/userLogin.php";
@@ -24,8 +25,9 @@ public class Config {
     public static final String URL_GET_COMMENTS = "https://e386dafb.ngrok.io/SuggMe/api/getCommentByAnswerId.php";
     public static final String URL_CREATE_COMMENTS = "https://e386dafb.ngrok.io/SuggMe/api/createComment.php";
     public static final String URL_ALREADY_WRITTEN = "https://e386dafb.ngrok.io/SuggMe/api/isAlreadyWritten.php";
-    public static final String URL_CREATE_LIKE = "https://e386dafb.ngrok.io/SuggMe/api/createRating.php";
-    public static final String URL_GETLIKE = "https://e386dafb.ngrok.io/SuggMe/api/getRating.php";
+    public static final String URL_CREATE_UPVOTE = "https://e386dafb.ngrok.io/SuggMe/api/createUpvote.php";
+    public static final String URL_GET_UPVOTE = "https://e386dafb.ngrok.io/SuggMe/api/getUpvote.php";
+    public static final String URL_DELETE_UPVOTE= "https://e386dafb.ngrok.io/SuggMe/api/deleteUpvote.php";
     public static final String URL_DEMO = "https://e386dafb.ngrok.io/SuggMe/api/demo.php";
 
 }

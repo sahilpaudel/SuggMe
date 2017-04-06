@@ -5,10 +5,12 @@ import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
 import com.sahilpaudel.app.suggme.R;
+import com.squareup.picasso.Picasso;
 
 import org.ocpsoft.prettytime.PrettyTime;
 
@@ -39,12 +41,16 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         TextView tvCommentBy;
         TextView tvCommentOn;
         TextView tvCommentText;
+        TextView tvNoComments;
+        ImageView ivImageComment;
 
         public MyViewHolder(View itemView) {
             super(itemView);
             tvCommentBy = (TextView)itemView.findViewById(R.id.commenterName);
             tvCommentOn = (TextView)itemView.findViewById(R.id.commentDate);
             tvCommentText = (TextView)itemView.findViewById(R.id.commentContent);
+            tvNoComments = (TextView)itemView.findViewById(R.id.noComments);
+            ivImageComment = (ImageView) itemView.findViewById(R.id.commenterImage);
         }
     }
 
@@ -59,6 +65,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
     @Override
     public void onBindViewHolder(CommentAdapter.MyViewHolder holder, int position) {
 
+        if (list_comment.size()==0) {
+            holder.tvNoComments.setVisibility(View.VISIBLE);
+        } else {
+            holder.tvNoComments.setVisibility(View.INVISIBLE);
+        }
+
         Comments comments = list_comment.get(position);
         String userName = comments.userName;
         String entryOn = comments.entryOn;
@@ -71,7 +83,12 @@ public class CommentAdapter extends RecyclerView.Adapter<CommentAdapter.MyViewHo
         } catch (ParseException e) {
             Toast.makeText(context, e.getMessage(), Toast.LENGTH_SHORT).show();
         }
+        String url = comments.imageUrl;
+        if (url.isEmpty()) {
 
+        } else {
+            Picasso.with(context).load(url).into(holder.ivImageComment);
+        }
         holder.tvCommentBy.setText(userName);
         holder.tvCommentOn.setText(entryOn);
         holder.tvCommentText.setText(comment);

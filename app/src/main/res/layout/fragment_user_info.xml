@@ -1,0 +1,146 @@
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context="com.sahilpaudel.app.suggme.profile.UserInfo">
+
+    <RelativeLayout
+        android:id="@+id/relative_up_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
+
+        <TextView
+            android:id="@+id/personalInfo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Personal Information"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/orange"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"/>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:background="@color/orange"
+            android:layout_below="@id/personalInfo"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/personalInfo"
+            android:layout_marginTop="7dp">
+            <TextView
+                android:id="@+id/tvUserName"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/account"
+                android:layout_below="@id/personalInfo"
+                android:text="Sahil Paudel"
+                android:padding="5dp"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:gravity="start|center_vertical"
+                android:drawablePadding="10dp"/>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView2"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardView1"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:id="@+id/tvGender"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/human_male_female"
+                android:text="Male"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textSize="16sp"
+                android:gravity="start|center_vertical"
+                android:drawablePadding="10dp"/>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView3"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardView2"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:id="@+id/tvAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableLeft="@drawable/location"
+                android:text="Jalandhar, Punjab"
+                android:textColor="#000"
+                android:padding="5dp"
+                android:textSize="16sp"
+                android:gravity="start|center_vertical"
+                android:drawablePadding="10dp"/>
+        </android.support.v7.widget.CardView>
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView4"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/cardView3"
+            android:layout_marginTop="5dp">
+            <TextView
+                android:id="@+id/tvWeb"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:drawableStart="@drawable/web"
+                android:text="https://www.sahilpaudel.com"
+                android:padding="5dp"
+                android:textColor="#000"
+                android:textSize="16sp"
+                android:autoLink="web"
+                android:gravity="start|center_vertical"
+                android:drawablePadding="10dp" />
+        </android.support.v7.widget.CardView>
+        <TextView
+            android:id="@+id/AboutMe"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="About Me"
+            android:textSize="18sp"
+            android:layout_below="@id/cardView4"
+            android:textStyle="bold"
+            android:textColor="@color/orange"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="6dp"/>
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="2dp"
+            android:layout_marginTop="1dp"
+            android:background="@color/orange"
+            android:layout_below="@id/AboutMe"/>
+
+        <android.support.v7.widget.CardView
+            android:id="@+id/cardView5"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/AboutMe"
+            android:layout_marginTop="8dp">
+            <TextView
+                android:id="@+id/tvDescription"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:textColor="#000"
+                android:height="200dp"
+                android:text="@string/demotxt2"
+                android:textSize="16sp"
+                android:gravity="start"
+                android:padding="3dp"
+                android:textStyle="italic"
+                android:drawablePadding="10dp" />
+        </android.support.v7.widget.CardView>
+
+    </RelativeLayout>
+
+</RelativeLayout>

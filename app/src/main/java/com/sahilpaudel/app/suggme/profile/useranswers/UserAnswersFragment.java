@@ -4,11 +4,9 @@ package com.sahilpaudel.app.suggme.profile.useranswers;
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
-import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -25,9 +23,7 @@ import com.sahilpaudel.app.suggme.Config;
 import com.sahilpaudel.app.suggme.CustomProgressDialog;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
-import com.sahilpaudel.app.suggme.singlequestionpage.AnswerActivity;
 import com.sahilpaudel.app.suggme.singlequestionpage.AnswerFeed;
-import com.sahilpaudel.app.suggme.singlequestionpage.AnswerFeedAdapter;
 
 import org.json.JSONArray;
 import org.json.JSONException;
@@ -52,6 +48,8 @@ public class UserAnswersFragment extends Fragment {
     RecyclerView recyclerViewAnswerByUser;
     UserAnswerAdapter userAnswerAdapter;
 
+    String user_id;
+
     public UserAnswersFragment() {
         // Required empty public constructor
     }
@@ -61,6 +59,23 @@ public class UserAnswersFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_user_answers, container, false);
+
+        // store current user id, to fetch records for current user
+        user_id = SharedPrefSuggMe.getInstance(getActivity()).getUserId();
+
+        try{
+            //to fetch records for user profile, when the profile activity
+            //is called for other users, by clicking names.
+            String temp_user_id = getArguments().getString("USER_ID");
+            Toast.makeText(getActivity(), temp_user_id, Toast.LENGTH_SHORT).show();
+
+            if (temp_user_id != null)
+                user_id = temp_user_id;
+
+        }catch (NullPointerException e){
+            e.printStackTrace();
+        }
+
         recyclerViewAnswerByUser = (RecyclerView)view.findViewById(R.id.recyclerViewAnswer);
         list = new ArrayList<>();
         manager = getActivity().getSupportFragmentManager();
@@ -114,13 +129,13 @@ public class UserAnswersFragment extends Fragment {
         },new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                Toast.makeText(getActivity(), error+"", Toast.LENGTH_SHORT).show();
+                error.printStackTrace();
             }
         }){
             @Override
             protected Map<String, String> getParams() throws AuthFailureError {
                 Map<String,String> params = new HashMap<>();
-                params.put("user_id", SharedPrefSuggMe.getInstance(getActivity()).getUserId());
+                params.put("user_id", user_id);
                 return params;
             }
         };
@@ -129,5 +144,4 @@ public class UserAnswersFragment extends Fragment {
 
         return view;
     }
-
 }

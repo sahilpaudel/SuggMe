@@ -239,7 +239,7 @@ public class MainFragment extends Fragment {
             @Override
             public void onErrorResponse(VolleyError error) {
                 //progress.dismiss();
-                Log.e("VOLLEY ERROR",error.getMessage());
+                Log.e("VOLLEY ERROR",""+error.getMessage());
             }
         }){
             @Override

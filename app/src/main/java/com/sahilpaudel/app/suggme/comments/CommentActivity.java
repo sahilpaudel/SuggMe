@@ -1,16 +1,17 @@
 package com.sahilpaudel.app.suggme.comments;
 
-import android.app.Activity;
 import android.app.Fragment;
-import android.app.FragmentManager;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.DefaultItemAnimator;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.view.KeyEvent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.EditorInfo;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
@@ -38,38 +39,44 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-public class CommentActivity extends Activity implements FragmentManager.OnBackStackChangedListener {
+public class CommentActivity extends AppCompatActivity {
 
-    //initially we are showing front of the card
-    private boolean mShowingBack = false;
     ImageView imageViewClose;
     TextView txQuestionTitle;
-    TextView txAnsweredBy;
     TextView txAnsweredOn;
 
-    ImageView ivWriteComment;
+    EditText ivWriteComment;
 
-    Fragment fragment_f;
-    Fragment fragment_b;
+    String questionTitle;
+    String answeredBy;
+    String answeredOn;
+    String answeredId;
+
+    RecyclerView commentRecyclerView;
+    StringRequest commentRequest;
+    RequestQueue commentQueue;
+    Comments comments;
+    List<Comments> commentList;
+    CommentAdapter commentAdapter;
+
+    ProgressDialog progress;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_comment);
 
-        String questionTitle = getIntent().getStringExtra("QUESTION_TITLE");
-        String answeredBy = getIntent().getStringExtra("ANSWERED_BY");
-        String answeredOn = getIntent().getStringExtra("ANSWERED_ON");
-        String answeredId = getIntent().getStringExtra("ANSWER_ID");
+         questionTitle = getIntent().getStringExtra("QUESTION_TITLE");
+         answeredBy = getIntent().getStringExtra("ANSWERED_BY");
+         answeredOn = getIntent().getStringExtra("ANSWERED_ON");
+         answeredId = getIntent().getStringExtra("ANSWER_ID");
 
-        //send answer id to fragment so that we can fetch comments/ write comments for that answer id
-        fragment_f = new CommentFrontFragment();
-        fragment_b = new CommentBackFragment();
-
-        Bundle bundle = new Bundle();
-        bundle.putString("ANSWER_ID", answeredId);
-        fragment_f.setArguments(bundle);
-        fragment_b.setArguments(bundle);
+        Toast.makeText(this, answeredBy, Toast.LENGTH_SHORT).show();
+        if (answeredBy.equals("Me")) {
+            answeredBy = "My";
+        } else {
+            answeredBy = answeredBy+"\'s";
+        }
 
         imageViewClose = (ImageView)findViewById(R.id.cross_close);
         imageViewClose.setOnClickListener(new View.OnClickListener() {
@@ -78,197 +85,119 @@ public class CommentActivity extends Activity implements FragmentManager.OnBackS
                finish();
             }
         });
-        txQuestionTitle = (TextView)findViewById(R.id.question_title);
-        txAnsweredBy = (TextView)findViewById(R.id.answeredByName);
-        txAnsweredOn = (TextView)findViewById(R.id.answeredOn);
-
-        txQuestionTitle.setText(questionTitle);
-        txAnsweredBy.setText(answeredBy);
-        txAnsweredOn.setText(answeredOn);
-
-        ivWriteComment = (ImageView)findViewById(R.id.ivWriteComment);
-        ivWriteComment.setOnClickListener(new View.OnClickListener() {
+        ivWriteComment = (EditText)findViewById(R.id.ivWriteComment);
+        ivWriteComment.setOnEditorActionListener(new TextView.OnEditorActionListener() {
             @Override
-            public void onClick(View view) {
-                flipCard();
+            public boolean onEditorAction(TextView textView, int actionId, KeyEvent keyEvent) {
+                boolean handled = false;
+
+                if (actionId == EditorInfo.IME_ACTION_SEND) {
+                    createComment(ivWriteComment.getText().toString());
+                    ivWriteComment.setText("");
+                    handled = true;
+                }
+                return handled;
             }
         });
-        if (savedInstanceState == null) {
-            getFragmentManager()
-                    .beginTransaction()
-                    .add(R.id.commentFragment, fragment_f)
-                    .commit();
-        } else {
-            mShowingBack = (getFragmentManager()
-                    .getBackStackEntryCount() > 0);
-        }
-        getFragmentManager().addOnBackStackChangedListener(this);
-    }
+        txQuestionTitle = (TextView)findViewById(R.id.question_title);
+        txAnsweredOn = (TextView)findViewById(R.id.answeredOn);
 
+        txQuestionTitle.setText(answeredBy+" response to "+questionTitle);
+        txAnsweredOn.setText(answeredOn);
 
-    @Override
-    public void onBackStackChanged() {
-        mShowingBack = (getFragmentManager().getBackStackEntryCount() > 0);
-    }
+        //start progress dialog
+        progress = ProgressDialog.show(this, "Please wait.","Loading comments...", false, false);
 
-    private void flipCard() {
-        if (mShowingBack) {
-            getFragmentManager().popBackStack();
-            return;
-        }
-        mShowingBack = true;
-        getFragmentManager()
-                .beginTransaction()
-                .setCustomAnimations(R.animator.card_flip_right_in, R.animator.card_flip_right_out,
-                        R.animator.card_flip_left_in, R.animator.card_flip_left_out)
-                .replace(R.id.commentFragment, fragment_b)
-                .addToBackStack(null)
-                .commit();
-    }
-
-    public static class CommentFrontFragment extends Fragment {
-
-        View view;
-        RecyclerView commentRecyclerView;
-        StringRequest commentRequest;
-        RequestQueue commentQueue;
-        Comments comments;
-        List<Comments> commentList;
-        CommentAdapter commentAdapter;
-
-        String tempAnswerId;
-        ProgressDialog progress;
-
-        public CommentFrontFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            view = inflater.inflate(R.layout.comment_view, container, false);
-
-            //start progress dialog
-            progress = ProgressDialog.show(getActivity(), "Please wait.","Loading comments...", false, false);
-            //get answer to fetch comments corresponding
-            tempAnswerId = getArguments().getString("ANSWER_ID");
-            //Toast.makeText(getActivity(), tempAnswerId, Toast.LENGTH_SHORT).show();
-            commentRecyclerView = (RecyclerView)view.findViewById(R.id.commentRecyclerView);
-            commentList = new ArrayList<>();
-            //volley start
-            commentQueue = Volley.newRequestQueue(getActivity());
-            commentRequest = new StringRequest(Request.Method.POST, Config.URL_GET_COMMENTS, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    try {
-                        JSONArray array = new JSONArray(response);
-                        for (int i = 0; i < array.length(); i++) {
-                            comments = new Comments();
-                            JSONObject object = array.getJSONObject(i);
-                            comments.userName = object.getString("first_name")+" "+object.getString("last_name");
-                            comments.commentContent = object.getString("comment");
-                            comments.entryOn = object.getString("entryOn");
-                            commentList.add(comments);
-                         //   Toast.makeText(getActivity(), object.getString("comment"), Toast.LENGTH_SHORT).show();
-                        }
-                        commentAdapter = new CommentAdapter(getActivity(), commentList);
-                        RecyclerView.LayoutManager ll = new LinearLayoutManager(getActivity());
-                        commentRecyclerView.setLayoutManager(ll);
-                        commentRecyclerView.setItemAnimator(new DefaultItemAnimator());
-                        commentRecyclerView.setAdapter(commentAdapter);
-                        commentAdapter.notifyDataSetChanged();
-
-                        //close the progress dialog
-                        progress.dismiss();
-                    } catch (JSONException e) {
-                        Toast.makeText(getActivity(), "Exception : "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                        progress.dismiss();
+        //Toast.makeText(getActivity(), tempAnswerId, Toast.LENGTH_SHORT).show();
+        commentRecyclerView = (RecyclerView)findViewById(R.id.commentRecyclerView);
+        commentList = new ArrayList<>();
+        //volley start
+        commentQueue = Volley.newRequestQueue(CommentActivity.this);
+        commentAdapter = new CommentAdapter(CommentActivity.this, commentList);
+        commentRequest = new StringRequest(Request.Method.POST, Config.URL_GET_COMMENTS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                try {
+                    JSONArray array = new JSONArray(response);
+                    for (int i = 0; i < array.length(); i++) {
+                        comments = new Comments();
+                        JSONObject object = array.getJSONObject(i);
+                        comments.userName = object.getString("first_name")+" "+object.getString("last_name");
+                        comments.commentContent = object.getString("comment");
+                        comments.entryOn = object.getString("entryOn");
+                        comments.imageUrl = object.getString("image_url");
+                        commentList.add(comments);
                     }
+                    RecyclerView.LayoutManager ll = new LinearLayoutManager(CommentActivity.this);
+                    commentRecyclerView.setLayoutManager(ll);
+                    commentRecyclerView.setItemAnimator(new DefaultItemAnimator());
+                    commentRecyclerView.setAdapter(commentAdapter);
+                    commentAdapter.notifyDataSetChanged();
+
+                    //close the progress dialog
+                    progress.dismiss();
+                } catch (JSONException e) {
+                    Toast.makeText(CommentActivity.this, "Exception : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    progress.dismiss();
                 }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                       Toast.makeText(getActivity(), "Error : "+error, Toast.LENGTH_SHORT).show();
-                        progress.dismiss();
-                }
-            }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("answer_id", tempAnswerId);
-                    return params;
-                }
-            };
-            commentQueue.add(commentRequest);
-            return view;
-        }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(CommentActivity.this, "Error : "+error, Toast.LENGTH_SHORT).show();
+                progress.dismiss();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("answer_id", answeredId);
+                return params;
+            }
+        };
+        commentQueue.add(commentRequest);
     }
 
-    public static class CommentBackFragment extends Fragment {
+    private void createComment(final String comment) {
 
-        View view;
-        EditText editTextWriteComment;
-        Button buttonSendComment;
-        Timestamp ts = new Timestamp(System.currentTimeMillis());
-        String currTime;
-
-        String tempAnswerId;
-        String user_id;
-
-        public CommentBackFragment() {
-        }
-
-        @Override
-        public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-            view = inflater.inflate(R.layout.comment_write, container, false);
-
-            //content of comment
-            editTextWriteComment = (EditText)view.findViewById(R.id.commentBox);
-            //user_id of commet
-            user_id = SharedPrefSuggMe.getInstance(getActivity()).getUserId();
-            //date of comment
-            currTime = ts.toString();
-            //answer_id to comment
-            tempAnswerId = getArguments().getString("ANSWER_ID");
-
-            buttonSendComment = (Button)view.findViewById(R.id.buttonComment);
-            buttonSendComment.setOnClickListener(new View.OnClickListener() {
-                @Override
-                public void onClick(View view) {
-                    sendComment(editTextWriteComment.getText().toString());
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_COMMENTS, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                if (response.equals("1")) {
+                    //clear all the data in the list
+                    commentList.clear();
+                    //make adpater empty
+                    commentAdapter.notifyDataSetChanged();
+                    //make new volley request
+                    commentQueue.add(commentRequest);
+                    //call adapter class
+                    commentAdapter = new CommentAdapter(CommentActivity.this, commentList);
+                    //set adapter
+                    commentRecyclerView.setAdapter(commentAdapter);
+                    //populate the adapter;
+                    commentAdapter.notifyDataSetChanged();
+                }else{
+                    Toast.makeText(CommentActivity.this, "Error", Toast.LENGTH_SHORT).show();
                 }
-            });
-            return view;
-        }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(CommentActivity.this, "Error : "+error, Toast.LENGTH_SHORT).show();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("ans_id", answeredId);
+                params.put("comment", comment);
+                params.put("user_id", SharedPrefSuggMe.getInstance(CommentActivity.this).getUserId());
+                return params;
+            }
+        };
 
-        private void sendComment(final String comment) {
-
-            StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_COMMENTS, new Response.Listener<String>() {
-                @Override
-                public void onResponse(String response) {
-                    if (response.equals("1")) {
-                        getFragmentManager().popBackStack();
-                    }else{
-                        Toast.makeText(getActivity(), "Error", Toast.LENGTH_SHORT).show();
-                    }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError error) {
-                    Toast.makeText(getActivity(), "Error : "+error, Toast.LENGTH_SHORT).show();
-                }
-            }){
-                @Override
-                protected Map<String, String> getParams() throws AuthFailureError {
-                    Map<String, String> params = new HashMap<>();
-                    params.put("ans_id", tempAnswerId);
-                    params.put("comment", comment);
-                    params.put("entryOn", currTime);
-                    params.put("user_id", user_id);
-                    return params;
-                }
-            };
-
-            RequestQueue queue = Volley.newRequestQueue(getActivity());
-            queue.add(request);
-        }
+        RequestQueue queue = Volley.newRequestQueue(CommentActivity.this);
+        queue.add(request);
     }
+
 }

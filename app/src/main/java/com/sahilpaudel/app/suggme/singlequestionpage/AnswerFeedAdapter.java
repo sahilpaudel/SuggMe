@@ -7,15 +7,18 @@ import android.content.Intent;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.widget.PopupMenu;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.MenuInflater;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CompoundButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
+import android.widget.ToggleButton;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -28,6 +31,8 @@ import com.sahilpaudel.app.suggme.Config;
 import com.sahilpaudel.app.suggme.R;
 import com.sahilpaudel.app.suggme.SharedPrefSuggMe;
 import com.sahilpaudel.app.suggme.comments.CommentActivity;
+import com.sahilpaudel.app.suggme.profile.ProfilePage;
+import com.sahilpaudel.app.suggme.profile.useranswers.UserAnswerAdapter;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONArray;
@@ -111,6 +116,14 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
         answeredOn = "Written "+p.format(time);
 
         holder.tvAnsweredBy.setText(answeredBy);
+        holder.tvAnsweredBy.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                Intent intent = new Intent(context, ProfilePage.class);
+                intent.putExtra("USER_ID", user_id);
+                context.startActivity(intent);
+            }
+        });
         holder.tvAnsweredOn.setText(answeredOn);
         holder.tvAnswer.setText(answer);
         Picasso.with(context).load(image_url).into(holder.imageView);
@@ -121,16 +134,15 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
             }
         });
 
-        //set upvotes
-        holder.bt_upvote.setText(total_like+" UPVOTES");
-        //create likes
         holder.bt_upvote.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                createLike(answer_id);
-                int i = Integer.parseInt(holder.bt_upvote.getText().charAt(0)+"") + 1;
-                holder.bt_upvote.setText(i+" UPVOTES");
-                holder.bt_upvote.setClickable(false);
+                if (holder.bt_upvote.isChecked()) {
+                    createLike(answer_id, holder);
+                } else {
+                    deleteLike(answer_id, holder);
+                }
+                getLike(answer_id, holder);
             }
         });
 
@@ -141,7 +153,7 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
             public void onClick(View view) {
                 Intent intent = new Intent(context, CommentActivity.class);
                 intent.putExtra("QUESTION_TITLE",question_title);
-                intent.putExtra("ANSWERED_BY", answeredBy);
+                intent.putExtra("ANSWERED_BY", holder.tvAnsweredBy.getText());
                 intent.putExtra("ANSWERED_ON", finalAnsweredOn);
                 intent.putExtra("ANSWER_ID",answer_id);
                 context.startActivity(intent);
@@ -158,7 +170,8 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
     public class MyViewHolder extends RecyclerView.ViewHolder {
 
         TextView tvAnsweredBy, tvAnsweredOn, tvAnswer;
-        Button bt_upvote, bt_comment;
+        Button  bt_comment;
+        ToggleButton bt_upvote;
         ImageView imageView;
         ImageView ivShowMore;
 
@@ -167,7 +180,7 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
             tvAnsweredBy = (TextView)itemView.findViewById(R.id.answeredByName);
             tvAnsweredOn = (TextView)itemView.findViewById(R.id.answeredOn);
             tvAnswer = (TextView)itemView.findViewById(R.id.answers);
-            bt_upvote = (Button)itemView.findViewById(R.id.like);
+            bt_upvote = (ToggleButton)itemView.findViewById(R.id.like);
             bt_comment = (Button)itemView.findViewById(R.id.suggest);
             imageView = (ImageView)itemView.findViewById(R.id.answeredByImage);
             ivShowMore = (ImageView)itemView.findViewById(R.id.ivShowMore);
@@ -205,7 +218,6 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
     }
 
     ProgressDialog progress;
-    //delete answer by setting isActive = 0
     private void deleteAnswer(final String answer_id) {
         progress = ProgressDialog.show(context,"Please wait.", "Deleting the answer...", false, false);
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_DELETE_ANSWER, new Response.Listener<String>() {
@@ -247,15 +259,59 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
 
     }
 
-    private void createLike(final String answer_id) {
-        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_LIKE, new Response.Listener<String>() {
+    private void getLike(final String answer_id, final MyViewHolder holder) {
+
+        //progress = ProgressDialog.show(context,"Please wait.", "Loading upvotes....", false, true);
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_UPVOTE, new Response.Listener<String>() {
+            @Override
+            public void onResponse(String response) {
+                Log.d("UPVOTED : ",""+response+" ");
+                try {
+                    JSONArray array = new JSONArray(response);
+                    total_like = array.length();
+                    for (int i = 0; i < array.length(); i++) {
+                        JSONObject object = array.getJSONObject(i);
+
+                        if (object.getString("user_id").equals(SharedPrefSuggMe.getInstance(context).getUserId())) {
+                            holder.bt_upvote.setChecked(true);
+                        } else {
+                            holder.bt_upvote.setChecked(false);
+                        }
+                        //progress.dismiss();
+                    }
+                } catch (JSONException e) {
+                    Toast.makeText(context, "LIKE : "+e.getMessage(), Toast.LENGTH_SHORT).show();
+                    //progress.dismiss();
+                }
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError error) {
+                Toast.makeText(context, "Error : "+error, Toast.LENGTH_SHORT).show();
+                //progress.dismiss();
+            }
+        }){
+            @Override
+            protected Map<String, String> getParams() throws AuthFailureError {
+                Map<String, String> params = new HashMap<>();
+                params.put("answer_id", answer_id);
+                return params;
+            }
+        };
+        RequestQueue queue = Volley.newRequestQueue(context);
+        queue.add(request);
+    }
+
+    private void createLike(final String answer_id, final MyViewHolder holder) {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_UPVOTE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
                 if (response.equals("1")) {
                     Toast.makeText(context, "upvoted", Toast.LENGTH_SHORT).show();
+                    holder.bt_upvote.setChecked(true);
                 }
                 else {
-                    Toast.makeText(context, "Oops! try again.", Toast.LENGTH_SHORT).show();
+                    //Toast.makeText(context, "Oops! try again.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
@@ -277,39 +333,22 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
 
     }
 
-
-    private void getLike(final String answer_id, final MyViewHolder holder) {
-
-        //progress = ProgressDialog.show(context,"Please wait.", "Loading upvotes....", false, true);
-        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GETLIKE, new Response.Listener<String>() {
+    private void deleteLike(final String answer_id, final MyViewHolder holder) {
+        StringRequest request = new StringRequest(Request.Method.POST, Config.URL_DELETE_UPVOTE, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                try {
-                    JSONArray array = new JSONArray(response);
-                    total_like = array.length();
-                    for (int i = 0; i < array.length(); i++) {
-                        JSONObject object = array.getJSONObject(i);
-
-                        if (object.getString("user_id").equals(SharedPrefSuggMe.getInstance(context).getUserId())) {
-                            holder.bt_upvote.setText(total_like+" UPVOTES");
-                            holder.bt_upvote.setClickable(false);
-
-                        } else {
-                            holder.bt_upvote.setClickable(true);
-                        }
-                        //progress.dismiss();
-                    }
-
-                } catch (JSONException e) {
-                    Toast.makeText(context, "LIKE : "+e.getMessage(), Toast.LENGTH_SHORT).show();
-                    //progress.dismiss();
+                if (response.equals("1")) {
+                    Toast.makeText(context, "downvoted", Toast.LENGTH_SHORT).show();
+                    holder.bt_upvote.setChecked(false);
+                }
+                else {
+                    //Toast.makeText(context, "Oops! try again.", Toast.LENGTH_SHORT).show();
                 }
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
                 Toast.makeText(context, "Error : "+error, Toast.LENGTH_SHORT).show();
-                //progress.dismiss();
             }
         }){
             @Override
@@ -322,5 +361,6 @@ public class AnswerFeedAdapter extends RecyclerView.Adapter<AnswerFeedAdapter.My
         };
         RequestQueue queue = Volley.newRequestQueue(context);
         queue.add(request);
+
     }
 }

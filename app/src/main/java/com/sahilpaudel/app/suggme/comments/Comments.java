@@ -8,4 +8,5 @@ public class Comments {
     public String userName;
     public String entryOn;
     public String commentContent;
+    public String imageUrl;
 }

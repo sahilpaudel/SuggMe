@@ -65,19 +65,19 @@
                 android:layout_marginRight="5dp"
                 android:text="@string/demotxt"
                 android:padding="5dp"/>
-
-            <Button
+            <ToggleButton
                 android:id="@+id/like"
-                android:text="0 upvote"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
-                android:layout_below="@id/answers"
+                android:textSize="12sp"
+                android:textOn="UPVOTED"
+                android:textOff="UPVOTE"
                 android:layout_marginLeft="10dp"
                 android:background="@drawable/roundedbutton2"
-                android:textColor="@color/alltext"
-                android:gravity="center_horizontal"
+                android:gravity="center"
                 android:padding="2dp"
-                android:layout_marginBottom="10dp"/>
+                android:textColor="@color/alltext"
+                android:layout_below="@id/answers"/>
             <Button
                 android:id="@+id/suggest"
                 android:text="0 suggest"
