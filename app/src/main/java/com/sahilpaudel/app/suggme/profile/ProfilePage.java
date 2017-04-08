@@ -1,22 +1,18 @@
 package com.sahilpaudel.app.suggme.profile;
 import android.app.ProgressDialog;
 import android.graphics.Color;
-import android.media.Image;
 import android.os.Bundle;
 import android.support.design.widget.AppBarLayout;
-import android.support.design.widget.CollapsingToolbarLayout;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
@@ -59,7 +55,7 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
     String state;
     String city;
     String country;
-    String image_url;
+    String image_url = "http://weshapelife.org/wp-content/uploads/2016/03/CYHZY4IWsAA4xSD-1.jpg";
     String description;
     Bundle bundle;
 
@@ -87,7 +83,7 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
 
         try{
             String temp_user_id = getIntent().getStringExtra("USER_ID");
-            Toast.makeText(this, temp_user_id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(this, temp_user_id, Toast.LENGTH_SHORT).show();
 
             if (temp_user_id != null)
                 user_id = temp_user_id;
@@ -107,6 +103,9 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
             @Override
             public void onClick(View view) {
                 fragment = new UserQuestionsFragment();
+                Bundle b = new Bundle();
+                b.putString("USER_ID",user_id);
+                fragment.setArguments(b);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFragment, fragment);
                 transaction.commit();
@@ -120,6 +119,9 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
             @Override
             public void onClick(View view) {
                 fragment = new UserAnswersFragment();
+                Bundle b = new Bundle();
+                b.putString("USER_ID",user_id);
+                fragment.setArguments(b);
                 transaction = getSupportFragmentManager().beginTransaction();
                 transaction.replace(R.id.contentFragment, fragment);
                 transaction.commit();
@@ -144,14 +146,16 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
             }
         });
 
-        fragment = new UserInfo();
-        fragment.setArguments(bundle);
+        fragment = new UserAnswersFragment();
+        Bundle b = new Bundle();
+        b.putString("USER_ID",user_id);
+        fragment.setArguments(b);
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.contentFragment, fragment);
         transaction.commit();
         findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#4db6ac"));
-        findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#4db6ac"));
-        findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#26a69a"));
+        findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#26a69a"));
+        findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#4db6ac"));
 
         bindActivity();
 
@@ -253,24 +257,27 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
                          state = object.getString("state");
                          city = object.getString("city");
                          country = object.getString("country");
-
-                         tvUserLocation.setText(city+", "+state+", "+country);
+                         tvUserLocation.setText(firstName+" "+lastName);
                          description = object.getString("description");
-                         image_url = object.getString("image_url");
+                         String temp_image_url = null;
+                         try{
+                             temp_image_url = object.getString("image_url");
+                             if (temp_image_url.isEmpty()) {
+                                 image_url = temp_image_url;
+                             }
+                         }catch (NullPointerException e){
+                            e.printStackTrace();
+                         }
 
                          bundle = new Bundle();
+                         bundle.putString("USER_ID", user_id);
                          bundle.putString("FIRST_NAME", firstName);
                          bundle.putString("LAST_NAME", lastName);
                          bundle.putString("GENDER", gender);
                          bundle.putString("DESCRIPTION", description);
-                         bundle.putString("CITY", city);
-                         bundle.putString("STATE", state);
-                         bundle.putString("COUNTRY", country);
+                         bundle.putString("ADDRESS", city+", "+state+", "+country);
 
-                         if (image_url != null)
-                             Picasso.with(ProfilePage.this).load(image_url).into(ivUserImage);
-                         else
-                             Picasso.with(ProfilePage.this).load("http://weshapelife.org/wp-content/uploads/2016/03/CYHZY4IWsAA4xSD-1.jpg").into(ivUserImage);
+                         Picasso.with(ProfilePage.this).load(image_url).into(ivUserImage);
 
                          bundle.putString("IMAGE_URL", image_url);
                          bundle.putString("AGE", age);

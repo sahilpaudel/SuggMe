@@ -51,8 +51,8 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:layout_marginTop="4dp"
-                        android:text="@string/quila_tagline"
-                        android:textColor="@android:color/white"/>
+                        android:text="@string/userName"
+                        android:textColor="@android:color/white" />
                 </LinearLayout>
                 </FrameLayout>
         </android.support.design.widget.CollapsingToolbarLayout>

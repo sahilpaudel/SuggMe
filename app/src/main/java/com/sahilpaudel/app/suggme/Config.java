@@ -9,6 +9,7 @@ public class Config {
     public static final String URL_GET_USER_INFO = "https://e386dafb.ngrok.io/SuggMe/api/getUserInfo.php";
     public static final String URL_CREATE_USER = "https://e386dafb.ngrok.io/SuggMe/api/createUser.php";
     public static final String URL_CREATE_USER_NORMAL = "https://e386dafb.ngrok.io/SuggMe/api/createUserNormal.php";
+    public static final String URL_UPDATE_USER = "https://e386dafb.ngrok.io/SuggMe/api/updateUser.php";
     public static final String URL_USER_LOGIN = "https://e386dafb.ngrok.io/SuggMe/api/userLogin.php";
     public static final String URL_USER_ISEXIST = "https://e386dafb.ngrok.io/SuggMe/api/isExist.php";
     public static final String URL_GET_QUESTIONS = "https://e386dafb.ngrok.io/SuggMe/api/getQuestion.php";
