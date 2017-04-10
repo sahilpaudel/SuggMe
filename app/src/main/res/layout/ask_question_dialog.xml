@@ -3,8 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="250dp"
     android:paddingTop="5dp"
-    android:background="#f5f5f5">
-
+    android:background="@drawable/mainbackgroun22">
     <View
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
@@ -34,7 +33,7 @@
     <LinearLayout
         android:id="@+id/layout2"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="70dp"
         android:layout_below="@id/view2"
         android:orientation="horizontal">
 
@@ -44,7 +43,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:background="@drawable/roundedbutton"
-            android:hint="Current Address"
+            android:text="Current Address"
             android:padding="10dp"
             android:maxLines="1"
             android:layout_marginLeft="16dp"
@@ -81,14 +80,14 @@
             android:maxLines="1"
             android:layout_marginLeft="16dp"
             android:layout_marginRight="8dp"
-            android:layout_marginTop="16dp"/>
+            android:layout_marginTop="12dp"/>
         <Button
             android:id="@+id/ask_question_button"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="ok"
             android:textColor="@color/alltext"
-            android:layout_marginTop="15dp"
+            android:layout_marginTop="10dp"
             android:padding="10dp"
             android:layout_marginRight="10dp"
             android:textStyle="bold"
@@ -105,5 +104,4 @@
         android:visibility="gone"
         android:layout_below="@id/l1">
     </ListView>
-
 </RelativeLayout>

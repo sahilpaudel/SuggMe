@@ -71,7 +71,7 @@ public class CommentActivity extends AppCompatActivity {
          answeredOn = getIntent().getStringExtra("ANSWERED_ON");
          answeredId = getIntent().getStringExtra("ANSWER_ID");
 
-        Toast.makeText(this, answeredBy, Toast.LENGTH_SHORT).show();
+        //Toast.makeText(this, answeredBy, Toast.LENGTH_SHORT).show();
         if (answeredBy.equals("Me")) {
             answeredBy = "My";
         } else {

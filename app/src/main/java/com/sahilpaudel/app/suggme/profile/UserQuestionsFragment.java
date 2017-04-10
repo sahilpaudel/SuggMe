@@ -74,7 +74,7 @@ public class UserQuestionsFragment extends Fragment {
             //to fetch records for user profile, when the profile activity
             //is called for other users, by clicking names.
             String temp_user_id = getArguments().getString("USER_ID");
-            Toast.makeText(getActivity(), temp_user_id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), temp_user_id, Toast.LENGTH_SHORT).show();
 
             if (temp_user_id != null)
                  user_id = temp_user_id;
@@ -88,15 +88,15 @@ public class UserQuestionsFragment extends Fragment {
          question_feed = new ArrayList<>();
 
          //progress dialog
-         manager = getActivity().getSupportFragmentManager();
-         customProgress = new CustomProgressDialog(getActivity(), manager);
-         customProgress.show();
+//         manager = getActivity().getSupportFragmentManager();
+//         customProgress = new CustomProgressDialog(getActivity(), manager);
+//         customProgress.show();
          queue = Volley.newRequestQueue(getActivity());
          requestQuestion = new StringRequest(Request.Method.POST, Config.URL_GET_QUESTION_BY_USER_ID, new Response.Listener<String>() {
              @Override
              public void onResponse(String response) {
                  try {
-                     customProgress.dismiss();
+//                     customProgress.dismiss();
                      JSONArray array = new JSONArray(response);
                      for (int i = 0; i < array.length(); i++) {
                          JSONObject object = array.getJSONObject(i);

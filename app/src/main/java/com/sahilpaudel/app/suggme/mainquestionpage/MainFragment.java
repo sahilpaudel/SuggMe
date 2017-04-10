@@ -148,7 +148,7 @@ public class MainFragment extends Fragment {
 
         getQuestionQueue = Volley.newRequestQueue(getActivity());
 
-        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the feeds", false, false);
+        progress = ProgressDialog.show(getActivity(),"Please wait.","Loading questions...", false, false);
 
         //get question
         getQuestionRequest = new StringRequest(Request.Method.POST, Config.URL_GET_QUESTIONS, new Response.Listener<String>() {
@@ -231,14 +231,14 @@ public class MainFragment extends Fragment {
 
                 } catch (JSONException e) {
                     Toast.makeText(getActivity(), e.getMessage(), Toast.LENGTH_SHORT).show();
-                    //progress.dismiss();
+                    progress.dismiss();
                 }
 
             }
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
-                //progress.dismiss();
+                progress.dismiss();
                 Log.e("VOLLEY ERROR",""+error.getMessage());
             }
         }){
@@ -354,7 +354,7 @@ public class MainFragment extends Fragment {
     private void getQuestionById(final String question_id, final AlertDialog b) {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the question", false, false);
+        progress = ProgressDialog.show(getActivity(),"Please wait.","Loading the question", false, false);
         //get question
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_QUESTIONBYID, new Response.Listener<String>() {
             @Override
@@ -386,6 +386,7 @@ public class MainFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progress.dismiss();
                 Log.e("EXCEPTION : ",""+error.getMessage());
             }
         }){
@@ -402,7 +403,7 @@ public class MainFragment extends Fragment {
     private void createQuestion(final String content, final String isAnonymous) {
 
         RequestQueue queue = Volley.newRequestQueue(getActivity());
-        progress = ProgressDialog.show(getActivity(),"Please wait.","Feeding the question", false, false);
+        progress = ProgressDialog.show(getActivity(),"Please wait.","Distributing to users...", false, false);
         //get question
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_QUESTION, new Response.Listener<String>() {
             @Override
@@ -428,6 +429,7 @@ public class MainFragment extends Fragment {
         }, new Response.ErrorListener() {
             @Override
             public void onErrorResponse(VolleyError error) {
+                progress.dismiss();
                 Toast.makeText(getActivity(), "Volley Error : "+error, Toast.LENGTH_SHORT).show();
             }
         }){

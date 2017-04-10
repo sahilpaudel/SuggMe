@@ -4,6 +4,7 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/mainbackgroun2"
    >
 
     <android.support.v7.widget.CardView
@@ -80,7 +81,7 @@
                 android:layout_below="@id/answers"/>
             <Button
                 android:id="@+id/suggest"
-                android:text="0 suggest"
+                android:text="suggest"
                 android:layout_width="wrap_content"
                 android:layout_height="20dp"
                 android:layout_below="@id/answers"

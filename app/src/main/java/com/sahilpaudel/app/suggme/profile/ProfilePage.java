@@ -7,6 +7,7 @@ import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentTransaction;
 import android.support.v7.app.AppCompatActivity;
 import android.support.v7.widget.Toolbar;
+import android.util.Log;
 import android.view.Menu;
 import android.view.View;
 import android.view.animation.AlphaAnimation;
@@ -110,9 +111,9 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
                 transaction.replace(R.id.contentFragment, fragment);
                 transaction.commit();
 
-                findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#26a69a"));
-                findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#4db6ac"));
-                findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#4db6ac"));
+                findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#F1948A"));
+                findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#FADBD8"));
+                findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#FADBD8"));
             }
         });
         tvAnswers.setOnClickListener(new View.OnClickListener() {
@@ -126,9 +127,9 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
                 transaction.replace(R.id.contentFragment, fragment);
                 transaction.commit();
 
-                findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#4db6ac"));
-                findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#26a69a"));
-                findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#4db6ac"));
+                findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#FADBD8"));
+                findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#F1948A"));
+                findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#FADBD8"));
             }
         });
         tvUser.setOnClickListener(new View.OnClickListener() {
@@ -140,9 +141,9 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
                 transaction.replace(R.id.contentFragment, fragment);
                 transaction.commit();
 
-                findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#4db6ac"));
-                findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#4db6ac"));
-                findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#26a69a"));
+                findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#FADBD8"));
+                findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#FADBD8"));
+                findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#F1948A"));
             }
         });
 
@@ -153,9 +154,9 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
         transaction = getSupportFragmentManager().beginTransaction();
         transaction.add(R.id.contentFragment, fragment);
         transaction.commit();
-        findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#4db6ac"));
-        findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#26a69a"));
-        findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#4db6ac"));
+        findViewById(R.id.tvQuestions).setBackgroundColor(Color.parseColor("#FADBD8"));
+        findViewById(R.id.tvAnswers).setBackgroundColor(Color.parseColor("#F1948A"));
+        findViewById(R.id.tvProfile).setBackgroundColor(Color.parseColor("#FADBD8"));
 
         bindActivity();
 
@@ -164,9 +165,6 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
         mToolbar.inflateMenu(R.menu.menu_main);
         startAlphaAnimation(mTitle, 0, View.INVISIBLE);
     }
-
-
-
     private void bindActivity() {
         mToolbar        = (Toolbar) findViewById(R.id.main_toolbar);
         mTitle          = (TextView) findViewById(R.id.main_textview_title);
@@ -260,14 +258,7 @@ public class ProfilePage extends AppCompatActivity implements AppBarLayout.OnOff
                          tvUserLocation.setText(firstName+" "+lastName);
                          description = object.getString("description");
                          String temp_image_url = null;
-                         try{
-                             temp_image_url = object.getString("image_url");
-                             if (temp_image_url.isEmpty()) {
-                                 image_url = temp_image_url;
-                             }
-                         }catch (NullPointerException e){
-                            e.printStackTrace();
-                         }
+                         image_url = object.getString("image_url");
 
                          bundle = new Bundle();
                          bundle.putString("USER_ID", user_id);

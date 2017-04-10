@@ -210,7 +210,7 @@ public class AnswerActivity extends AppCompatActivity {
         //end of beautifying the time display
 
         getAnswerQueue = Volley.newRequestQueue(AnswerActivity.this);
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Feeding the answers...", false, false);
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Loading the answers...", false, false);
 
         answerFeeds = new ArrayList<>();
         //to get Answers which are active
@@ -361,7 +361,7 @@ public class AnswerActivity extends AppCompatActivity {
     //to create answers
     private void createAnswer (final String content, final String user_id) {
 
-        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Responding to need ones...", false, false);
+        progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Creating answer...", false, false);
 
         RequestQueue queue = Volley.newRequestQueue(AnswerActivity.this);
         final StringRequest request = new StringRequest(Request.Method.POST, Config.URL_CREATE_ANSWERS, new Response.Listener<String>() {

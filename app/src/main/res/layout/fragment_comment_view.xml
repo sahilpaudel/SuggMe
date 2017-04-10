@@ -2,6 +2,8 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/mainbackgroun2"
     tools:context="com.sahilpaudel.app.suggme.comments.CommentViewFragment">
 
     <ImageView
@@ -15,11 +17,15 @@
         android:id="@+id/topCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cross_close">
+        android:layout_below="@id/cross_close"
+        android:layout_margin="5dp"
+        app:cardCornerRadius="2dp"
+        >
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content">
+            android:layout_height="wrap_content"
+            >
 
             <TextView
                 android:id="@+id/question_title"
@@ -55,7 +61,8 @@
         android:layout_below="@id/topCard"
         android:layout_marginTop="10dp"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="wrap_content"
+        android:layout_margin="5dp">
 
         <android.support.v7.widget.RecyclerView
             android:layout_width="match_parent"

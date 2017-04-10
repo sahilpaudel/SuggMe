@@ -67,7 +67,7 @@ public class UserAnswersFragment extends Fragment {
             //to fetch records for user profile, when the profile activity
             //is called for other users, by clicking names.
             String temp_user_id = getArguments().getString("USER_ID");
-            Toast.makeText(getActivity(), temp_user_id, Toast.LENGTH_SHORT).show();
+            //Toast.makeText(getActivity(), temp_user_id, Toast.LENGTH_SHORT).show();
 
             if (temp_user_id != null)
                 user_id = temp_user_id;
@@ -78,13 +78,13 @@ public class UserAnswersFragment extends Fragment {
 
         recyclerViewAnswerByUser = (RecyclerView)view.findViewById(R.id.recyclerViewAnswer);
         list = new ArrayList<>();
-        manager = getActivity().getSupportFragmentManager();
-        p = new CustomProgressDialog(getActivity(), manager);
-        p.show();
+//        manager = getActivity().getSupportFragmentManager();
+//        p = new CustomProgressDialog(getActivity(), manager);
+//        p.show();
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_GET_ANSWER_BY_USER_ID, new Response.Listener<String>() {
             @Override
             public void onResponse(String response) {
-                p.dismiss();
+                //p.dismiss();
                 try {
                     JSONObject object = new JSONObject(response);
                     JSONArray array1 = object.getJSONArray("ANSWERS");

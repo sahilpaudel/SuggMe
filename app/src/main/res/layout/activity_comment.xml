@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     android:id="@+id/activity_comment"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
@@ -8,6 +9,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
+    android:background="@drawable/mainbackgroun2"
     tools:context="com.sahilpaudel.app.suggme.comments.CommentActivity">
     <ImageView
         android:id="@+id/cross_close"
@@ -20,7 +22,8 @@
         android:id="@+id/topCard"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@id/cross_close">
+        android:layout_below="@id/cross_close"
+        app:cardCornerRadius="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
@@ -39,7 +42,6 @@
                 android:id="@+id/answeredOn"
                 android:text="Dummy Date"
                 android:padding="5dp"
-                android:textStyle="italic"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_below="@id/question_title"/>

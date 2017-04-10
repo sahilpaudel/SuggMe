@@ -1,7 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/mainbackgroun2"
     tools:context="com.sahilpaudel.app.suggme.mainquestionpage.MainFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -16,30 +17,31 @@
         <TextView
             android:id="@+id/userName"
             android:text="Sahil Paudel"
-            android:textStyle="italic"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"
-            android:layout_marginTop="5dp"
+            android:layout_marginTop="10dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"/>
         <EditText
             android:id="@+id/askQuestion"
-            android:hint="Ask SuggMe"
+            android:hint="Ask for a Suggestion"
             android:padding="6dp"
             android:focusable="false"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_below="@id/userName"
+            android:layout_marginTop="8dp"
             android:layout_marginBottom="5dp"
             android:layout_marginLeft="5dp"
             android:layout_marginRight="5dp"
-            android:background="@color/cardview_light_background"/>
+            android:background="@drawable/roundedbutton"/>
 
         <android.support.v7.widget.RecyclerView
             android:id="@+id/mainFeedRecycler"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:layout_marginTop="5dp"
             android:layout_below="@id/askQuestion">
         </android.support.v7.widget.RecyclerView>
         </RelativeLayout>

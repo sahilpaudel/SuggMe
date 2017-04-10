@@ -10,22 +10,13 @@
             android:id="@+id/nav_profile"
             android:icon="@drawable/profile"
             android:title="Profile" />
-        <item
-            android:id="@+id/nav_notifications"
-            android:icon="@drawable/notification"
-            android:title="Notifications" />
-        <item
-            android:id="@+id/nav_manage"
-            android:icon="@drawable/ic_menu_manage"
-            android:title="Tools" />
+
+
     </group>
 
-    <item android:title="Communicate">
+    <item android:title="Session">
         <menu>
-            <item
-                android:id="@+id/nav_share"
-                android:icon="@drawable/ic_menu_share"
-                android:title="Share" />
+
             <item
                 android:id="@+id/nav_logout"
                 android:icon="@drawable/logout"

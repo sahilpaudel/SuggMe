@@ -2,6 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
+    android:background="@drawable/mainbackgroun2"
     tools:context="com.sahilpaudel.app.suggme.profile.useranswers.UserAnswersFragment">
 
     <android.support.v7.widget.RecyclerView

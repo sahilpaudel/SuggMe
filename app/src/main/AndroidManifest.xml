@@ -36,11 +36,11 @@
         </activity>
         <activity
             android:name=".profile.ProfilePage"
-            android:screenOrientation="portrait"
             android:label=""
+            android:screenOrientation="portrait"
             android:theme="@style/Theme.AppCompat.Light.NoActionBar" />
         <activity
-            android:name=".LoginActivity"
+            android:name=".SplashScreen"
             android:label="SuggMe"
             android:screenOrientation="portrait"
             android:theme="@style/AppTheme.NoActionBar">
@@ -54,7 +54,14 @@
         <activity android:name=".RichTextEditor" />
         <activity android:name=".singlequestionpage.AnswerActivity" />
         <activity android:name=".comments.CommentActivity" />
-        <activity android:name=".RegisterActivity"></activity>
+        <activity android:name=".RegisterActivity" />
+        <activity android:name=".LoginActivity">
+        <intent-filter>
+            <action android:name="com.sahilpaudel.app.advocatus" />
+
+            <category android:name="android.intent.category.DEFAULT" />
+        </intent-filter>
+        </activity>
     </application>
 
 </manifest>

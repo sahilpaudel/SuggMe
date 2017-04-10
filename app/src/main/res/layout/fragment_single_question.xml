@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:background="@drawable/mainbackgroun2"
     tools:context="com.sahilpaudel.app.suggme.singlequestionpage.SingleQuestionFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout
@@ -29,7 +30,8 @@
                         android:id="@+id/categoryTitle"
                         android:text="Question"
                         android:gravity="center_horizontal"
-                        android:textStyle="bold|italic"
+                        android:textStyle="bold"
+                        android:textSize="17sp"
                         android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:layout_marginTop="5dp"/>
@@ -94,7 +96,7 @@
         android:layout_height="wrap_content"
         android:layout_below="@id/cardViewSingleQuestion"
         android:layout_margin="5dp"
-        android:background="#F5F5F5"/>
+    />
 
     <android.support.v7.widget.RecyclerView
         android:id="@+id/answerFeedRecycler"

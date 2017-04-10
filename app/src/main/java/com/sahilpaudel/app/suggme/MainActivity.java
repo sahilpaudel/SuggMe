@@ -127,22 +127,7 @@ public class MainActivity extends AppCompatActivity
 //            transaction.addToBackStack("user_profile");
 //            transaction.commit();
             startActivity(new Intent(this, ProfilePage.class));
-        } else if (id == R.id.nav_notifications) {
-            fragment = new NotificationFragment();
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack("notification");
-            transaction.commit();
-        } else if (id == R.id.nav_manage) {
-
-        } else if (id == R.id.nav_share) {
-            fragment = new LoadingFragment();
-            transaction = getSupportFragmentManager().beginTransaction();
-            transaction.replace(R.id.contentFragment, fragment);
-            transaction.addToBackStack("loading");
-            transaction.commit();
-
-        } else if (id == R.id.nav_logout) {
+        }   else if (id == R.id.nav_logout) {
             logout();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
