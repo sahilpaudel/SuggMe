@@ -10,7 +10,7 @@
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:background="@drawable/main_backgroun2"
-    tools:context="com.sahilpaudel.app.suggme.singlequestionpage.AnswerActivity">
+    tools:context="com.sahilpaudel.app.suggme.oneanswerpage.OneAnswerActivity">
 
     <FrameLayout
         android:id="@+id/contentFragment"
@@ -18,10 +18,6 @@
         android:layout_height="match_parent">
     </FrameLayout>
 
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/swipeToRefreshAnswer"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
 
         <RelativeLayout
             android:id="@+id/rl1"
@@ -67,18 +63,6 @@
                         android:layout_marginStart="6dp"
                         android:textStyle="bold"
                         android:gravity="center"/>
-                    <Button
-                        android:id="@+id/writeAnswer"
-                        android:text="Answer"
-                        android:background="@drawable/roundedfields"
-                        android:layout_width="wrap_content"
-                        android:layout_height="20dp"
-                        android:textSize="12sp"
-                        android:gravity="center"
-                        android:layout_toEndOf="@id/askedDate"
-                        android:layout_marginLeft="20dp"
-                        android:layout_below="@id/questionContent"
-                        android:textColor="@color/alltext"/>
 
                     <ImageView
                         android:id="@+id/ivEditQuestion"
@@ -113,25 +97,95 @@
                 </RelativeLayout>
 
             </android.support.v7.widget.CardView>
-            <TextView
-                android:id="@+id/totalAnswerCount"
-                android:text="Answers"
+
+            <android.support.v7.widget.CardView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/cardViewSingleQuestion"
+                android:layout_gravity="center"
+                android:elevation="0.3dp"
                 android:layout_margin="5dp"
-              />
+                app:cardCornerRadius="5dp"
+                android:layout_below="@id/cardViewSingleQuestion">
+                <RelativeLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content">
+                    <ImageView
+                        android:id="@+id/answeredByImage"
+                        android:layout_width="50dp"
+                        android:layout_height="50dp"
+                        android:layout_margin="10dp"
+                        android:src="@drawable/user"
+                        android:scaleType="fitXY"/>
+                    <TextView
+                        android:id="@+id/answeredByName"
+                        android:text="Sahil Paudel"
+                        android:textColor="#000"
+                        android:textStyle="bold"
+                        android:textSize="18sp"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/answeredByImage"
+                        android:layout_marginTop="10dp"
+                        android:layout_marginRight="10dp"/>
+                    <TextView
+                        android:id="@+id/answeredOn"
+                        android:text="07/03/2017"
+                        android:textStyle="bold"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_toRightOf="@id/answeredByImage"
+                        android:layout_below="@id/answeredByName"
+                        android:layout_marginTop="5dp"
+                        android:layout_marginRight="10dp"/>
 
-            <android.support.v7.widget.RecyclerView
-                android:id="@+id/answerFeedRecycler"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_below="@id/totalAnswerCount"
-                android:layout_margin="10dp">
-            </android.support.v7.widget.RecyclerView>
+                    <ImageView
+                        android:id="@+id/ivShowMore"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_marginTop="10dp"
+                        android:src="@drawable/dots_vertical"/>
 
+                    <TextView
+                        android:id="@+id/answers"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@id/answeredByImage"
+                        android:layout_marginLeft="5dp"
+                        android:maxLength="5000"
+                        android:textColor="#000"
+                        android:layout_marginRight="5dp"
+                        android:text="@string/demotxt"
+                        android:padding="5dp"/>
+                    <ToggleButton
+                        android:id="@+id/like"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:textSize="12sp"
+                        android:textOn="UPVOTED"
+                        android:textOff="UPVOTE"
+                        android:layout_marginLeft="10dp"
+                        android:background="@drawable/roundedbutton2"
+                        android:gravity="center"
+                        android:padding="2dp"
+                        android:textColor="@color/alltext"
+                        android:layout_below="@id/answers"/>
+                    <Button
+                        android:id="@+id/suggest"
+                        android:text="suggest"
+                        android:layout_width="wrap_content"
+                        android:layout_height="20dp"
+                        android:layout_below="@id/answers"
+                        android:layout_toRightOf="@id/like"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginBottom="10dp"
+                        android:padding="2dp"
+                        android:textColor="@color/alltext"
+                        android:background="@drawable/roundedbutton2"/>
+                </RelativeLayout>
+            </android.support.v7.widget.CardView>
         </RelativeLayout>
-    </android.support.v4.widget.SwipeRefreshLayout>
 
     <ImageView
         android:id="@+id/closeActivity"

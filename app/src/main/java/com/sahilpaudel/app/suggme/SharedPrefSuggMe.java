@@ -13,6 +13,8 @@ public class SharedPrefSuggMe {
     private static SharedPrefSuggMe mInstance;
 
     private static final String USER_PREF = "SharedPrefs";
+    private static final String TAG_TOKEN = "TOKEN_ID";
+
     SharedPreferences preferences;
     SharedPreferences.Editor editor;
 
@@ -81,5 +83,31 @@ public class SharedPrefSuggMe {
 
     public void deleteSession() {
         preferences.edit().clear().apply();
+    }
+
+
+    //this method will save the device token to shared preferences
+    public boolean saveDeviceToken(String token){
+        editor = preferences.edit();
+        editor.putString(TAG_TOKEN, token);
+        editor.apply();
+        return true;
+    }
+
+    //this method will fetch the device token from shared preferences
+    public String getDeviceToken(){
+        return  preferences.getString(TAG_TOKEN, null);
+    }
+
+    public boolean setRead(String str) {
+
+        editor = preferences.edit();
+        editor.putString("UNREAD", str);
+        editor.apply();
+        return true;
+    }
+
+    public String getReadStatus(){
+        return  preferences.getString("UNREAD", "1");
     }
 }

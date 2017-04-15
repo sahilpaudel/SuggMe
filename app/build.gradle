@@ -11,6 +11,10 @@ android {
         versionName "1.0"
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+
+        manifestPlaceholders = [onesignal_app_id: "92137bd6-0f11-4bbf-8750-9648224b8504",
+                                // Project number pulled from dashboard, local value is ignored.
+                                onesignal_google_project_number: "326874559147"]
     }
     buildTypes {
         release {
@@ -46,6 +50,15 @@ dependencies {
     compile 'de.hdodenhof:circleimageview:1.2.1'
     compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     compile 'jp.wasabeef:richeditor-android:1.2.1'
+    compile 'com.google.firebase:firebase-messaging:10.2.1'
+
+    compile 'com.onesignal:OneSignal:3.4.3@aar'
+    // Required for OneSignal, even if you have added FCM.
+    compile 'com.google.android.gms:play-services-gcm:10.2.1'
+
+    // Required for geotagging
+    compile "com.google.android.gms:play-services-location:10.2.1"
+
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'

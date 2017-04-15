@@ -8,7 +8,7 @@
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
     android:paddingTop="@dimen/activity_vertical_margin"
-    android:background="@drawable/mainbackgroun2"
+    android:background="@drawable/main_backgroun2"
     tools:context="com.sahilpaudel.app.suggme.SplashScreen">
 
     <ImageView

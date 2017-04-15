@@ -1,10 +1,8 @@
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:background="@drawable/mainbackgroun2"
-    tools:context="com.sahilpaudel.app.suggme.comments.CommentViewFragment">
+    android:background="@drawable/main_backgroun2">
 
     <ImageView
         android:id="@+id/cross_close"

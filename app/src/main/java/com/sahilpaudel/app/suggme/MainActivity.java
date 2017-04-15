@@ -21,7 +21,7 @@ import android.widget.TextView;
 import com.facebook.login.LoginManager;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.mainquestionpage.MainFragment;
-import com.sahilpaudel.app.suggme.notifications.NotificationFragment;
+import com.sahilpaudel.app.suggme.notifications.NotificationActivity;
 import com.sahilpaudel.app.suggme.profile.ProfilePage;
 import com.squareup.picasso.Picasso;
 
@@ -59,7 +59,7 @@ public class MainActivity extends AppCompatActivity
         toggle.syncState();
 
         View navHeader;
-        NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
+        final NavigationView navigationView = (NavigationView) findViewById(R.id.nav_view);
         navHeader = navigationView.getHeaderView(0);
 
         userNavigationPic = (ImageView)navHeader.findViewById(R.id.imageView);
@@ -69,7 +69,6 @@ public class MainActivity extends AppCompatActivity
         userName.setText(SharedPrefSuggMe.getInstance(MainActivity.this).getUserName());
         showAddress.setText(getUserAddress.getCity()+", "+getUserAddress.getState()+", "+getUserAddress.getCountry());
         Picasso.with(this).load(SharedPrefSuggMe.getInstance(this).getImageUrl()).into(userNavigationPic);
-
         navigationView.setNavigationItemSelectedListener(this);
     }
 
@@ -121,14 +120,13 @@ public class MainActivity extends AppCompatActivity
             transaction.addToBackStack("main_fragment");
             transaction.commit();
         } else if (id == R.id.nav_profile) {
-//            fragment = new FragmentProfile();
-//            transaction = getSupportFragmentManager().beginTransaction();
-//            transaction.replace(R.id.contentFragment, fragment);
-//            transaction.addToBackStack("user_profile");
-//            transaction.commit();
             startActivity(new Intent(this, ProfilePage.class));
-        }   else if (id == R.id.nav_logout) {
+        } else if (id == R.id.nav_logout) {
             logout();
+        } else if (id == R.id.nav_notification) {
+
+            startActivity(new Intent(this, NotificationActivity.class));
+           // item.setIcon(R.drawable.notification);
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

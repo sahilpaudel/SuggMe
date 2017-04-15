@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/mainbackgroun2"
+    android:background="@drawable/main_backgroun2"
     tools:context="com.sahilpaudel.app.suggme.profile.UserInfo">
 
     <RelativeLayout

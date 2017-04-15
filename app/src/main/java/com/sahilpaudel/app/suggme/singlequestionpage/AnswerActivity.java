@@ -31,6 +31,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -310,8 +311,12 @@ public class AnswerActivity extends AppCompatActivity {
                 return params;
             }
         };
-        getAnswerQueue.add(getAnswerRequest);
+        getAnswerRequest.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
 
+        getAnswerQueue.add(getAnswerRequest);
         tvQuestion.setText(question_content);
         tvAskedOn.setText(question_date);
         tvAnswerCount.setText("Answers");
@@ -408,6 +413,10 @@ public class AnswerActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
 
@@ -496,10 +505,14 @@ public class AnswerActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
 
-    // // TODO: 4/3/2017 to show the hints
+    // // TODO: 4/3/2017 to load old answer in Edit Text
     private void GetAnswerByQuestionUserId() {
 
         progress = ProgressDialog.show(AnswerActivity.this,"Please wait.","Loading the updater", false, false);
@@ -536,6 +549,10 @@ public class AnswerActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
 
@@ -566,6 +583,10 @@ public class AnswerActivity extends AppCompatActivity {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         RequestQueue queue = Volley.newRequestQueue(this);
         queue.add(request);
     }

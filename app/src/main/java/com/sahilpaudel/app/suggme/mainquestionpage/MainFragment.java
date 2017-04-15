@@ -29,6 +29,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.android.volley.AuthFailureError;
+import com.android.volley.DefaultRetryPolicy;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -117,6 +118,9 @@ public class MainFragment extends Fragment {
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
         view = inflater.inflate(R.layout.fragment_main, container, false);
+
+        //show user token
+        Log.d("Refresh Token : ", "Token "+SharedPrefSuggMe.getInstance(getActivity()).getDeviceToken());
 
         getUserAddress = new GetUserAddress(getActivity());
         getUserAddress.executeGPS();
@@ -249,6 +253,10 @@ public class MainFragment extends Fragment {
                 return params;
             }
         };
+        getQuestionRequest.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         getQuestionQueue.add(getQuestionRequest);
         return view;
     }
@@ -397,6 +405,10 @@ public class MainFragment extends Fragment {
                 return params;
             }
         };
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
 
@@ -445,7 +457,10 @@ public class MainFragment extends Fragment {
                 return params;
             }
         };
-
+        request.setRetryPolicy(new DefaultRetryPolicy(
+                30000,
+                DefaultRetryPolicy.DEFAULT_MAX_RETRIES,
+                DefaultRetryPolicy.DEFAULT_BACKOFF_MULT));
         queue.add(request);
     }
 

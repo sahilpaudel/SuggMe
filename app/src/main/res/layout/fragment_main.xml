@@ -2,7 +2,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:background="@drawable/mainbackgroun2"
+    android:background="@drawable/main_backgroun2"
     tools:context="com.sahilpaudel.app.suggme.mainquestionpage.MainFragment">
 
     <android.support.v4.widget.SwipeRefreshLayout

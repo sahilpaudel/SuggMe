@@ -10,14 +10,11 @@
         android:layout_height="wrap_content"
         android:layout_gravity="center"
         android:elevation="0.3dp"
-        android:layout_margin="5dp"
-        >
+        android:layout_margin="5dp">
 
         <RelativeLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            
-            >
+            android:layout_height="wrap_content">
 
             <TextView
                 android:id="@+id/mainQuestion"

@@ -3,7 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="250dp"
     android:paddingTop="5dp"
-    android:background="@drawable/mainbackgroun22">
+    android:background="@drawable/main_background22">
     <View
         android:layout_width="match_parent"
         android:layout_height="1.5dp"
