@@ -11,4 +11,6 @@ public class NotificationInfo {
     public String NotificationImage;
     public String NotificationTime;
     public String NotificationStatus;
+
+    public String NotificationAdditionalInfo;
 }

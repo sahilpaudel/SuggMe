@@ -114,7 +114,7 @@ public class AnswerActivity extends AppCompatActivity {
     ImageView imageViewClose;
     ImageView imageViewEditQuestion;
     FragmentTransaction transaction = getSupportFragmentManager().beginTransaction();
-    FragmentManager manager;
+    //FragmentManager manager;
     //CustomProgressDialog p;
     @RequiresApi(api = Build.VERSION_CODES.M)
     @Override
@@ -173,6 +173,7 @@ public class AnswerActivity extends AppCompatActivity {
             }
         });
 
+        //data from quetion activity
         question_id = getIntent().getStringExtra("QID");
         question_content = getIntent().getStringExtra("CONTENT");
         question_date = getIntent().getStringExtra("DATE");

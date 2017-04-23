@@ -19,6 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
+import com.sahilpaudel.app.suggme.foundsomethingnew.SomethingNewFragment;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.mainquestionpage.MainFragment;
 import com.sahilpaudel.app.suggme.notifications.NotificationActivity;
@@ -124,9 +125,14 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.nav_logout) {
             logout();
         } else if (id == R.id.nav_notification) {
-
             startActivity(new Intent(this, NotificationActivity.class));
            // item.setIcon(R.drawable.notification);
+        } else if (id == R.id.nav_something_new) {
+            fragment = new SomethingNewFragment();
+            transaction = getSupportFragmentManager().beginTransaction();
+            transaction.replace(R.id.contentFragment, fragment);
+            transaction.addToBackStack("something_new");
+            transaction.commit();
         }
         DrawerLayout drawer = (DrawerLayout) findViewById(R.id.drawer_layout);
         drawer.closeDrawer(GravityCompat.START);

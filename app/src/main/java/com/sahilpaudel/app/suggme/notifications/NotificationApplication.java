@@ -104,12 +104,15 @@ public class NotificationApplication extends Application {
         public void notificationReceived(OSNotification notification) {
             JSONObject data = notification.payload.additionalData;
             String body = notification.payload.body;
-
+            Log.d("ADDITIONAL DATA : ", "Q : "+ data.toString());
             if (data != null) {
                 try {
                     String imageUrl = data.getString("image_url");
+                    String additional_data  = data.getString("additional_data");
+                    //to whom the notification is to be send
+                    String toWhom  = data.getString("toWhom");
                     //save notification data
-                    saveNotification(body, imageUrl);
+                    saveNotification(body, imageUrl, additional_data, toWhom);
 
                 } catch (JSONException e) {
                     e.printStackTrace();
@@ -119,7 +122,7 @@ public class NotificationApplication extends Application {
     }
 
     //save notification to database
-    private void saveNotification(final String content, final String imageurl) {
+    private void saveNotification(final String content, final String imageurl, final String additional_data, final String toWhom) {
 
         StringRequest request = new StringRequest(Request.Method.POST, Config.URL_SAVE_NOTIFICATION, new Response.Listener<String>() {
             @Override
@@ -137,6 +140,8 @@ public class NotificationApplication extends Application {
                 Map<String, String> params = new HashMap<>();
                 params.put("content", content);
                 params.put("image_url", imageurl);
+                params.put("additional_data", additional_data);
+                params.put("toWhom", toWhom);
                 return params;
             }
         };

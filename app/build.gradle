@@ -59,6 +59,9 @@ dependencies {
     // Required for geotagging
     compile "com.google.android.gms:play-services-location:10.2.1"
 
+    //gridview
+    compile 'com.github.ceryle:fitgridview:v1.0.3'
+
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
