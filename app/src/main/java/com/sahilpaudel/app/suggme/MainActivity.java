@@ -19,7 +19,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.facebook.login.LoginManager;
-import com.sahilpaudel.app.suggme.foundsomethingnew.SomethingNewFragment;
+import com.sahilpaudel.app.suggme.foundsomethingnew.FoundSomethingNew;
 import com.sahilpaudel.app.suggme.location.GetUserAddress;
 import com.sahilpaudel.app.suggme.mainquestionpage.MainFragment;
 import com.sahilpaudel.app.suggme.notifications.NotificationActivity;
@@ -128,7 +128,7 @@ public class MainActivity extends AppCompatActivity
             startActivity(new Intent(this, NotificationActivity.class));
            // item.setIcon(R.drawable.notification);
         } else if (id == R.id.nav_something_new) {
-            fragment = new SomethingNewFragment();
+            fragment = new FoundSomethingNew();
             transaction = getSupportFragmentManager().beginTransaction();
             transaction.replace(R.id.contentFragment, fragment);
             transaction.addToBackStack("something_new");

@@ -12,7 +12,7 @@ android {
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
-        manifestPlaceholders = [onesignal_app_id: "92137bd6-0f11-4bbf-8750-9648224b8504",
+        manifestPlaceholders = [onesignal_app_id               : "92137bd6-0f11-4bbf-8750-9648224b8504",
                                 // Project number pulled from dashboard, local value is ignored.
                                 onesignal_google_project_number: "326874559147"]
     }
@@ -36,7 +36,11 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
 
+    // Required for OneSignal, even if you have added FCM.
+    
 
+    // Required for geotagging
+    
 
     compile 'com.android.support:appcompat-v7:25.3.1'
     compile 'com.android.support:design:25.3.1'
@@ -51,17 +55,10 @@ dependencies {
     compile 'org.ocpsoft.prettytime:prettytime:4.0.1.Final'
     compile 'jp.wasabeef:richeditor-android:1.2.1'
     compile 'com.google.firebase:firebase-messaging:10.2.1'
-
+    compile 'com.yalantis:flipviewpager:1.0.0'
     compile 'com.onesignal:OneSignal:3.4.3@aar'
-    // Required for OneSignal, even if you have added FCM.
     compile 'com.google.android.gms:play-services-gcm:10.2.1'
-
-    // Required for geotagging
-    compile "com.google.android.gms:play-services-location:10.2.1"
-
-    //gridview
-    compile 'com.github.ceryle:fitgridview:v1.0.3'
-
+    compile 'com.google.android.gms:play-services-location:10.2.1'
     testCompile 'junit:junit:4.12'
 }
 apply plugin: 'com.google.gms.google-services'
