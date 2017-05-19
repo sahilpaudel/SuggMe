@@ -1,14 +1,21 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:background="@drawable/main_background22"
     tools:context="com.sahilpaudel.app.suggme.foundsomethingnew.FoundSomethingNew">
 
+    <Button
+        android:id="@+id/addButton"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Add new" />
     <ListView
         xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/something_new"
         android:divider="@color/colorAccent"
         android:dividerHeight="1dp"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
-</FrameLayout>
+        android:layout_height="match_parent"
+        android:layout_below="@id/addButton" />
+</RelativeLayout>

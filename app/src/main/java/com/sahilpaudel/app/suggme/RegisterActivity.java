@@ -3,6 +3,8 @@ package com.sahilpaudel.app.suggme;
 import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
@@ -18,6 +20,7 @@ import com.android.volley.toolbox.Volley;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.regex.Pattern;
 
 public class RegisterActivity extends AppCompatActivity {
 
@@ -41,6 +44,49 @@ public class RegisterActivity extends AppCompatActivity {
         etGender = (EditText)findViewById(R.id.et_Gender);
         etPassword = (EditText)findViewById(R.id.et_Password);
         btRegister = (Button)findViewById(R.id.bt_Register);
+
+        etFirstName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!(Pattern.matches("^[\\p{L} .'-]+$", charSequence))) {
+                    etFirstName.setError("Only Characters allowed");
+                    btRegister.setEnabled(false);
+                } else {
+                    btRegister.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
+        etLastName.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void beforeTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+
+            }
+
+            @Override
+            public void onTextChanged(CharSequence charSequence, int i, int i1, int i2) {
+                if (!(Pattern.matches("^[\\p{L} .'-]+$", charSequence))) {
+                    etLastName.setError("Only Characters allowed");
+                    btRegister.setEnabled(false);
+                } else {
+                    btRegister.setEnabled(true);
+                }
+            }
+
+            @Override
+            public void afterTextChanged(Editable editable) {
+
+            }
+        });
 
         btRegister.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -76,8 +122,8 @@ public class RegisterActivity extends AppCompatActivity {
                     }
                     return;
                 }else
-                if (passWord.isEmpty()) {
-                    etPassword.setError("Cannot be empty");
+                if (passWord.isEmpty() && passWord.length() > 8) {
+                    etPassword.setError("Length must be 8 characters");
                     return;
                 }else
                 if (!passWord.matches("^[a-zA-Z0-9_]*$")) {

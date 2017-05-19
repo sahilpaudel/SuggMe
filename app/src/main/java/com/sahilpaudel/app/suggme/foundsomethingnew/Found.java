@@ -9,14 +9,14 @@ import java.util.List;
  */
 
 public class Found {
-    private int avatar;
+    private String avatar;
     private String nickname;
     private String description;
     private String entryOn;
     private String yes;
     private String no;
 
-    public Found(int avatar, String nickname,String description, String entryOn, String yes, String no) {
+    public Found(String avatar, String nickname,String description, String entryOn, String yes, String no) {
         this.avatar = avatar;
         this.nickname = nickname;
         this.description = description;
@@ -25,7 +25,7 @@ public class Found {
         this.no = no;
     }
 
-    public int getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 

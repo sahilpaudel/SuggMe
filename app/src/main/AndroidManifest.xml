@@ -5,11 +5,12 @@
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_FINE_LOCATION" />
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
     <application
         android:name=".notifications.NotificationApplication"
         android:allowBackup="true"
-        android:icon="@mipmap/ic_launcher"
+        android:icon="@drawable/logom"
         android:label="@string/app_name"
         android:supportsRtl="true"
         android:theme="@style/Theme.AppCompat.Light.NoActionBar">
@@ -67,7 +68,8 @@
             </intent-filter>
         </activity>
         <activity android:name=".notifications.NotificationActivity" />
-        <activity android:name=".oneanswerpage.OneAnswerActivity"></activity>
+        <activity android:name=".oneanswerpage.OneAnswerActivity" />
+        <activity android:name=".MyLoadingActivity"></activity>
     </application>
 
 </manifest>

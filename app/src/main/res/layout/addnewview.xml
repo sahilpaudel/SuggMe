@@ -1,0 +1,96 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+<LinearLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:orientation="vertical"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="5dp"
+    android:background="@drawable/main_backgroun2">
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/textme" />
+
+    <TextView
+
+        android:id="@+id/dialog_question_tag"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:textStyle="bold"
+        android:textSize="18dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:gravity="center_horizontal"
+        android:text="FOUND SOMETHING NEW"/>
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1.5dp"
+        android:layout_marginTop="6dp"
+        android:layout_marginLeft="16dp"
+        android:layout_marginRight="16dp"
+        android:background="@color/textme"
+        android:layout_below="@id/dialog_question_tag"/>
+    <EditText
+        android:id="@+id/addNewTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:hint="Add title (max 20 characters)"
+        android:maxLength="50"
+        android:layout_marginTop="15dp"
+        android:background="@color/alltext"/>
+    <EditText
+        android:id="@+id/addNewDescription"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:gravity="start"
+        android:inputType="textMultiLine"
+        android:hint="Add description (max 50 characters)"
+        android:layout_marginTop="10dp"
+        android:maxLength="50"
+        android:background="@color/alltext"/>
+    <EditText
+        android:id="@+id/addNewLocation"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:editable="false"
+        android:hint="Add found location"
+        android:layout_marginTop="10dp"
+        android:background="@color/alltext"/>
+    <Button
+        android:id="@+id/addNewImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:padding="10dp"
+        android:text="Choose Image"
+        android:layout_marginTop="10dp"/>
+    <ImageView
+        android:id="@+id/foundImage"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:scaleType="fitXY"
+        android:layout_gravity="center_horizontal"/>
+    <Button
+        android:id="@+id/submitFound"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Create"
+        android:layout_marginTop="10dp"
+        android:background="#00a875"
+        android:layout_gravity="center_horizontal"/>
+</LinearLayout>
+
+</ScrollView>

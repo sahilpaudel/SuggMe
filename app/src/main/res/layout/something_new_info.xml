@@ -1,20 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
     android:orientation="vertical"
-    android:background="@android:color/transparent"
+    android:background="@drawable/main_background22"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
+    <ImageView
+        android:id="@+id/foundEdit"
+        android:src="@drawable/editorange"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
+        android:layout_margin="5dp"
+        android:layout_alignParentEnd="true"
+        android:contentDescription="edit image" />
+
     <TextView
         android:id="@+id/nickname"
-        android:textSize="30sp"
+        android:textSize="20sp"
+        android:textStyle="bold|italic"
+        android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="30dp"
-        android:layout_marginStart="20dp"/>
+        android:layout_marginStart="10dp"/>
 
     <LinearLayout
-        android:layout_below="@+id/nickname"
+        android:layout_below="@id/nickname"
         android:id="@+id/interestsPrimary"
         android:layout_marginTop="14dp"
         android:orientation="horizontal"
@@ -26,7 +38,8 @@
             android:textColor="@color/alltext"
             android:textSize="16sp"
             android:textStyle="bold"
-            android:layout_margin="3dp"
+            android:layout_marginTop="5dp"
+            android:layout_marginStart="5dp"
             android:background="@drawable/roundedfields"
             android:layout_height="wrap_content"
             android:layout_width="wrap_content" />
@@ -34,37 +47,69 @@
 
 
     <LinearLayout
-        android:layout_below="@+id/interestsPrimary"
+        android:layout_below="@id/interestsPrimary"
         android:id="@+id/interestsSecondary"
-        android:layout_marginTop="14dp"
-        android:layout_marginStart="14dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
         android:orientation="horizontal"
-        android:layout_width="match_parent"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <TextView
+        <Button
             android:id="@+id/interest_4"
             android:textColor="@color/alltext"
             android:textSize="15sp"
             android:text="YES"
             android:textStyle="bold"
-            android:layout_margin="3dp"
-            android:gravity="center_horizontal"
+            android:gravity="center"
             android:background="@drawable/roundedfields"
-            android:layout_height="wrap_content"
-            android:layout_width="50dp" />
+            android:layout_height="25dp"
+            android:layout_width="50dp"
+            android:elevation="10dp"/>
 
         <TextView
             android:id="@+id/interest_5"
             android:textColor="@color/alltext"
             android:textSize="15sp"
-            android:textStyle="bold"
-            android:layout_margin="3dp"
-            android:text="NO"
-            android:gravity="center_horizontal"
+            android:textStyle="bold|italic"
+            android:text="0"
+            android:gravity="center"
             android:background="@drawable/roundedfields"
-            android:layout_height="wrap_content"
-            android:layout_width="50dp" />
+            android:layout_height="25dp"
+            android:layout_width="30dp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_toEndOf="@+id/interestsSecondary"
+        android:layout_below="@id/interestsPrimary"
+        android:id="@+id/interestsTertiary"
+        android:layout_marginTop="10dp"
+        android:layout_marginStart="5dp"
+        android:orientation="horizontal"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content">
+
+        <Button
+            android:id="@+id/interest_6"
+            android:textColor="@color/alltext"
+            android:textSize="15sp"
+            android:text="NO"
+            android:textStyle="bold"
+            android:gravity="center"
+            android:background="@drawable/roundedfields"
+            android:layout_height="25dp"
+            android:layout_width="50dp"
+            android:elevation="10dp"/>
+
+        <TextView
+            android:id="@+id/interest_7"
+            android:textColor="@color/alltext"
+            android:textSize="15sp"
+            android:textStyle="bold|italic"
+            android:text="0"
+            android:gravity="center"
+            android:background="@drawable/roundedfields"
+            android:layout_height="25dp"
+            android:layout_width="30dp" />
+    </LinearLayout>
 </RelativeLayout>

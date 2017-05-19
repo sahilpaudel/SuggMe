@@ -1,11 +1,16 @@
 package com.sahilpaudel.app.suggme;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
+import android.support.v4.app.ActivityCompat;
 import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentTransaction;
+
+import com.sahilpaudel.app.suggme.profile.useranswers.UserAnswerAdapter;
 
 /**
  * Created by Sahil Paudel on 4/2/2017.
@@ -14,25 +19,19 @@ import android.support.v4.app.FragmentTransaction;
 
 public class CustomProgressDialog {
 
-    FragmentManager manager;
-    Fragment fragment;
     Context context;
-    FragmentTransaction transaction;
-    public CustomProgressDialog(Context context, FragmentManager manager) {
-        this.context = context;
-        this.manager = manager;
-        fragment = new LoadingFragment();
-        transaction = manager.beginTransaction();
+
+    public CustomProgressDialog(Context context) {
+      this.context = context;
     }
 
     public void show() {
-        transaction.add(R.id.contentFragment, fragment);
-        transaction.addToBackStack(null);
-        transaction.commit();
+       context.startActivity(new Intent(context, MyLoadingActivity.class));
     }
 
     public void dismiss() {
-        manager.popBackStack();
+        ((Activity)context).finish();
+
     }
 
 }
