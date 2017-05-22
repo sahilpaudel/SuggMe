@@ -6,15 +6,6 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent">
 
-    <ImageView
-        android:id="@+id/foundEdit"
-        android:src="@drawable/editorange"
-        android:layout_width="30dp"
-        android:layout_height="30dp"
-        android:layout_margin="5dp"
-        android:layout_alignParentEnd="true"
-        android:contentDescription="edit image" />
-
     <TextView
         android:id="@+id/nickname"
         android:textSize="20sp"
@@ -22,13 +13,13 @@
         android:text=""
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="30dp"
+        android:layout_marginTop="10dp"
         android:layout_marginStart="10dp"/>
 
     <LinearLayout
         android:layout_below="@id/nickname"
         android:id="@+id/interestsPrimary"
-        android:layout_marginTop="14dp"
+        android:layout_marginTop="10dp"
         android:orientation="horizontal"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
@@ -55,28 +46,15 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
 
-        <Button
-            android:id="@+id/interest_4"
-            android:textColor="@color/alltext"
-            android:textSize="15sp"
-            android:text="YES"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:background="@drawable/roundedfields"
-            android:layout_height="25dp"
-            android:layout_width="50dp"
-            android:elevation="10dp"/>
-
         <TextView
             android:id="@+id/interest_5"
-            android:textColor="@color/alltext"
+            android:textColor="@drawable/roundedfields"
             android:textSize="15sp"
             android:textStyle="bold|italic"
             android:text="0"
             android:gravity="center"
-            android:background="@drawable/roundedfields"
             android:layout_height="25dp"
-            android:layout_width="30dp" />
+            android:layout_width="wrap_content" />
     </LinearLayout>
 
     <LinearLayout
@@ -88,28 +66,5 @@
         android:orientation="horizontal"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content">
-
-        <Button
-            android:id="@+id/interest_6"
-            android:textColor="@color/alltext"
-            android:textSize="15sp"
-            android:text="NO"
-            android:textStyle="bold"
-            android:gravity="center"
-            android:background="@drawable/roundedfields"
-            android:layout_height="25dp"
-            android:layout_width="50dp"
-            android:elevation="10dp"/>
-
-        <TextView
-            android:id="@+id/interest_7"
-            android:textColor="@color/alltext"
-            android:textSize="15sp"
-            android:textStyle="bold|italic"
-            android:text="0"
-            android:gravity="center"
-            android:background="@drawable/roundedfields"
-            android:layout_height="25dp"
-            android:layout_width="30dp" />
     </LinearLayout>
 </RelativeLayout>

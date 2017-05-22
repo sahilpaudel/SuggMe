@@ -9,13 +9,44 @@
         android:id="@+id/addButton"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Add new" />
+        android:text="Add new"
+        android:background="@drawable/roundedfields"/>
+    <LinearLayout
+        android:id="@+id/operations"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_below="@id/addButton">
+
+        <Button
+            android:id="@+id/editFound"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="edit"
+
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/deleteFound"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="delete"
+            android:gravity="center"/>
+        <Button
+            android:id="@+id/reportFound"
+            android:layout_width="0dp"
+            android:layout_height="35dp"
+            android:layout_weight="1"
+            android:text="report"
+            android:gravity="center"/>
+    </LinearLayout>
     <ListView
-        xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/something_new"
         android:divider="@color/colorAccent"
         android:dividerHeight="1dp"
+        android:layout_marginTop="6dp"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:layout_below="@id/addButton" />
+        android:layout_below="@id/operations" />
 </RelativeLayout>

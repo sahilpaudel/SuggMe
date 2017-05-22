@@ -16,7 +16,7 @@
             android:layout_height="wrap_content">
         <TextView
             android:id="@+id/userName"
-            android:text="Sahil Paudel"
+            android:text=""
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginBottom="5dp"

@@ -144,11 +144,15 @@ public class MainActivity extends AppCompatActivity
             LoginManager.getInstance().logOut();
             SharedPrefSuggMe.getInstance(this).deleteSession();
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         } else if (SharedPrefSuggMe.getInstance(this).getProvider().equals("G")){
-
+            SharedPrefSuggMe.getInstance(this).deleteSession();
+            startActivity(new Intent(this, LoginActivity.class));
+            finish();
         } else {
             SharedPrefSuggMe.getInstance(this).deleteSession();
             startActivity(new Intent(this, LoginActivity.class));
+            finish();
         }
     }
 
